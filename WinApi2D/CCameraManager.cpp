@@ -26,7 +26,7 @@ void CCameraManager::update()
 {
 	if (m_pTargetObj)
 	{
-		if (m_pTargetObj->isDead())
+		if (m_pTargetObj->ActiveSelf())
 		{
 			m_pTargetObj = nullptr;
 		}

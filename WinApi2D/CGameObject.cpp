@@ -9,7 +9,7 @@ CGameObject::CGameObject()
 	m_fptScale = {};
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
-	m_bAlive = true;
+	m_bActive = true;
 }
 
 CGameObject::CGameObject(const CGameObject& other)
@@ -19,7 +19,7 @@ CGameObject::CGameObject(const CGameObject& other)
 	m_fptScale	= other.m_fptScale;
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
-	m_bAlive	= true;
+	m_bActive = true;
 
 	if (nullptr != other.m_pCollider)
 	{
@@ -75,14 +75,14 @@ wstring CGameObject::GetName()
 	return m_strName;
 }
 
-bool CGameObject::isDead()
+bool CGameObject::ActiveSelf()
 {
-	return !m_bAlive;
+	return m_bActive;
 }
 
-void CGameObject::SetDead()
+void CGameObject::SetActive(bool _bool)
 {
-	m_bAlive = false;
+	m_bActive = _bool;
 }
 
 void CGameObject::finalupdate()
@@ -114,7 +114,7 @@ void CGameObject::component_render()
 	{
 		m_pAnimator->render();
 	}
-	if (nullptr != m_pCollider)
+	if (nullptr != m_pCollider && Debug())
 	{
 		m_pCollider->render();
 	}

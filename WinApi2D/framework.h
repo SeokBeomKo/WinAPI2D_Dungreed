@@ -31,7 +31,6 @@ using namespace std;
 #include "struct.h"
 #include "Logger.h"
 
-
 //========================================
 //## 게임 그룹						##
 //========================================
@@ -52,9 +51,9 @@ enum class GROUP_GAMEOBJ
 enum class GROUP_SCENE
 {
 	TOOL,
-	START,
-	STAGE_01,
-	STAGE_02,
+	TITLE,
+	LOBBY,
+	INGAME,
 
 	SIZE,
 };
@@ -120,6 +119,9 @@ enum class TYPE_EVENT
 #define KeyDown(key)	CKeyManager::getInst()->GetButtonDOWN(key)
 
 #define MousePos()		CKeyManager::getInst()->GetMousePos()
+
+#define DebugMode()		CSceneManager::getInst()->SetDebug()
+#define Debug()			CSceneManager::getInst()->GetDebug()
 
 #define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)
 #define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)

@@ -23,12 +23,16 @@ CScene::~CScene()
 
 void CScene::update()
 {
+    if (KeyDown(VK_F3))
+    {
+        DebugMode();
+    }
     // 씬이 가진 모든 오브젝트 업데이트
     for (int i = 0; i < (int)GROUP_GAMEOBJ::SIZE; i++)
     {
         for (int j = 0; j < m_arrObj[i].size(); j++)
         {
-            if (!m_arrObj[i][j]->isDead())
+            if (m_arrObj[i][j]->ActiveSelf())
                 m_arrObj[i][j]->update();
         }
     }
@@ -59,7 +63,7 @@ void CScene::render()
         for (vector<CGameObject*>::iterator iter = m_arrObj[i].begin();
             iter != m_arrObj[i].end(); )
         {
-            if (!(*iter)->isDead())
+            if ((*iter)->ActiveSelf())
             {
                 (*iter)->render();
                 iter++;

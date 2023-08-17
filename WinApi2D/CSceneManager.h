@@ -13,12 +13,15 @@ private:
 	CScene* m_pCurScene;							// 현재 씬
 
 	void ChangeScene(GROUP_SCENE scene);			// 씬 전환
-	
 
+	bool m_bDebug;							// 디버그모드
 public:
 	void update();
 	void render();
 	void init();
+
+	void SetDebug();					
+	bool GetDebug();
 
 	CScene* GetCurScene();							//현재 씬 반환
 };

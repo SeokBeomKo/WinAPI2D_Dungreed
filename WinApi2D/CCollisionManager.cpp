@@ -57,7 +57,7 @@ void CCollisionManager::CollisionGroupUpdate(GROUP_GAMEOBJ objLeft, GROUP_GAMEOB
 				if (iter->second)
 				{
 					// 충돌체 중 하나가 Dead 상태라면 충돌 해제
-					if (vecLeft[i]->isDead() || vecRight[j]->isDead())
+					if (!vecLeft[i]->ActiveSelf() || !vecRight[j]->ActiveSelf())
 					{
 						vecLeft[i]->GetCollider()->OnCollisionExit(vecRight[j]->GetCollider());
 						vecRight[j]->GetCollider()->OnCollisionExit(vecLeft[i]->GetCollider());
@@ -73,7 +73,7 @@ void CCollisionManager::CollisionGroupUpdate(GROUP_GAMEOBJ objLeft, GROUP_GAMEOB
 				else
 				{
 					// 충돌체 중 하나가 Dead 상태라면 충돌 시키지 않음
-					if (vecLeft[i]->isDead() || vecRight[j]->isDead())
+					if (!vecLeft[i]->ActiveSelf() || !vecRight[j]->ActiveSelf())
 					{
 						// 아무것도 하지 않음
 					}

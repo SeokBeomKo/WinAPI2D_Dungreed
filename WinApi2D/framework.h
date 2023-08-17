@@ -59,6 +59,20 @@ enum class GROUP_SCENE
 	SIZE,
 };
 
+enum class GROUP_TILE
+{
+	NONE,
+	GROUND,
+	PLATFORM,
+	WALL,
+	TOPANGLE,
+	BOTANGLE,
+	RIGHTSLOPE,
+	LEFTSLOPE,
+
+	SIZE,
+};
+
 //========================================
 //## 이벤트 타입					##
 //========================================

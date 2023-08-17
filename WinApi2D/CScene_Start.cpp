@@ -4,7 +4,6 @@
 #include "CGameObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
-#include "Map_Start.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
@@ -42,8 +41,8 @@ void CScene_Start::Enter()
 {
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\test.tile";
-	//LoadTile(path);
+	path += L"tile\\temp";
+	LoadTile(path);
 
 	// Player 추가
 	CGameObject* pPlayer = new CPlayer;
@@ -56,12 +55,9 @@ void CScene_Start::Enter()
 	pMonster->SetCenterPos(pMonster->GetPos());
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
-	Map_Start* map = new Map_Start;
-	map->SetPos(fPoint(100, 100));
-	map->SetScale(fPoint(100, 100));
-	AddObject(map, GROUP_GAMEOBJ::MONSTER);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 지정

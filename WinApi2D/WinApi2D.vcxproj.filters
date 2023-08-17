@@ -58,14 +58,35 @@
     <Filter Include="Object\UI">
       <UniqueIdentifier>{e6177611-ca95-4efd-98d5-4a87ca547807}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Character">
-      <UniqueIdentifier>{a0374c23-f28b-40d4-a4f4-380a7473d4b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resouce\CD2DImage">
       <UniqueIdentifier>{7be60d72-5b7b-4f9d-b116-6bc827b05510}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\UI\CButton">
+    <Filter Include="Object\Entity">
+      <UniqueIdentifier>{345b557f-00d6-498f-b058-38de8df83db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI\Button">
       <UniqueIdentifier>{e83c18c8-53fc-4872-a423-58620ab7bfa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\LobbyScene">
+      <UniqueIdentifier>{94c366c7-ed23-42af-b00b-15aa6b8efa97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\InGameScene">
+      <UniqueIdentifier>{e373c1d9-1884-4d2a-8080-552ac4dbf4f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TitleScene">
+      <UniqueIdentifier>{34889218-5650-4f88-bf24-f2f988008d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Player">
+      <UniqueIdentifier>{808184ca-6f97-4ddb-afcf-1281610d55cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Enemy">
+      <UniqueIdentifier>{a045a683-1d28-4d11-873c-ac30805aea66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Object">
+      <UniqueIdentifier>{5c01962d-4081-4f0e-abde-27905c730bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\Gravity">
+      <UniqueIdentifier>{7e80e798-8ca7-47d9-9f62-0f6ac51c4303}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -104,9 +125,6 @@
     </ClInclude>
     <ClInclude Include="CSceneManager.h">
       <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Start.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CResource.h">
       <Filter>Resouce</Filter>
@@ -153,15 +171,6 @@
     <ClInclude Include="CUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
@@ -178,10 +187,28 @@
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CButtonUI.h">
-      <Filter>Object\UI\CButton</Filter>
+      <Filter>Object\UI\Button</Filter>
     </ClInclude>
     <ClInclude Include="CTileButton.h">
-      <Filter>Object\UI\CButton</Filter>
+      <Filter>Object\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Lobby.h">
+      <Filter>Scene\LobbyScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CEntity.h">
+      <Filter>Object\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Object\Entity\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CGravity.h">
+      <Filter>Engine\Component\Gravity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="CSceneManager.cpp">
       <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Start.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CResource.cpp">
       <Filter>Resouce</Filter>
@@ -251,15 +275,6 @@
     <ClCompile Include="CUI.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
@@ -276,10 +291,28 @@
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CButtonUI.cpp">
-      <Filter>Object\UI\CButton</Filter>
+      <Filter>Object\UI\Button</Filter>
     </ClCompile>
     <ClCompile Include="CTileButton.cpp">
-      <Filter>Object\UI\CButton</Filter>
+      <Filter>Object\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Lobby.cpp">
+      <Filter>Scene\LobbyScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CEntity.cpp">
+      <Filter>Object\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Object\Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CGravity.cpp">
+      <Filter>Engine\Component\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -66,6 +66,7 @@ void CPlayer::update()
 		pos.y += m_fVelocity * fDT;
 	}
 
+
 	SetPos(pos);
 
 	if (KeyDown(VK_SPACE))

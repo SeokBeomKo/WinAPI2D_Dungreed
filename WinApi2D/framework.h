@@ -104,6 +104,8 @@ enum class TYPE_EVENT
 //##			디파인문				##
 //========================================
 
+#define GRAVITY		2000
+
 #define WINSTARTX   100
 #define WINSTARTY   100
 #define WINSIZEX	1280

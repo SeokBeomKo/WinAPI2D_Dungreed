@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "CScene_Start.h"
+#include "CScene_Lobby.h"
 
 #include "CGameObject.h"
 #include "CPlayer.h"
@@ -8,15 +8,15 @@
 #include "CSound.h"
 #include "CD2DImage.h"
 
-CScene_Start::CScene_Start()
+CScene_Lobby::CScene_Lobby()
 {
 }
 
-CScene_Start::~CScene_Start()
+CScene_Lobby::~CScene_Lobby()
 {
 }
 
-void CScene_Start::update()
+void CScene_Lobby::update()
 {
 	CScene::update();
 
@@ -37,7 +37,7 @@ void CScene_Start::update()
 	}
 }
 
-void CScene_Start::Enter()
+void CScene_Lobby::Enter()
 {
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
@@ -64,7 +64,7 @@ void CScene_Start::Enter()
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
 
-void CScene_Start::Exit()
+void CScene_Lobby::Exit()
 {
 	DeleteAll();
 

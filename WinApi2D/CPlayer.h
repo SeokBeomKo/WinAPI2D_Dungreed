@@ -1,17 +1,17 @@
 #pragma once
 
-#include "CGameObject.h"
+#include "CEntity.h"
 
 class CD2DImage;
+class CPlayerStateMachine;
 
-class CPlayer : public CGameObject
+class CPlayer : public CEntity
 {
 private:
 	CD2DImage* m_pImg;
+	CPlayerStateMachine* m_pStateMachine;
+
 	float m_fVelocity = 300;
-
-	void CreateMissile();
-
 public:
 	CPlayer();
 	~CPlayer();

@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CGravity.h"
-#include "CGameObject.h"
+
+#include "CEntity.h"
 
 CGravity::CGravity()
 {

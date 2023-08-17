@@ -1,13 +1,13 @@
 #pragma once
 
-class CGameObject;
+class CEntity;
 
 class CGravity
 {
-	friend class CGameObject;
+	friend class CEntity;
 
 private:
-	CGameObject*	m_pOwner;
+	CEntity*			m_pOwner;
 	bool			m_bIsGravity;
 	float			m_fTime;
 public:

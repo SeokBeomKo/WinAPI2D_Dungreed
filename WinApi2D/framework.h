@@ -72,6 +72,16 @@ enum class GROUP_TILE
 	SIZE,
 };
 
+enum class STATE_PLAYER
+{
+	IDLE,
+	MOVE,
+	JUMP,
+	FALL,
+
+	SIZE,
+};
+
 //========================================
 //## 이벤트 타입					##
 //========================================

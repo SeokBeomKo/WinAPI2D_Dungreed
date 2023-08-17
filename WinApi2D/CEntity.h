@@ -1,4 +1,5 @@
 #pragma once
+
 #include "CGameObject.h"
 
 class CGravity;
@@ -7,6 +8,7 @@ class CEntity : public CGameObject
 {
 private:
 	CGravity* m_pGravity;	// 오브젝트 중력
+
 public:
 	CEntity();
 	~CEntity();

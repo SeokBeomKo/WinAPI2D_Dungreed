@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CEntity.h"
+#include "CGravity.h"
 
 CEntity::CEntity()
 {
@@ -28,9 +29,11 @@ void CEntity::component_render()
 
 void CEntity::CreateGravity()
 {
+	m_pGravity = new CGravity;
+	m_pGravity->m_pOwner = this;
 }
 
 CGravity* CEntity::GetGravity()
 {
-	return nullptr;
+	return m_pGravity;
 }

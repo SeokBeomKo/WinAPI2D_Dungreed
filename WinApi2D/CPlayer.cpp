@@ -1,14 +1,19 @@
 #include "framework.h"
 #include "CPlayer.h"
-#include "CMissile.h"
+
 #include "CScene.h"
 #include "CTexture.h"
-#include "CCollider.h"
-#include "CAnimator.h"
-#include "CAnimation.h"
+
+// 컴포넌트
+#include "CCollider.h"				// 충돌체
+#include "CAnimation.h"				// 애니메이션
+#include "CAnimator.h"				// 애니메이터
+#include "CPlayerStateMachine.h"	// 유한상태기계
 
 CPlayer::CPlayer()
 {
+	m_pStateMachine = new CPlayerStateMachine;
+
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
 	SetScale(fPoint(70.f, 70.f));
@@ -71,7 +76,6 @@ void CPlayer::update()
 
 	if (KeyDown(VK_SPACE))
 	{
-		CreateMissile();
 		GetAnimator()->Play(L"LeftHit");
 	}
 
@@ -81,17 +85,4 @@ void CPlayer::update()
 void CPlayer::render()
 {
 	component_render();
-}
-
-void CPlayer::CreateMissile()
-{
- 	fPoint fpMissilePos = GetPos();
-	fpMissilePos.x += GetScale().x / 2.f;
-
-	// Misiile Object
-	CMissile* pMissile = new CMissile;
-	pMissile->SetPos(fpMissilePos);
-	pMissile->SetDir(fVec2(1, 0));
-
-	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }

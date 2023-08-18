@@ -12,18 +12,28 @@ private:
 	CPlayerStateMachine* m_pStateMachine;
 
 	float m_fVelocity = 350.f;
+	float m_fForce = 1000.f;
+
+	float m_fJumpForce;
+	int m_iJumpCount;
 public:
 	CPlayer();
 	~CPlayer();
 	virtual CPlayer* Clone();
 
 	void Idle();
-	void Move(bool _isRight, bool _isGrounded = true);
-	// void Jump();
+	void Move(bool _isRight);
+	void Jump();
 	// void DoubleJump();
+	void Fall();
 	void Dash();
 	void Dead();
 
+	void InitForce();
+	float GetForce();
+
+	float GetJump();
+	void SetJump(float temp);
 
 	virtual void update();
 	virtual void render();

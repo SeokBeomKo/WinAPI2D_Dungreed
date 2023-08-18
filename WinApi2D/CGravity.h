@@ -6,8 +6,8 @@ class CGravity
 {
 	friend class CEntity;
 
-private:
-	CEntity*			m_pOwner;
+protected:
+	CEntity*		m_pOwner;
 	bool			m_bIsGravity;
 	float			m_fTime;
 public:

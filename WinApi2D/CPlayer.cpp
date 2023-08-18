@@ -8,10 +8,14 @@
 #include "CCollider.h"				// 충돌체
 #include "CAnimation.h"				// 애니메이션
 #include "CAnimator.h"				// 애니메이터
+#include "CGravity.h"				// 중력
 #include "CPlayerStateMachine.h"	// 유한상태기계
 
 CPlayer::CPlayer()
 {
+	m_iJumpCount = 2;
+	m_fJumpForce = m_fForce;
+
 	m_pStateMachine = new CPlayerStateMachine;
 	m_pStateMachine->m_pPlayer = this;
 
@@ -30,8 +34,7 @@ CPlayer::CPlayer()
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerMove", L"texture\\player\\PlayerRun.png");
 	GetAnimator()->CreateAnimation(L"Move", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.06f, 8);
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerJump", L"texture\\player\\PlayerJump.png");
-	GetAnimator()->CreateAnimation(L"Jumpright", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
-	GetAnimator()->CreateAnimation(L"Jumpleft", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1, true);
+	GetAnimator()->CreateAnimation(L"Jump", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerDead", L"texture\\player\\PlayerDead.png");
 	GetAnimator()->CreateAnimation(L"Dead", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
 
@@ -59,22 +62,31 @@ void CPlayer::Idle()
 {
 }
 
-void CPlayer::Move(bool _isRight, bool _isGrounded)
+void CPlayer::Move(bool _isRight)
 {
 	fPoint pos = GetPos();
-	if (_isRight)
-	{
-		pos.x += m_fVelocity * fDT;
-	}
-	else
-	{
-		pos.x -= m_fVelocity * fDT;
-	}
-	//if (_isGrounded)
+
+	if (_isRight)	pos.x += m_fVelocity * fDT;
+	else			pos.x -= m_fVelocity * fDT;
 		
 	SetPos(pos);
 }
 
+void CPlayer::Jump()
+{
+	fPoint pos = GetPos();
+
+	m_fJumpForce -= m_fForce * fDT;
+	pos.y -= m_fJumpForce * fDT;
+
+	SetPos(pos);
+}
+
+
+void CPlayer::Fall()
+{
+	
+}
 
 void CPlayer::Dash()
 {
@@ -82,6 +94,26 @@ void CPlayer::Dash()
 
 void CPlayer::Dead()
 {
+}
+
+void CPlayer::InitForce()
+{
+	m_fJumpForce = m_fForce;
+}
+
+float CPlayer::GetForce()
+{
+	return m_fForce;
+}
+
+float CPlayer::GetJump()
+{
+	return m_fJumpForce;
+}
+
+void CPlayer::SetJump(float temp)
+{
+	m_fJumpForce = temp;
 }
 
 void CPlayer::update()

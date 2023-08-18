@@ -8,12 +8,14 @@ class CPlayerStateMachine;
 
 class CPlayerState
 {
-private:
+protected:
 	CPlayerStateMachine* m_pStateMachine;
 
 public:
 	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
+
+	bool GetVertical();
 
 	virtual void update() = 0;
 	virtual void enter() = 0;
@@ -72,6 +74,23 @@ public:
 };
 
 //========================================
+//## 더블 점프 상태						##
+//========================================
+
+class CPlayerDoubleJumpState : public CPlayerState
+{
+private:
+
+public:
+	CPlayerDoubleJumpState(CPlayerStateMachine* _machine);
+	~CPlayerDoubleJumpState();
+
+	virtual void update();
+	virtual void enter();
+	virtual void exit();
+};
+
+//========================================
 //## 낙하 상태							##
 //========================================
 
@@ -82,6 +101,23 @@ private:
 public:
 	CPlayerFallState(CPlayerStateMachine* _machine);
 	~CPlayerFallState();
+
+	virtual void update();
+	virtual void enter();
+	virtual void exit();
+};
+
+//========================================
+//## 죽음 상태							##
+//========================================
+
+class CPlayerDeadState : public CPlayerState
+{
+private:
+
+public:
+	CPlayerDeadState(CPlayerStateMachine* _machine);
+	~CPlayerDeadState();
 
 	virtual void update();
 	virtual void enter();

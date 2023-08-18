@@ -6,11 +6,14 @@ CPlayerStateMachine::CPlayerStateMachine()
 {
 	m_pPlayer	= nullptr;
 	m_pCurState = nullptr;
+	m_bVertical = true;
 
-	m_mapState.insert(make_pair(STATE_PLAYER::IDLE, new CPlayerIdleState(this)));
-	m_mapState.insert(make_pair(STATE_PLAYER::MOVE, new CPlayerMoveState(this)));
-	m_mapState.insert(make_pair(STATE_PLAYER::JUMP, new CPlayerJumpState(this)));
-	m_mapState.insert(make_pair(STATE_PLAYER::FALL, new CPlayerFallState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::IDLE,			new CPlayerIdleState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::MOVE,			new CPlayerMoveState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::JUMP,			new CPlayerJumpState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::DOUBLEJUMP,	new CPlayerDoubleJumpState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::FALL,			new CPlayerFallState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::DEAD,			new CPlayerDeadState(this)));
 
 	m_pCurState = GetState(STATE_PLAYER::IDLE);
 }
@@ -30,6 +33,11 @@ CPlayer* CPlayerStateMachine::GetOwner()
 	return m_pPlayer;
 }
 
+bool CPlayerStateMachine::GetVertical()
+{
+	return m_bVertical;
+}
+
 CPlayerState* CPlayerStateMachine::GetState(STATE_PLAYER state)
 {
 	map<STATE_PLAYER, CPlayerState*>::iterator iter = m_mapState.find(state);
@@ -38,6 +46,11 @@ CPlayerState* CPlayerStateMachine::GetState(STATE_PLAYER state)
 		return nullptr;
 	}
 	return iter->second;
+}
+
+void CPlayerStateMachine::SetVertical(bool _vertical)
+{
+	m_bVertical = _vertical;
 }
 
 void CPlayerStateMachine::update()

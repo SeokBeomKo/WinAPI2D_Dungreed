@@ -13,31 +13,35 @@
 CPlayer::CPlayer()
 {
 	m_pStateMachine = new CPlayerStateMachine;
+	m_pStateMachine->m_pPlayer = this;
 
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
-	SetScale(fPoint(70.f, 70.f));
+	SetScale(fPoint(32.f * 4, 32.f * 4));
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(40.f, 40.f));
+	GetCollider()->SetScale(fPoint(32.f, 64.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
+	// 플레이어 애니메이션
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"LeftNone",		m_pImg, fPoint(0.f, 0.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"RightNone",	m_pImg, fPoint(0.f, 70.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"LeftMove",		m_pImg, fPoint(0.f, 140.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"RightMove",	m_pImg, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"LeftHit",		m_pImg, fPoint(140.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->CreateAnimation(L"RightHit",		m_pImg, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->Play(L"LeftNone");
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerIdle", L"texture\\player\\PlayerIdle.png");
+	GetAnimator()->CreateAnimation(L"Idle", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.1f, 5);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerMove", L"texture\\player\\PlayerRun.png");
+	GetAnimator()->CreateAnimation(L"Move", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.06f, 8);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerJump", L"texture\\player\\PlayerJump.png");
+	GetAnimator()->CreateAnimation(L"Jumpright", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
+	GetAnimator()->CreateAnimation(L"Jumpleft", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1, true);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerDead", L"texture\\player\\PlayerDead.png");
+	GetAnimator()->CreateAnimation(L"Dead", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
 
 	CreateGravity();
 
-	CAnimation* pAni;
+	/*CAnimation* pAni;
 	pAni = GetAnimator()->FindAnimation(L"LeftMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 	pAni = GetAnimator()->FindAnimation(L"RightMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);*/
 }
 
 CPlayer::~CPlayer()
@@ -50,39 +54,41 @@ CPlayer* CPlayer::Clone()
 	return new CPlayer(*this);
 }
 
-void CPlayer::update()
-{
-	/*if (nullptr != m_pStateMachine)
-	{
-		m_pStateMachine->update();
-	}*/
-	fPoint pos = GetPos();
 
-	if (Key(VK_LEFT))
-	{
-		pos.x -= m_fVelocity * fDT;
-		GetAnimator()->Play(L"LeftMove");
-	}
-	if (Key(VK_RIGHT))
+void CPlayer::Idle()
+{
+}
+
+void CPlayer::Move(bool _isRight, bool _isGrounded)
+{
+	fPoint pos = GetPos();
+	if (_isRight)
 	{
 		pos.x += m_fVelocity * fDT;
-		GetAnimator()->Play(L"RightMove");
-	}				   
-	if (Key(VK_UP))	   
-	{				   
-		pos.y -= m_fVelocity * fDT;
-	}				   
-	if (Key(VK_DOWN))  
-	{				   
-		pos.y += m_fVelocity * fDT;
 	}
-
-
-	SetPos(pos);
-
-	if (KeyDown(VK_SPACE))
+	else
 	{
-		GetAnimator()->Play(L"LeftHit");
+		pos.x -= m_fVelocity * fDT;
+	}
+	//if (_isGrounded)
+		
+	SetPos(pos);
+}
+
+
+void CPlayer::Dash()
+{
+}
+
+void CPlayer::Dead()
+{
+}
+
+void CPlayer::update()
+{
+	if (nullptr != m_pStateMachine)
+	{
+		m_pStateMachine->update();
 	}
 
 	GetAnimator()->update();

@@ -77,7 +77,9 @@ enum class STATE_PLAYER
 	IDLE,
 	MOVE,
 	JUMP,
+	DOUBLEJUMP,
 	FALL,
+	DEAD,
 
 	SIZE,
 };

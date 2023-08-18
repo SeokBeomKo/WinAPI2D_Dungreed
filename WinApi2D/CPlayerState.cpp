@@ -1,6 +1,10 @@
 #include "framework.h"
 #include "CPlayerState.h"
 
+#include "CPlayerStateMachine.h"
+#include "CPlayer.h"
+#include "CAnimator.h"
+
 //========================================
 //## 기본 상태							##
 //========================================
@@ -14,16 +18,11 @@ CPlayerState::~CPlayerState()
 {
 }
 
-void CPlayerState::update()
+bool CPlayerState::GetVertical()
 {
-}
-
-void CPlayerState::enter()
-{
-}
-
-void CPlayerState::exit()
-{
+	fPoint pos = m_pStateMachine->GetOwner()->GetPos();
+	fPoint realpos = CCameraManager::getInst()->GetRenderPos(pos);
+	return MousePos().x <= realpos.x;
 }
 
 //========================================
@@ -41,6 +40,12 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
+	if (Key('A') || Key('D'))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
+	}
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
+	m_pStateMachine->GetOwner()->Idle();
 }
 
 void CPlayerIdleState::enter()
@@ -66,6 +71,12 @@ CPlayerMoveState::~CPlayerMoveState()
 
 void CPlayerMoveState::update()
 {
+	if (!Key('A') && !Key('D'))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
+	}
+	m_pStateMachine->GetOwner()->Move(Key('D'));
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Move", GetVertical());
 }
 
 void CPlayerMoveState::enter()
@@ -102,6 +113,31 @@ void CPlayerJumpState::exit()
 }
 
 //========================================
+//## 더블 점프 상태						##
+//========================================
+
+CPlayerDoubleJumpState::CPlayerDoubleJumpState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
+{
+}
+
+CPlayerDoubleJumpState::~CPlayerDoubleJumpState()
+{
+}
+
+void CPlayerDoubleJumpState::update()
+{
+}
+
+void CPlayerDoubleJumpState::enter()
+{
+}
+
+void CPlayerDoubleJumpState::exit()
+{
+}
+
+//========================================
 //## 낙하 상태							##
 //========================================
 
@@ -124,5 +160,31 @@ void CPlayerFallState::enter()
 }
 
 void CPlayerFallState::exit()
+{
+}
+
+
+//========================================
+//## 죽음 상태						##
+//========================================
+
+CPlayerDeadState::CPlayerDeadState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
+{
+}
+
+CPlayerDeadState::~CPlayerDeadState()
+{
+}
+
+void CPlayerDeadState::update()
+{
+}
+
+void CPlayerDeadState::enter()
+{
+}
+
+void CPlayerDeadState::exit()
 {
 }

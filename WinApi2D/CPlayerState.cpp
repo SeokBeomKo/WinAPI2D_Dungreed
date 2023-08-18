@@ -5,8 +5,9 @@
 //## 기본 상태							##
 //========================================
 
-CPlayerState::CPlayerState()
+CPlayerState::CPlayerState(CPlayerStateMachine* _machine)
 {
+	m_pStateMachine = _machine;
 }
 
 CPlayerState::~CPlayerState()
@@ -29,7 +30,8 @@ void CPlayerState::exit()
 //## 대기 상태							##
 //========================================
 
-CPlayerIdleState::CPlayerIdleState()
+CPlayerIdleState::CPlayerIdleState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
 {
 }
 
@@ -53,7 +55,8 @@ void CPlayerIdleState::exit()
 //## 이동 상태							##
 //========================================
 
-CPlayerMoveState::CPlayerMoveState()
+CPlayerMoveState::CPlayerMoveState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
 {
 }
 
@@ -77,7 +80,8 @@ void CPlayerMoveState::exit()
 //## 점프 상태							##
 //========================================
 
-CPlayerJumpState::CPlayerJumpState()
+CPlayerJumpState::CPlayerJumpState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
 {
 }
 
@@ -101,7 +105,9 @@ void CPlayerJumpState::exit()
 //## 낙하 상태							##
 //========================================
 
-CPlayerFallState::CPlayerFallState()
+
+CPlayerFallState::CPlayerFallState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
 {
 }
 

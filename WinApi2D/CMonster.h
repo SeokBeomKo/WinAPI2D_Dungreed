@@ -1,7 +1,7 @@
 #pragma once
-#include "CGameObject.h"
+#include "CEntity.h"
 
-class CMonster : public CGameObject
+class CMonster : public CEntity
 {
 private:
 	fPoint m_fptCenterPos;

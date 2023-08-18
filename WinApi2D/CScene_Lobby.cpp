@@ -45,7 +45,7 @@ void CScene_Lobby::Enter()
 	LoadTile(path);
 
 	// Player Ãß°¡
-	CGameObject* pPlayer = new CPlayer;
+	CPlayer* pPlayer = new CPlayer;
 	pPlayer->SetPos(fPoint(200, 200));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 

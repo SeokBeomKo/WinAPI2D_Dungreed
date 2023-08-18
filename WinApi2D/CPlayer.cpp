@@ -31,6 +31,8 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"RightHit",		m_pImg, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
 	GetAnimator()->Play(L"LeftNone");
 
+	CreateGravity();
+
 	CAnimation* pAni;
 	pAni = GetAnimator()->FindAnimation(L"LeftMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
@@ -50,6 +52,10 @@ CPlayer* CPlayer::Clone()
 
 void CPlayer::update()
 {
+	/*if (nullptr != m_pStateMachine)
+	{
+		m_pStateMachine->update();
+	}*/
 	fPoint pos = GetPos();
 
 	if (Key(VK_LEFT))

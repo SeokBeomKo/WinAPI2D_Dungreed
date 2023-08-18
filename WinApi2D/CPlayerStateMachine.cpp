@@ -6,6 +6,13 @@ CPlayerStateMachine::CPlayerStateMachine()
 {
 	m_pPlayer	= nullptr;
 	m_pCurState = nullptr;
+
+	m_mapState.insert(make_pair(STATE_PLAYER::IDLE, new CPlayerIdleState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::MOVE, new CPlayerMoveState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::JUMP, new CPlayerJumpState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::FALL, new CPlayerFallState(this)));
+
+	m_pCurState = GetState(STATE_PLAYER::IDLE);
 }
 
 CPlayerStateMachine::~CPlayerStateMachine()
@@ -31,6 +38,11 @@ CPlayerState* CPlayerStateMachine::GetState(STATE_PLAYER state)
 		return nullptr;
 	}
 	return iter->second;
+}
+
+void CPlayerStateMachine::update()
+{
+	m_pCurState->update();
 }
 
 void CPlayerStateMachine::ChangeState(STATE_PLAYER nextState)

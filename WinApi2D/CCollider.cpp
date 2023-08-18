@@ -30,7 +30,7 @@ CCollider::~CCollider()
 
 CGameObject* CCollider::GetObj()
 {
-	return m_pOwner;
+	return m_pOwner->GetObj();
 }
 
 fPoint CCollider::GetOffsetPos()

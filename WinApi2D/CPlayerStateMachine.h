@@ -17,6 +17,8 @@ public:
 	CPlayer* GetOwner();
 	CPlayerState* GetState(STATE_PLAYER state);
 
+	void update();
+
 	void ChangeState(STATE_PLAYER nextState);
 };
 

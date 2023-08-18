@@ -31,7 +31,7 @@ void CGravity::finalupdate()
 	m_pOwner->SetPos(pos);
 }
 
-void CGravity::OnOffGravity(bool set, float time)
+void CGravity::Set(bool set, float time)
 {
 	m_bIsGravity = set;
 	m_fTime = time;

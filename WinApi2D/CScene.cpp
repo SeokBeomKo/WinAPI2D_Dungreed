@@ -113,6 +113,7 @@ int CScene::GetObjectSize(GROUP_GAMEOBJ group)
 void CScene::AddObject(CGameObject* pObj, GROUP_GAMEOBJ type)
 {
     m_arrObj[(int)type].push_back(pObj);
+    pObj->SetGroup(type);
 }
 
 void CScene::DeleteGroup(GROUP_GAMEOBJ group)

@@ -8,31 +8,38 @@ class CGameObject
 	friend class CEventManager;
 
 private:
+	GROUP_GAMEOBJ	m_eGroup;	// 오브젝트 그룹 (레이어)
+
 	wstring m_strName;			// 오브젝트 이름
 	fPoint m_fptPos;			// 오브젝트 좌표
 	fPoint m_fptScale;			// 오브젝트 크기
 
-	// Component
+	bool m_bActive;					// 오브젝트 활성화 여부
+
+protected:	// Component
 	CCollider* m_pCollider;		// 오브젝트 충돌체
 	CAnimator* m_pAnimator;		// 오브젝트 애니메이터
 
-	bool m_bActive;					// 오브젝트 활성화 여부
-	void SetActive(bool _bool);		// 오브젝트 활성화 여부 체크
 public:
 	CGameObject();
-	CGameObject(const CGameObject& other);
+	CGameObject(const CGameObject& _other);
 	~CGameObject();
 	virtual CGameObject* Clone() = 0;
 
-	void SetPos(fPoint pos);
-	void SetScale(fPoint scale);
-	void SetName(wstring name);
-
-	fPoint GetPos();
-	fPoint GetScale();
-	wstring GetName();
+	void SetActive(bool _bool);		// 오브젝트 활성화 여부 설정
+	void SetGroup(GROUP_GAMEOBJ _group);
+	void SetName(wstring _name);
+	void SetPos(fPoint _pos);
+	void SetScale(fPoint _scale);
 
 	bool ActiveSelf();					// 오브젝트 활성화 여부
+	GROUP_GAMEOBJ GetGroup();
+	wstring GetName();
+	fPoint GetPos();
+	fPoint GetScale();
+
+
+	virtual CGameObject* GetObj();
 
 	virtual void update() = 0;			// 반드시 상속받은 객체가 update를 구현하도록 순수가상함수로 선언
 	virtual void finalupdate();			// 상속받는 클래스가 오버라이딩 할 수 없게 막는 final 키워드

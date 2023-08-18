@@ -12,7 +12,7 @@ private:
 	CPlayerStateMachine* m_pStateMachine;
 
 public:
-	CPlayerState();
+	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
 
 	virtual void update() = 0;
@@ -29,7 +29,7 @@ class CPlayerIdleState : public CPlayerState
 private:
 
 public:
-	CPlayerIdleState();
+	CPlayerIdleState(CPlayerStateMachine* _machine);
 	~CPlayerIdleState();
 
 	virtual void update();
@@ -46,7 +46,7 @@ class CPlayerMoveState : public CPlayerState
 private:
 
 public:
-	CPlayerMoveState();
+	CPlayerMoveState(CPlayerStateMachine* _machine);
 	~CPlayerMoveState();
 
 	virtual void update();
@@ -63,7 +63,7 @@ class CPlayerJumpState : public CPlayerState
 private:
 
 public:
-	CPlayerJumpState();
+	CPlayerJumpState(CPlayerStateMachine* _machine);
 	~CPlayerJumpState();
 
 	virtual void update();
@@ -80,7 +80,7 @@ class CPlayerFallState : public CPlayerState
 private:
 
 public:
-	CPlayerFallState();
+	CPlayerFallState(CPlayerStateMachine* _machine);
 	~CPlayerFallState();
 
 	virtual void update();

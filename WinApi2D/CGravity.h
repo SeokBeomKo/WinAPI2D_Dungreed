@@ -15,7 +15,7 @@ public:
 	~CGravity();
 
 	virtual void finalupdate();
-	void OnOffGravity(bool set, float time = 0);
+	void Set(bool set, float time = 0);
 
 	float GetTime();
 

@@ -2,6 +2,11 @@
 #include "CTile.h"
 #include "CD2DImage.h"
 
+#include "CCollider.h"
+#include "CGravity.h"
+
+#include "CEntity.h"
+
 CTile::CTile()
 {
 	m_pImg = nullptr;
@@ -128,4 +133,40 @@ void CTile::Load(FILE* pFile)
 	int group;
 	fread(&group, sizeof(int), 1, pFile);
 	m_group = (GROUP_TILE)group;
+}
+
+void CTile::OnCollisionEnter(CCollider* pOther)
+{
+	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
+	if (nullptr == pEntity)	return;
+
+	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
+		(this->GetGroup() == GROUP_TILE::GROUND))
+	{
+		pEntity->SetGravity(false);
+	}
+}
+
+void CTile::OnCollision(CCollider* pOther)
+{
+	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
+	if (nullptr == pEntity)	return;
+
+	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
+		(this->GetGroup() == GROUP_TILE::GROUND))
+	{
+		pEntity->SetGravity(false);
+	}
+}
+
+void CTile::OnCollisionExit(CCollider* pOther)
+{
+	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
+	if (nullptr == pEntity)	return;
+
+	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
+		(this->GetGroup() == GROUP_TILE::GROUND))
+	{
+		pEntity->SetGravity(true);
+	}
 }

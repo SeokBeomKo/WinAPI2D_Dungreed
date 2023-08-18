@@ -9,26 +9,26 @@ CGameObject::CGameObject()
 	m_fptScale = {};
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
-	m_bAlive = true;
+	m_bActive = true;
 }
 
-CGameObject::CGameObject(const CGameObject& other)
+CGameObject::CGameObject(const CGameObject& _other)
 {
-	m_strName	= other.m_strName;
-	m_fptPos	= other.m_fptPos;
-	m_fptScale	= other.m_fptScale;
+	m_strName	= _other.m_strName;
+	m_fptPos	= _other.m_fptPos;
+	m_fptScale	= _other.m_fptScale;
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
-	m_bAlive	= true;
+	m_bActive = true;
 
-	if (nullptr != other.m_pCollider)
+	if (nullptr != _other.m_pCollider)
 	{
-		m_pCollider = new CCollider(*other.m_pCollider);
+		m_pCollider = new CCollider(*_other.m_pCollider);
 		m_pCollider->m_pOwner = this;
 	}
-	if (nullptr != other.m_pAnimator)
+	if (nullptr != _other.m_pAnimator)
 	{
-		m_pAnimator = new CAnimator(*other.m_pAnimator);
+		m_pAnimator = new CAnimator(*_other.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
 	}
 }
@@ -45,19 +45,24 @@ CGameObject::~CGameObject()
 	}
 }
 
-void CGameObject::SetPos(fPoint pos)
+void CGameObject::SetPos(fPoint _pos)
 {
-	m_fptPos = pos;
+	m_fptPos = _pos;
 }
 
-void CGameObject::SetScale(fPoint scale)
+void CGameObject::SetScale(fPoint _scale)
 {
-	m_fptScale = scale;
+	m_fptScale = _scale;
 }
 
-void CGameObject::SetName(wstring name)
+void CGameObject::SetGroup(GROUP_GAMEOBJ _group)
 {
-	m_strName = name;
+	m_eGroup = _group;
+}
+
+void CGameObject::SetName(wstring _name)
+{
+	m_strName = _name;
 }
 
 fPoint CGameObject::GetPos()
@@ -70,19 +75,29 @@ fPoint CGameObject::GetScale()
 	return m_fptScale;
 }
 
+GROUP_GAMEOBJ CGameObject::GetGroup()
+{
+	return m_eGroup;
+}
+
 wstring CGameObject::GetName()
 {
 	return m_strName;
 }
 
-bool CGameObject::isDead()
+bool CGameObject::ActiveSelf()
 {
-	return !m_bAlive;
+	return m_bActive;
 }
 
-void CGameObject::SetDead()
+CGameObject* CGameObject::GetObj()
 {
-	m_bAlive = false;
+	return this;
+}
+
+void CGameObject::SetActive(bool _bool)
+{
+	m_bActive = _bool;
 }
 
 void CGameObject::finalupdate()
@@ -114,7 +129,7 @@ void CGameObject::component_render()
 	{
 		m_pAnimator->render();
 	}
-	if (nullptr != m_pCollider)
+	if (nullptr != m_pCollider && Debug())
 	{
 		m_pCollider->render();
 	}

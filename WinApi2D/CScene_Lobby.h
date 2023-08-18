@@ -1,11 +1,11 @@
 #pragma once
 #include "CScene.h"
 
-class CScene_Start : public CScene
+class CScene_Lobby : public CScene
 {
 public:
-	CScene_Start();
-	virtual ~CScene_Start();
+	CScene_Lobby();
+	virtual ~CScene_Lobby();
 
 	virtual void update();
 

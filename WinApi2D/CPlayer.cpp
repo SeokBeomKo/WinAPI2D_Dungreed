@@ -1,36 +1,50 @@
 #include "framework.h"
 #include "CPlayer.h"
-#include "CMissile.h"
+
 #include "CScene.h"
 #include "CTexture.h"
-#include "CCollider.h"
-#include "CAnimator.h"
-#include "CAnimation.h"
+
+// 컴포넌트
+#include "CCollider.h"				// 충돌체
+#include "CAnimation.h"				// 애니메이션
+#include "CAnimator.h"				// 애니메이터
+#include "CGravity.h"				// 중력
+#include "CPlayerStateMachine.h"	// 유한상태기계
 
 CPlayer::CPlayer()
 {
+	m_iJumpCount = 1;
+	m_fJumpForce = GRAVITY_POWER;
+
+	m_pStateMachine = new CPlayerStateMachine;
+	m_pStateMachine->m_pPlayer = this;
+
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
-	SetScale(fPoint(70.f, 70.f));
+	SetScale(fPoint(32.f * 4, 32.f * 4));
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(40.f, 40.f));
+	GetCollider()->SetScale(fPoint(32.f, 64.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
+	// 플레이어 애니메이션
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"LeftNone",		m_pImg, fPoint(0.f, 0.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"RightNone",	m_pImg, fPoint(0.f, 70.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"LeftMove",		m_pImg, fPoint(0.f, 140.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"RightMove",	m_pImg, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"LeftHit",		m_pImg, fPoint(140.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->CreateAnimation(L"RightHit",		m_pImg, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->Play(L"LeftNone");
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerIdle", L"texture\\player\\PlayerIdle.png");
+	GetAnimator()->CreateAnimation(L"Idle", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.1f, 5);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerMove", L"texture\\player\\PlayerRun.png");
+	GetAnimator()->CreateAnimation(L"Move", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 0.06f, 8);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerJump", L"texture\\player\\PlayerJump.png");
+	GetAnimator()->CreateAnimation(L"Jump", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerDead", L"texture\\player\\PlayerDead.png");
+	GetAnimator()->CreateAnimation(L"Dead", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
 
-	CAnimation* pAni;
+	CreateGravity();
+
+	/*CAnimation* pAni;
 	pAni = GetAnimator()->FindAnimation(L"LeftMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 	pAni = GetAnimator()->FindAnimation(L"RightMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);*/
 }
 
 CPlayer::~CPlayer()
@@ -43,35 +57,80 @@ CPlayer* CPlayer::Clone()
 	return new CPlayer(*this);
 }
 
-void CPlayer::update()
+
+void CPlayer::Idle()
+{
+}
+
+void CPlayer::Move(bool _isRight)
 {
 	fPoint pos = GetPos();
 
-	if (Key(VK_LEFT))
-	{
-		pos.x -= m_fVelocity * fDT;
-		GetAnimator()->Play(L"LeftMove");
-	}
-	if (Key(VK_RIGHT))
-	{
-		pos.x += m_fVelocity * fDT;
-		GetAnimator()->Play(L"RightMove");
-	}				   
-	if (Key(VK_UP))	   
-	{				   
-		pos.y -= m_fVelocity * fDT;
-	}				   
-	if (Key(VK_DOWN))  
-	{				   
-		pos.y += m_fVelocity * fDT;
-	}
+	if (_isRight)	pos.x += m_fVelocity * fDT;
+	else			pos.x -= m_fVelocity * fDT;
+		
+	SetPos(pos);
+}
+
+void CPlayer::Jump()
+{
+	fPoint pos = GetPos();
+
+	m_fJumpForce -= GRAVITY_FORCE * fDT;
+	pos.y -= m_fJumpForce * fDT;
 
 	SetPos(pos);
+}
 
-	if (KeyDown(VK_SPACE))
+
+void CPlayer::Fall()
+{
+	
+}
+
+void CPlayer::Dash()
+{
+}
+
+void CPlayer::Dead()
+{
+}
+
+bool CPlayer::GetJumpCount()
+{
+	return m_iJumpCount != 0;
+}
+
+void CPlayer::RemoveJumpCount()
+{
+	m_iJumpCount--;
+}
+
+void CPlayer::InitForce()
+{
+	m_fJumpForce = GRAVITY_POWER;
+}
+
+float CPlayer::GetForce()
+{
+	return m_fForce;
+}
+
+float CPlayer::GetJump()
+{
+	return m_fJumpForce;
+}
+
+void CPlayer::SetJump(float temp)
+{
+	m_fJumpForce = temp;
+}
+
+void CPlayer::update()
+{
+	if (nullptr != m_pStateMachine)
 	{
-		CreateMissile();
-		GetAnimator()->Play(L"LeftHit");
+		m_pStateMachine->update();
 	}
 
 	GetAnimator()->update();
@@ -80,17 +139,4 @@ void CPlayer::update()
 void CPlayer::render()
 {
 	component_render();
-}
-
-void CPlayer::CreateMissile()
-{
- 	fPoint fpMissilePos = GetPos();
-	fpMissilePos.x += GetScale().x / 2.f;
-
-	// Misiile Object
-	CMissile* pMissile = new CMissile;
-	pMissile->SetPos(fpMissilePos);
-	pMissile->SetDir(fVec2(1, 0));
-
-	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }

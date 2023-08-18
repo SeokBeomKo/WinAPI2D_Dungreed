@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CSceneManager.h"
 
-#include "CScene_Start.h"
+#include "CScene_Lobby.h"
 #include "CScene_Tool.h"
 
 CSceneManager::CSceneManager()
@@ -12,6 +12,7 @@ CSceneManager::CSceneManager()
 		m_arrScene[i] = nullptr;
 	}
 	m_pCurScene = nullptr;
+	m_bDebug	= false;	
 }
 
 CSceneManager::~CSceneManager()
@@ -33,6 +34,16 @@ void CSceneManager::ChangeScene(GROUP_SCENE scene)
 	m_pCurScene->Enter();
 }
 
+void CSceneManager::SetDebug()
+{
+	m_bDebug = !m_bDebug;
+}
+
+bool CSceneManager::GetDebug()
+{
+	return m_bDebug;
+}
+
 void CSceneManager::update()
 {
 	m_pCurScene->update();
@@ -46,13 +57,13 @@ void CSceneManager::render()
 
 void CSceneManager::init()
 {
-	m_arrScene[(size_t)GROUP_SCENE::START] = new CScene_Start;
-	m_arrScene[(size_t)GROUP_SCENE::START]->SetName(L"Start_Scene");
+	m_arrScene[(size_t)GROUP_SCENE::LOBBY] = new CScene_Lobby;
+	m_arrScene[(size_t)GROUP_SCENE::LOBBY]->SetName(L"Lobby_Scene");
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
-	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::START];
+	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::LOBBY];
 	m_pCurScene->Enter();
 }
 

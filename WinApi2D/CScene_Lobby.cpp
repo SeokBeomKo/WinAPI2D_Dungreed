@@ -1,23 +1,22 @@
 #include "framework.h"
-#include "CScene_Start.h"
+#include "CScene_Lobby.h"
 
 #include "CGameObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
-#include "Map_Start.h"
 
 #include "CSound.h"
 #include "CD2DImage.h"
 
-CScene_Start::CScene_Start()
+CScene_Lobby::CScene_Lobby()
 {
 }
 
-CScene_Start::~CScene_Start()
+CScene_Lobby::~CScene_Lobby()
 {
 }
 
-void CScene_Start::update()
+void CScene_Lobby::update()
 {
 	CScene::update();
 
@@ -38,16 +37,16 @@ void CScene_Start::update()
 	}
 }
 
-void CScene_Start::Enter()
+void CScene_Lobby::Enter()
 {
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\test.tile";
-	//LoadTile(path);
+	path += L"tile\\temp";
+	LoadTile(path);
 
 	// Player 추가
-	CGameObject* pPlayer = new CPlayer;
-	pPlayer->SetPos(fPoint(200, 200));
+	CPlayer* pPlayer = new CPlayer;
+	pPlayer->SetPos(fPoint(200, 300));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
 	// Monster 추가
@@ -56,19 +55,16 @@ void CScene_Start::Enter()
 	pMonster->SetCenterPos(pMonster->GetPos());
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
-	Map_Start* map = new Map_Start;
-	map->SetPos(fPoint(100, 100));
-	map->SetScale(fPoint(100, 100));
-	AddObject(map, GROUP_GAMEOBJ::MONSTER);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
 
-void CScene_Start::Exit()
+void CScene_Lobby::Exit()
 {
 	DeleteAll();
 

@@ -23,7 +23,9 @@ private:
 	int				m_iCurFrm;		// 현재 프레임의 index
 	float			m_fAccTime;		// 다음 프레임까지 축적시간
 
-	bool			m_bReverse;
+	bool			m_bFlip;
+	bool			m_bRotate;
+	float			m_fPlayerPos;
 
 public:
 	CAnimation();

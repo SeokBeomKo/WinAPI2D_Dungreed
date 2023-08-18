@@ -58,11 +58,41 @@
     <Filter Include="Object\UI">
       <UniqueIdentifier>{e6177611-ca95-4efd-98d5-4a87ca547807}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Character">
-      <UniqueIdentifier>{a0374c23-f28b-40d4-a4f4-380a7473d4b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resouce\CD2DImage">
       <UniqueIdentifier>{7be60d72-5b7b-4f9d-b116-6bc827b05510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity">
+      <UniqueIdentifier>{345b557f-00d6-498f-b058-38de8df83db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI\Button">
+      <UniqueIdentifier>{e83c18c8-53fc-4872-a423-58620ab7bfa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\LobbyScene">
+      <UniqueIdentifier>{94c366c7-ed23-42af-b00b-15aa6b8efa97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\InGameScene">
+      <UniqueIdentifier>{e373c1d9-1884-4d2a-8080-552ac4dbf4f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TitleScene">
+      <UniqueIdentifier>{34889218-5650-4f88-bf24-f2f988008d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Player">
+      <UniqueIdentifier>{808184ca-6f97-4ddb-afcf-1281610d55cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Enemy">
+      <UniqueIdentifier>{a045a683-1d28-4d11-873c-ac30805aea66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Object">
+      <UniqueIdentifier>{5c01962d-4081-4f0e-abde-27905c730bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\Gravity">
+      <UniqueIdentifier>{7e80e798-8ca7-47d9-9f62-0f6ac51c4303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ToolScene">
+      <UniqueIdentifier>{d0723bec-bac1-42f5-b15b-2c760bc1ed86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\FSM">
+      <UniqueIdentifier>{816f92a0-0192-4aa8-a597-863dd33bcfc8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +132,6 @@
     <ClInclude Include="CSceneManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Start.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CResource.h">
       <Filter>Resouce</Filter>
     </ClInclude>
@@ -132,9 +159,6 @@
     <ClInclude Include="CEventManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Tool.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CAnimator.h">
       <Filter>Engine\Component\Animator</Filter>
     </ClInclude>
@@ -150,22 +174,10 @@
     <ClInclude Include="CUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CPanelUI.h">
-      <Filter>Object\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CButtonUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="CSoundManager.h">
@@ -174,11 +186,41 @@
     <ClInclude Include="CD2DImage.h">
       <Filter>Resouce\CD2DImage</Filter>
     </ClInclude>
-    <ClInclude Include="Map_Start.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CRenderManager.h">
       <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CButtonUI.h">
+      <Filter>Object\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CTileButton.h">
+      <Filter>Object\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Lobby.h">
+      <Filter>Scene\LobbyScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CEntity.h">
+      <Filter>Object\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Object\Entity\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CGravity.h">
+      <Filter>Engine\Component\Gravity</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tool.h">
+      <Filter>Scene\ToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateMachine.h">
+      <Filter>Engine\Component\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerState.h">
+      <Filter>Engine\Component\FSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +244,6 @@
     </ClCompile>
     <ClCompile Include="CSceneManager.cpp">
       <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Start.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CResource.cpp">
       <Filter>Resouce</Filter>
@@ -230,9 +269,6 @@
     <ClCompile Include="CEventManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CScene_Tool.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CAnimator.cpp">
       <Filter>Engine\Component\Animator</Filter>
     </ClCompile>
@@ -248,22 +284,10 @@
     <ClCompile Include="CUI.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CPanelUI.cpp">
-      <Filter>Object\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CButtonUI.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="CSoundManager.cpp">
@@ -272,11 +296,41 @@
     <ClCompile Include="CD2DImage.cpp">
       <Filter>Resouce\CD2DImage</Filter>
     </ClCompile>
-    <ClCompile Include="Map_Start.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CRenderManager.cpp">
       <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CButtonUI.cpp">
+      <Filter>Object\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileButton.cpp">
+      <Filter>Object\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Lobby.cpp">
+      <Filter>Scene\LobbyScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CEntity.cpp">
+      <Filter>Object\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Object\Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CGravity.cpp">
+      <Filter>Engine\Component\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tool.cpp">
+      <Filter>Scene\ToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerState.cpp">
+      <Filter>Engine\Component\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateMachine.cpp">
+      <Filter>Engine\Component\FSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

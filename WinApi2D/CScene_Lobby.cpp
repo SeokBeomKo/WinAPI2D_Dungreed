@@ -46,7 +46,7 @@ void CScene_Lobby::Enter()
 
 	// Player 추가
 	CPlayer* pPlayer = new CPlayer;
-	pPlayer->SetPos(fPoint(200, 200));
+	pPlayer->SetPos(fPoint(200, 300));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
 	// Monster 추가

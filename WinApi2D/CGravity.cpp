@@ -6,7 +6,7 @@
 CGravity::CGravity()
 {
 	m_pOwner		= nullptr;
-	m_bIsGravity	= true;
+	m_bIsGravity	= false;
 	m_fTime			= 0;
 }
 
@@ -22,19 +22,23 @@ void CGravity::finalupdate()
 	}
 
 	fPoint pos = m_pOwner->GetPos();
-	m_fTime += GRAVITY * fDT;
-	if (m_fTime > 1200.f)
+	m_fTime += GRAVITY_FORCE * fDT;
+	if (m_fTime > GRAVITY_POWER)
 	{
-		m_fTime = 1200.f;
+		m_fTime = GRAVITY_POWER;
 	}
 	pos.y += m_fTime * fDT;
 	m_pOwner->SetPos(pos);
 }
 
-void CGravity::Set(bool set, float time)
+void CGravity::SetSwitch(bool _switch)
 {
-	m_bIsGravity = set;
-	m_fTime = time;
+	m_bIsGravity = _switch;
+}
+
+void CGravity::SetTime(float _time)
+{
+	m_fTime = _time;
 }
 
 float CGravity::GetTime()

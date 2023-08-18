@@ -15,7 +15,8 @@ public:
 	~CGravity();
 
 	virtual void finalupdate();
-	void Set(bool set, float time = 0);
+	void SetSwitch(bool _switch);
+	void SetTime(float _time = 0);
 
 	float GetTime();
 

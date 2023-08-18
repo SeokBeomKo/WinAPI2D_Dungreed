@@ -48,6 +48,19 @@ CPlayerState* CPlayerStateMachine::GetState(STATE_PLAYER state)
 	return iter->second;
 }
 
+STATE_PLAYER CPlayerStateMachine::GetCurrentState()
+{
+	for (const auto& statePair : m_mapState)
+	{
+		if (statePair.second == m_pCurState)
+		{
+			return statePair.first;
+		}
+	}
+
+	return STATE_PLAYER::IDLE; // 현재 상태를 찾지 못한 경우 기본 상태 반환
+}
+
 void CPlayerStateMachine::SetVertical(bool _vertical)
 {
 	m_bVertical = _vertical;

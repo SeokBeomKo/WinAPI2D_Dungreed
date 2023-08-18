@@ -19,6 +19,7 @@ public:
 	CPlayer* GetOwner();
 	bool GetVertical();
 	CPlayerState* GetState(STATE_PLAYER state);
+	STATE_PLAYER GetCurrentState();
 
 	void SetVertical(bool _vertical);
 

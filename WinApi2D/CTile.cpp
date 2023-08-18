@@ -143,7 +143,7 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
 		(this->GetGroup() == GROUP_TILE::GROUND))
 	{
-		pEntity->SetGravity(false);
+		pEntity->AddGrounded();
 	}
 }
 
@@ -155,7 +155,7 @@ void CTile::OnCollision(CCollider* pOther)
 	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
 		(this->GetGroup() == GROUP_TILE::GROUND))
 	{
-		pEntity->SetGravity(false);
+
 	}
 }
 
@@ -167,6 +167,6 @@ void CTile::OnCollisionExit(CCollider* pOther)
 	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
 		(this->GetGroup() == GROUP_TILE::GROUND))
 	{
-		pEntity->SetGravity(true);
+		pEntity->RemoveGrounded();
 	}
 }

@@ -13,8 +13,8 @@
 
 CPlayer::CPlayer()
 {
-	m_iJumpCount = 2;
-	m_fJumpForce = m_fForce;
+	m_iJumpCount = 1;
+	m_fJumpForce = GRAVITY_POWER;
 
 	m_pStateMachine = new CPlayerStateMachine;
 	m_pStateMachine->m_pPlayer = this;
@@ -76,7 +76,7 @@ void CPlayer::Jump()
 {
 	fPoint pos = GetPos();
 
-	m_fJumpForce -= m_fForce * fDT;
+	m_fJumpForce -= GRAVITY_FORCE * fDT;
 	pos.y -= m_fJumpForce * fDT;
 
 	SetPos(pos);
@@ -96,9 +96,19 @@ void CPlayer::Dead()
 {
 }
 
+bool CPlayer::GetJumpCount()
+{
+	return m_iJumpCount != 0;
+}
+
+void CPlayer::RemoveJumpCount()
+{
+	m_iJumpCount--;
+}
+
 void CPlayer::InitForce()
 {
-	m_fJumpForce = m_fForce;
+	m_fJumpForce = GRAVITY_POWER;
 }
 
 float CPlayer::GetForce()

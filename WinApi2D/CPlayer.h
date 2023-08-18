@@ -12,7 +12,7 @@ private:
 	CPlayerStateMachine* m_pStateMachine;
 
 	float m_fVelocity = 350.f;
-	float m_fForce = 1000.f;
+	float m_fForce = 1200.f;
 
 	float m_fJumpForce;
 	int m_iJumpCount;
@@ -28,6 +28,9 @@ public:
 	void Fall();
 	void Dash();
 	void Dead();
+
+	bool GetJumpCount();
+	void RemoveJumpCount();
 
 	void InitForce();
 	float GetForce();

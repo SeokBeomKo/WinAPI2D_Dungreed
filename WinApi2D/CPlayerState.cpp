@@ -46,12 +46,13 @@ void CPlayerIdleState::update()
 		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
 		return;
 	}
-	if (KeyDown(VK_SPACE) || KeyDown('W'))
+	if (KeyDown(VK_SPACE) || KeyDown('W') && m_pStateMachine->GetOwner()->GetGrounded())
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
 		return;
 	}
 	m_pStateMachine->GetOwner()->Idle();
+	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
 }
 
@@ -89,6 +90,7 @@ void CPlayerMoveState::update()
 		return;
 	}
 	m_pStateMachine->GetOwner()->Move(Key('D'));
+	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Move", GetVertical());
 }
 
@@ -115,28 +117,30 @@ CPlayerJumpState::~CPlayerJumpState()
 
 void CPlayerJumpState::update()
 {
+	m_pStateMachine->GetOwner()->Jump();
+	if (m_pStateMachine->GetOwner()->GetJump() < 50.f)
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return;
+	}
+
 	if (Key('A') || Key('D'))
 	{
 		m_pStateMachine->GetOwner()->Move(Key('D'));
 	}
-	m_pStateMachine->GetOwner()->Jump();
+	
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
-
-	if (!m_pStateMachine->GetOwner()->GetGravity()->CheckGravity())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
-		return;
-	}
 }
 
 void CPlayerJumpState::enter()
 {
-	m_pStateMachine->GetOwner()->SetGravity(false);
+	m_pStateMachine->GetOwner()->InitForce();
+	//m_pStateMachine->GetOwner()->InitGravity();
+	m_pStateMachine->GetOwner()->RemoveJumpCount();
 }
 
 void CPlayerJumpState::exit()
 {
-	m_pStateMachine->GetOwner()->InitForce();
 }
 
 //========================================
@@ -180,7 +184,7 @@ CPlayerFallState::~CPlayerFallState()
 
 void CPlayerFallState::update()
 {
-	if (!m_pStateMachine->GetOwner()->GetGravity()->CheckGravity())
+	if (m_pStateMachine->GetOwner()->GetGrounded())
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
 		return;
@@ -195,6 +199,7 @@ void CPlayerFallState::update()
 
 void CPlayerFallState::enter()
 {
+	m_pStateMachine->GetOwner()->InitGravity();
 	m_pStateMachine->GetOwner()->SetGravity(true);
 }
 

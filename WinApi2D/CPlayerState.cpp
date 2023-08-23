@@ -51,6 +51,11 @@ void CPlayerIdleState::update()
 		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
 		return;
 	}
+	if (m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return;
+	}
 	m_pStateMachine->GetOwner()->Idle();
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
@@ -87,6 +92,11 @@ void CPlayerMoveState::update()
 	if (KeyDown(VK_SPACE) || KeyDown('W'))
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
+		return;
+	}
+	if (!m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
 		return;
 	}
 	m_pStateMachine->GetOwner()->Move(Key('D'));

@@ -24,17 +24,6 @@ void CScene_Lobby::update()
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
 	}
-
-	if (KeyDown('Z'))
-	{
-		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
-		CSoundManager::getInst()->Play(L"bgm");
-	}
-
-	if (KeyDown('X'))
-	{
-		CSoundManager::getInst()->Stop(L"bgm");
-	}
 }
 
 void CScene_Lobby::Enter()
@@ -60,8 +49,9 @@ void CScene_Lobby::Enter()
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
-	// Camera Look ÁöÁ¤
-	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	// Camera Look 
+	CCameraManager::getInst()->SetRange(fPoint(1904.f, 384.f));
+	CCameraManager::getInst()->SetTargetObj(pPlayer);
 }
 
 void CScene_Lobby::Exit()

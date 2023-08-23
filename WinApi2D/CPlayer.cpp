@@ -91,11 +91,6 @@ void CPlayer::Fall()
 
 void CPlayer::Dash(fPoint _dir)
 {
-	if (m_fDashForce <= 0)
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
-		return;
-	}
 	fPoint pos = GetPos();
 
 	m_fDashForce -= DASH_FORCE * fDT;
@@ -115,7 +110,7 @@ void CPlayer::InitDashForce()
 
 float CPlayer::GetDashForce()
 {
-	return 0.0f;
+	return m_fDashForce;
 }
 
 bool CPlayer::GetJumpCount()

@@ -76,7 +76,7 @@ void CPlayerStateMachine::update()
 void CPlayerStateMachine::ChangeState(STATE_PLAYER nextState)
 {
 	CPlayerState* pNextState = GetState(nextState);
-	assert(m_pCurState != pNextState);
+	// assert(m_pCurState != pNextState);
 
 	m_pCurState->exit();
 	m_pCurState = pNextState;

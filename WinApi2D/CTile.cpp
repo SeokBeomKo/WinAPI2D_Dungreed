@@ -143,24 +143,17 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	{
 	case GROUP_TILE::GROUND:
 		pEntity->AddGrounded();
+		//pEntity->m_ftempY = (GetCollider()->GetFinalPos().y - (GetCollider()->GetScale().y + pOther->GetScale().y / 2.f)); // TODO : 1.9f 오프셋값
 		pEntity->m_ftempY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f); // TODO : 1.9f 오프셋값
 		break;
 	case GROUP_TILE::PLATFORM:
 		if (pEntity->GetPassPlatform()) break;
 		pEntity->AddGrounded();
 		pEntity->m_ftempY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f);
+		pEntity->SetPosY(pEntity->m_ftempY);
 		break;
 	default:
 		break;
-	}
-
-	if (this->GetGroup() == GROUP_TILE::GROUND)
-	{
-		
-	}
-	else if (this->GetGroup() == GROUP_TILE::PLATFORM)
-	{
-		
 	}
 }
 
@@ -177,7 +170,6 @@ void CTile::OnCollision(CCollider* pOther)
 		break;
 	case GROUP_TILE::PLATFORM:
 		if (pEntity->GetPassPlatform()) break;
-		pEntity->SetPosY(pEntity->m_ftempY);
 		break;
 	default:
 		break;

@@ -19,11 +19,69 @@ CPlayerState::~CPlayerState()
 {
 }
 
+bool CPlayerState::IdleHandle()
+{
+	if (m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::MoveHandle()
+{
+	if (Key('A') || Key('D'))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
+		return true;
+	}
+	return false;
+}
+
+void CPlayerState::OverMoveHandle()
+{
+	if (Key('A') || Key('D'))
+	{
+		m_pStateMachine->GetOwner()->Move(Key('D'));
+	}
+}
+
+bool CPlayerState::DashHandle()
+{
+	if (KeyDown(VK_RBUTTON))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::DASH);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::JumpHandle()
+{
+	if (KeyDown(VK_SPACE) || KeyDown('W') && m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
+		return true;
+	}
+	return false;
+}
+
 bool CPlayerState::DownJumpHandle()
 {
 	if (Key('S') && KeyDown(VK_SPACE))
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::DOWNJUMP);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::FallHandle()
+{
+	if (!m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
 		return true;
 	}
 	return false;
@@ -52,26 +110,11 @@ CPlayerIdleState::~CPlayerIdleState()
 void CPlayerIdleState::update()
 {
 	if (DownJumpHandle())	return;
-	if (Key('A') || Key('D'))
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
-		return;
-	}
-	if (KeyDown(VK_SPACE) || KeyDown('W') && m_pStateMachine->GetOwner()->GetGrounded())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
-		return;
-	}
-	if (!m_pStateMachine->GetOwner()->GetGrounded())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
-		return;
-	}
-	if (KeyDown(VK_RBUTTON))
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::DASH);
-		return;
-	}
+	if (MoveHandle())		return;
+	if (JumpHandle())		return;
+	if (FallHandle())		return;
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->Idle();
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
@@ -106,16 +149,9 @@ void CPlayerMoveState::update()
 		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
 		return;
 	}
-	if (KeyDown(VK_SPACE) || KeyDown('W'))
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
-		return;
-	}
-	if (!m_pStateMachine->GetOwner()->GetGrounded())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
-		return;
-	}
+	if (JumpHandle())		return;
+	if (FallHandle())		return;
+	if (DashHandle())		return;
 
 	m_pStateMachine->GetOwner()->Move(Key('D'));
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
@@ -147,6 +183,12 @@ CPlayerDashState::~CPlayerDashState()
 
 void CPlayerDashState::update()
 {
+	if (DashHandle())		return;
+	if (m_pStateMachine->GetOwner()->GetDashForce() <= DASH_POWER * 0.1f)
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return;
+	}
 	m_pStateMachine->GetOwner()->SetGravity(false);
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 	m_pStateMachine->GetOwner()->Dash(m_fptDirection);
@@ -184,17 +226,16 @@ CPlayerJumpState::~CPlayerJumpState()
 void CPlayerJumpState::update()
 {
 	m_pStateMachine->GetOwner()->Jump();
-	if (m_pStateMachine->GetOwner()->GetJump() < 50.f)
+
+	if (m_pStateMachine->GetOwner()->GetJump() <= 0.f)
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
 		return;
 	}
 
-	if (Key('A') || Key('D'))
-	{
-		m_pStateMachine->GetOwner()->Move(Key('D'));
-	}
-	
+	OverMoveHandle();
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 }
 
@@ -225,6 +266,8 @@ CPlayerDoubleJumpState::~CPlayerDoubleJumpState()
 
 void CPlayerDoubleJumpState::update()
 {
+	OverMoveHandle();
+	if (DashHandle())		return;
 }
 
 void CPlayerDoubleJumpState::enter()
@@ -278,15 +321,10 @@ CPlayerFallState::~CPlayerFallState()
 
 void CPlayerFallState::update()
 {
-	if (m_pStateMachine->GetOwner()->GetGrounded())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
-		return;
-	}
-	if (Key('A') || Key('D'))
-	{
-		m_pStateMachine->GetOwner()->Move(Key('D'));
-	}
+	if (IdleHandle())		return;
+	OverMoveHandle();
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->Fall();
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 }

@@ -15,7 +15,13 @@ public:
 	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
 
+	bool IdleHandle();
+	bool MoveHandle();
+	void OverMoveHandle();
+	bool DashHandle();
+	bool JumpHandle();
 	bool DownJumpHandle();
+	bool FallHandle();
 	bool GetVertical();
 
 	virtual void update() = 0;

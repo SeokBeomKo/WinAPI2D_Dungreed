@@ -90,6 +90,13 @@ void CPlayer::Fall()
 
 void CPlayer::Dash()
 {
+	fPoint pos = GetPos();
+
+	fPoint fdash = (MousePos() - CCameraManager::getInst()->GetRenderPos(pos)).normalize() * 1000.f;
+	// fPoint fdash = {1000,1000};
+	pos += fdash * fDT;
+
+	SetPos(pos);
 }
 
 void CPlayer::Dead()

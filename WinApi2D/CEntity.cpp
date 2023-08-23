@@ -8,6 +8,7 @@ CEntity::CEntity()
 {
 	m_pGravity = nullptr;
 	m_iGrounded = 0;
+	m_bIsPass = false;
 }
 
 CEntity::~CEntity()
@@ -41,6 +42,16 @@ void CEntity::render()
 	//component_render();
 }
 
+void CEntity::SetPassPlatform(bool _set)
+{
+	m_bIsPass = _set;
+}
+
+bool CEntity::GetPassPlatform()
+{
+	return m_bIsPass;
+}
+
 void CEntity::AddGrounded()
 {
 	m_iGrounded++;
@@ -49,6 +60,11 @@ void CEntity::AddGrounded()
 void CEntity::RemoveGrounded()
 {
 	m_iGrounded--;
+}
+
+void CEntity::SetGrounded(int _set)
+{
+	m_iGrounded = _set;
 }
 
 bool CEntity::GetGrounded()

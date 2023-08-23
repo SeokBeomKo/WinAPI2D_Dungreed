@@ -14,7 +14,6 @@ CTile::CTile()
 	m_iY = 0;
 	m_iIdx = 0;
 	m_group = GROUP_TILE::NONE;
-	m_bIsPlat = false;
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
 }
 
@@ -140,10 +139,26 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
-		(this->GetGroup() == GROUP_TILE::GROUND))
+	switch (this->GetGroup())
 	{
+	case GROUP_TILE::GROUND:
 		pEntity->AddGrounded();
+		break;
+	case GROUP_TILE::PLATFORM:
+		if (pEntity->GetPassPlatform()) break;
+		pEntity->AddGrounded();
+		break;
+	default:
+		break;
+	}
+
+	if (this->GetGroup() == GROUP_TILE::GROUND)
+	{
+		
+	}
+	else if (this->GetGroup() == GROUP_TILE::PLATFORM)
+	{
+		
 	}
 }
 
@@ -152,8 +167,7 @@ void CTile::OnCollision(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
-		(this->GetGroup() == GROUP_TILE::GROUND))
+	if (this->GetGroup() == GROUP_TILE::GROUND)
 	{
 
 	}
@@ -164,9 +178,23 @@ void CTile::OnCollisionExit(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
-		(this->GetGroup() == GROUP_TILE::GROUND))
+	switch (this->GetGroup())
 	{
+	case GROUP_TILE::GROUND:
 		pEntity->RemoveGrounded();
+		break;
+	case GROUP_TILE::PLATFORM:
+		if (pEntity->GetGrounded())	// Entity 가 땅에 있었을 때만 카운트 --
+		{
+			pEntity->RemoveGrounded();
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (this->GetGroup() == GROUP_TILE::GROUND)
+	{
+
 	}
 }

@@ -41,6 +41,11 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
+	if (Key('S') && KeyDown(VK_SPACE))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::DOWNJUMP);
+		return;
+	}
 	if (Key('A') || Key('D'))
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
@@ -51,9 +56,14 @@ void CPlayerIdleState::update()
 		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
 		return;
 	}
-	if (m_pStateMachine->GetOwner()->GetGrounded())
+	if (!m_pStateMachine->GetOwner()->GetGrounded())
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return;
+	}
+	if (KeyDown(VK_RBUTTON))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::DASH);
 		return;
 	}
 	m_pStateMachine->GetOwner()->Idle();
@@ -99,6 +109,7 @@ void CPlayerMoveState::update()
 		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
 		return;
 	}
+
 	m_pStateMachine->GetOwner()->Move(Key('D'));
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Move", GetVertical());
@@ -109,6 +120,41 @@ void CPlayerMoveState::enter()
 }
 
 void CPlayerMoveState::exit()
+{
+}
+
+//========================================
+//## 대쉬 상태							##
+//========================================
+
+CPlayerDashState::CPlayerDashState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
+{
+	m_fDashTime = 0.f;
+}
+
+CPlayerDashState::~CPlayerDashState()
+{
+}
+
+void CPlayerDashState::update()
+{
+	m_fDashTime += fDT;
+	if (m_fDashTime >= 0.1f)
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
+		return;
+	}
+	m_pStateMachine->GetOwner()->Dash();
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
+}
+
+void CPlayerDashState::enter()
+{
+	m_fDashTime = 0.f;
+}
+
+void CPlayerDashState::exit()
 {
 }
 
@@ -145,12 +191,13 @@ void CPlayerJumpState::update()
 void CPlayerJumpState::enter()
 {
 	m_pStateMachine->GetOwner()->InitForce();
-	//m_pStateMachine->GetOwner()->InitGravity();
 	m_pStateMachine->GetOwner()->RemoveJumpCount();
+	m_pStateMachine->GetOwner()->SetPassPlatform(true);
 }
 
 void CPlayerJumpState::exit()
 {
+	m_pStateMachine->GetOwner()->SetPassPlatform(false);
 }
 
 //========================================
@@ -175,6 +222,33 @@ void CPlayerDoubleJumpState::enter()
 }
 
 void CPlayerDoubleJumpState::exit()
+{
+}
+
+//========================================
+//## 아래 점프 상태						##
+//========================================
+
+CPlayerDownJumpState::CPlayerDownJumpState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
+{
+}
+
+CPlayerDownJumpState::~CPlayerDownJumpState()
+{
+}
+
+void CPlayerDownJumpState::update()
+{
+	m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+}
+
+void CPlayerDownJumpState::enter()
+{
+	m_pStateMachine->GetOwner()->SetGrounded(0);
+}
+
+void CPlayerDownJumpState::exit()
 {
 }
 
@@ -219,7 +293,7 @@ void CPlayerFallState::exit()
 
 
 //========================================
-//## 죽음 상태						##
+//## 죽음 상태							##
 //========================================
 
 CPlayerDeadState::CPlayerDeadState(CPlayerStateMachine* _machine)
@@ -242,3 +316,5 @@ void CPlayerDeadState::enter()
 void CPlayerDeadState::exit()
 {
 }
+
+

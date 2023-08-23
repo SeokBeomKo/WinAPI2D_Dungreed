@@ -76,8 +76,10 @@ enum class STATE_PLAYER
 {
 	IDLE,
 	MOVE,
+	DASH,
 	JUMP,
 	DOUBLEJUMP,
+	DOWNJUMP,
 	FALL,
 	DEAD,
 

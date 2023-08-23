@@ -11,7 +11,7 @@ private:
 	int m_iX;
 	int m_iY;
 	int m_iIdx;			// 텍스쳐 인덱스
-	bool m_bIsPlat;
+	// bool m_bWasColl;	// 
 
 	GROUP_TILE m_group;
 

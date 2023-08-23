@@ -30,12 +30,16 @@ public:
 	void SetGroup(GROUP_GAMEOBJ _group);
 	void SetName(wstring _name);
 	void SetPos(fPoint _pos);
+	void SetPosX(float _posX);
+	void SetPosY(float _posY);
 	void SetScale(fPoint _scale);
 
 	bool ActiveSelf();					// 오브젝트 활성화 여부
 	GROUP_GAMEOBJ GetGroup();
 	wstring GetName();
 	fPoint GetPos();
+	float GetPosX();
+	float GetPosY();
 	fPoint GetScale();
 
 

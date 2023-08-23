@@ -15,6 +15,7 @@ private:
 	float m_fForce = 1200.f;
 
 	float m_fJumpForce;
+	float m_fDashForce;
 	int m_iJumpCount;
 public:
 	CPlayer();
@@ -26,13 +27,16 @@ public:
 	void Jump();
 	// void DoubleJump();
 	void Fall();
-	void Dash();
+	void Dash(fPoint _dir);
 	void Dead();
+
+	void InitDashForce();
+	float GetDashForce();
 
 	bool GetJumpCount();
 	void RemoveJumpCount();
 
-	void InitForce();
+	void InitJumpForce();
 	float GetForce();
 
 	float GetJump();

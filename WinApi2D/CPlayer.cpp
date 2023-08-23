@@ -15,6 +15,7 @@ CPlayer::CPlayer()
 {
 	m_iJumpCount = 1;
 	m_fJumpForce = GRAVITY_POWER;
+	m_fDashForce = DASH_POWER;
 
 	m_pStateMachine = new CPlayerStateMachine;
 	m_pStateMachine->m_pPlayer = this;
@@ -88,19 +89,33 @@ void CPlayer::Fall()
 	
 }
 
-void CPlayer::Dash()
+void CPlayer::Dash(fPoint _dir)
 {
+	if (m_fDashForce <= 0)
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return;
+	}
 	fPoint pos = GetPos();
 
-	fPoint fdash = (MousePos() - CCameraManager::getInst()->GetRenderPos(pos)).normalize() * 1000.f;
-	// fPoint fdash = {1000,1000};
-	pos += fdash * fDT;
+	m_fDashForce -= DASH_FORCE * fDT;
+	pos += _dir * m_fDashForce * fDT;
 
 	SetPos(pos);
 }
 
 void CPlayer::Dead()
 {
+}
+
+void CPlayer::InitDashForce()
+{
+	m_fDashForce = DASH_POWER;
+}
+
+float CPlayer::GetDashForce()
+{
+	return 0.0f;
 }
 
 bool CPlayer::GetJumpCount()
@@ -113,7 +128,7 @@ void CPlayer::RemoveJumpCount()
 	m_iJumpCount--;
 }
 
-void CPlayer::InitForce()
+void CPlayer::InitJumpForce()
 {
 	m_fJumpForce = GRAVITY_POWER;
 }

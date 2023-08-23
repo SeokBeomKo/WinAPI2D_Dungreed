@@ -19,6 +19,16 @@ CPlayerState::~CPlayerState()
 {
 }
 
+bool CPlayerState::DownJumpHandle()
+{
+	if (Key('S') && KeyDown(VK_SPACE))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::DOWNJUMP);
+		return true;
+	}
+	return false;
+}
+
 bool CPlayerState::GetVertical()
 {
 	fPoint pos = m_pStateMachine->GetOwner()->GetPos();
@@ -41,11 +51,7 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
-	if (Key('S') && KeyDown(VK_SPACE))
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::DOWNJUMP);
-		return;
-	}
+	if (DownJumpHandle())	return;
 	if (Key('A') || Key('D'))
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
@@ -94,6 +100,7 @@ CPlayerMoveState::~CPlayerMoveState()
 
 void CPlayerMoveState::update()
 {
+	if (DownJumpHandle())	return;
 	if (!Key('A') && !Key('D'))
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
@@ -131,6 +138,7 @@ CPlayerDashState::CPlayerDashState(CPlayerStateMachine* _machine)
 	: CPlayerState(_machine)
 {
 	m_fDashTime = 0.f;
+	m_fptDirection = {};
 }
 
 CPlayerDashState::~CPlayerDashState()
@@ -139,23 +147,25 @@ CPlayerDashState::~CPlayerDashState()
 
 void CPlayerDashState::update()
 {
-	m_fDashTime += fDT;
-	if (m_fDashTime >= 0.1f)
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
-		return;
-	}
-	m_pStateMachine->GetOwner()->Dash();
+	m_pStateMachine->GetOwner()->SetGravity(false);
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
+	m_pStateMachine->GetOwner()->Dash(m_fptDirection);
 }
 
 void CPlayerDashState::enter()
 {
+	m_pStateMachine->GetOwner()->InitDashForce();
 	m_fDashTime = 0.f;
+	m_pStateMachine->GetOwner()->SetPassPlatform(true);
+
+	m_fptDirection = (MousePos() - CCameraManager::getInst()->GetRenderPos(m_pStateMachine->GetOwner()->GetPos())).normalize();
 }
 
 void CPlayerDashState::exit()
 {
+	m_pStateMachine->GetOwner()->SetPassPlatform(false);
+	
+	m_fptDirection = {  };
 }
 
 //========================================
@@ -190,7 +200,7 @@ void CPlayerJumpState::update()
 
 void CPlayerJumpState::enter()
 {
-	m_pStateMachine->GetOwner()->InitForce();
+	m_pStateMachine->GetOwner()->InitJumpForce();
 	m_pStateMachine->GetOwner()->RemoveJumpCount();
 	m_pStateMachine->GetOwner()->SetPassPlatform(true);
 }

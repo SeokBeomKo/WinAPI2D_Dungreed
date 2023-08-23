@@ -14,6 +14,7 @@ protected:	// Component
 	CGravity* m_pGravity;	// 오브젝트 중력
 
 public:
+	float m_ftempY;
 	CEntity();
 	~CEntity();
 	virtual CEntity* Clone();

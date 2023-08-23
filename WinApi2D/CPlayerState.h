@@ -15,6 +15,7 @@ public:
 	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
 
+	bool DownJumpHandle();
 	bool GetVertical();
 
 	virtual void update() = 0;
@@ -64,6 +65,7 @@ class CPlayerDashState : public CPlayerState
 {
 private:
 	float m_fDashTime;
+	fPoint m_fptDirection;
 public:
 	CPlayerDashState(CPlayerStateMachine* _machine);
 	~CPlayerDashState();

@@ -117,8 +117,11 @@ enum class TYPE_EVENT
 //##			디파인문				##
 //========================================
 
-#define GRAVITY_FORCE		2000
-#define GRAVITY_POWER		1200
+#define DASH_FORCE  4000				// 돌아가는 힘
+#define DASH_POWER	2000				// 가해지는 힘
+
+#define GRAVITY_FORCE		2000		// 돌아가는 힘
+#define GRAVITY_POWER		1200		// 가해지는 힘
 
 #define WINSTARTX   100
 #define WINSTARTY   100

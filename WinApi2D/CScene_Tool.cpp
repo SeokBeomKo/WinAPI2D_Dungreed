@@ -86,6 +86,7 @@ void CScene_Tool::Enter()
 	CreateTile(20, 20);
 	CreateTilePanel();
 
+	CCameraManager::getInst()->SetTargetObj(nullptr);
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
 

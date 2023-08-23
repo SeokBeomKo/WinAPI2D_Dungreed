@@ -143,11 +143,12 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	{
 	case GROUP_TILE::GROUND:
 		pEntity->AddGrounded();
-		pEntity->m_ftempY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4 - 1.9f); // TODO : 1.5f 오프셋값
+		pEntity->m_ftempY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f); // TODO : 1.9f 오프셋값
 		break;
 	case GROUP_TILE::PLATFORM:
 		if (pEntity->GetPassPlatform()) break;
 		pEntity->AddGrounded();
+		pEntity->m_ftempY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f);
 		break;
 	default:
 		break;
@@ -168,9 +169,18 @@ void CTile::OnCollision(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if (this->GetGroup() == GROUP_TILE::GROUND)
+	switch (this->GetGroup())
 	{
+	case GROUP_TILE::GROUND:
+		if (!pEntity->GetGrounded())	pEntity->SetGrounded(1);
 		pEntity->SetPosY(pEntity->m_ftempY);
+		break;
+	case GROUP_TILE::PLATFORM:
+		if (pEntity->GetPassPlatform()) break;
+		pEntity->SetPosY(pEntity->m_ftempY);
+		break;
+	default:
+		break;
 	}
 }
 

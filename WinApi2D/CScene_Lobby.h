@@ -3,6 +3,8 @@
 
 class CScene_Lobby : public CScene
 {
+private:
+	fPoint m_fptPlayerPos;
 public:
 	CScene_Lobby();
 	virtual ~CScene_Lobby();

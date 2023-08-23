@@ -38,6 +38,8 @@ using namespace std;
 enum class GROUP_GAMEOBJ
 {
 	DEFAULT,
+	BACK_GROUND,
+	MAP,
 	TILE,
 	PLAYER,
 	MONSTER,

@@ -20,7 +20,6 @@ CPlayer::CPlayer()
 	m_pStateMachine = new CPlayerStateMachine;
 	m_pStateMachine->m_pPlayer = this;
 
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
 	SetScale(fPoint(32.f * 4, 32.f * 4));
 

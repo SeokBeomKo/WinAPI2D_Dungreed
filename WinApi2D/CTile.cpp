@@ -149,7 +149,7 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	case GROUP_TILE::PLATFORM:
 		if (pEntity->GetPassPlatform()) break;
 		pEntity->AddGrounded();
-		pEntity->m_foffsetY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f);
+		pEntity->m_foffsetY = ((this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f) - 1.9f);
 		pEntity->SetPosY(pEntity->m_foffsetY);
 		break;
 	default:

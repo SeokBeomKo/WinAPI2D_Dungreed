@@ -3,9 +3,9 @@
 
 CItem::CItem()
 {
-	CreateGravity();
-
+	m_pImg = nullptr;
 	CreateCollider();
+	CreateGravity();
 }
 
 CItem::~CItem()

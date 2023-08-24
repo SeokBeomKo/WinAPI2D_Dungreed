@@ -71,10 +71,9 @@ void CScene_Lobby::Enter()
 	pShortSword->SetPos(fPoint(m_fptPlayerPos));
 	AddObject(pShortSword, GROUP_GAMEOBJ::ITEM);
 
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ITEM);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ITEM, GROUP_GAMEOBJ::TILE);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 
 	CCameraManager::getInst()->SetRange(fPoint(1904.f, 384.f));

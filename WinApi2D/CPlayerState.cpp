@@ -19,6 +19,16 @@ CPlayerState::~CPlayerState()
 {
 }
 
+void CPlayerState::AttackHandle()
+{
+	if (nullptr == m_pStateMachine->GetOwner()->GetWeapon())	return;
+
+	if (Key(VK_LBUTTON))
+	{
+		m_pStateMachine->GetOwner()->Attack();
+	}
+}
+
 bool CPlayerState::IdleHandle()
 {
 	if (m_pStateMachine->GetOwner()->GetGrounded())

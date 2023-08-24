@@ -15,6 +15,8 @@ public:
 	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
 
+	void AttackHandle();
+
 	bool IdleHandle();
 	bool MoveHandle();
 	void OverMoveHandle();

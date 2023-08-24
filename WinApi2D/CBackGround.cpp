@@ -50,6 +50,7 @@ void CBack_Ground::render()
     );
 }
 
+
 void CBack_Ground::Load(wstring strKey, wstring strPath, fPoint pos, float speed)
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);

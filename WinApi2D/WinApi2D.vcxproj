@@ -164,6 +164,8 @@
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGravity.h" />
+    <ClInclude Include="CImage.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
@@ -187,7 +189,9 @@
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
+    <ClInclude Include="CWeapon.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="IWeapon.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTon.h" />
@@ -209,6 +213,8 @@
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGravity.cpp" />
+    <ClCompile Include="CImage.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
@@ -232,6 +238,8 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
+    <ClCompile Include="CWeapon.cpp" />
+    <ClCompile Include="IWeapon.cpp" />
     <ClCompile Include="WinApi2D.cpp" />
   </ItemGroup>
   <ItemGroup>

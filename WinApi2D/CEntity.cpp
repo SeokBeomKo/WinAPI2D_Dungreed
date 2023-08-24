@@ -9,6 +9,8 @@ CEntity::CEntity()
 	m_pGravity = nullptr;
 	m_iGrounded = 0;
 	m_bIsPass = false;
+
+	m_foffsetY = 0.f;
 }
 
 CEntity::~CEntity()

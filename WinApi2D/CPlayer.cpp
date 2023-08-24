@@ -11,8 +11,13 @@
 #include "CGravity.h"				// 중력
 #include "CPlayerStateMachine.h"	// 유한상태기계
 
+// 아이템
+#include "IWeapon.h"
+
 CPlayer::CPlayer()
 {
+	m_pCurWeapon = nullptr;
+
 	m_iJumpCount = 1;
 	m_fJumpForce = GRAVITY_POWER;
 	m_fDashForce = DASH_POWER;
@@ -102,6 +107,11 @@ void CPlayer::Dead()
 {
 }
 
+void CPlayer::Attack()
+{
+	m_pCurWeapon->use();
+}
+
 void CPlayer::InitDashForce()
 {
 	m_fDashForce = DASH_POWER;
@@ -127,11 +137,6 @@ void CPlayer::InitJumpForce()
 	m_fJumpForce = GRAVITY_POWER;
 }
 
-float CPlayer::GetForce()
-{
-	return m_fForce;
-}
-
 float CPlayer::GetJump()
 {
 	return m_fJumpForce;
@@ -140,6 +145,11 @@ float CPlayer::GetJump()
 void CPlayer::SetJump(float temp)
 {
 	m_fJumpForce = temp;
+}
+
+IWeapon* CPlayer::GetWeapon()
+{
+	return m_pCurWeapon;
 }
 
 void CPlayer::update()

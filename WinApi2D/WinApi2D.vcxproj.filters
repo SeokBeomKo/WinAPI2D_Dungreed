@@ -82,9 +82,6 @@
     <Filter Include="Object\Entity\Enemy">
       <UniqueIdentifier>{a045a683-1d28-4d11-873c-ac30805aea66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Entity\Object">
-      <UniqueIdentifier>{5c01962d-4081-4f0e-abde-27905c730bdd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Component\Gravity">
       <UniqueIdentifier>{7e80e798-8ca7-47d9-9f62-0f6ac51c4303}</UniqueIdentifier>
     </Filter>
@@ -93,6 +90,21 @@
     </Filter>
     <Filter Include="Engine\Component\FSM">
       <UniqueIdentifier>{816f92a0-0192-4aa8-a597-863dd33bcfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Image">
+      <UniqueIdentifier>{70f4535d-8bdd-46d5-aa96-6ff80a135551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{3dcce1ed-88d4-40e2-8392-572c1182932d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Weapon">
+      <UniqueIdentifier>{259d8d47-65e8-43e3-bec7-e2cfeaeb8a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Item">
+      <UniqueIdentifier>{5c01962d-4081-4f0e-abde-27905c730bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Entity\Item\Weapon">
+      <UniqueIdentifier>{1a3e109b-7e05-419f-a3c9-87abdbf7c072}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +234,21 @@
     <ClInclude Include="CPlayerState.h">
       <Filter>Engine\Component\FSM</Filter>
     </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>Object\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="CImage.h">
+      <Filter>Object\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="IWeapon.h">
+      <Filter>Interface\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>Object\Entity\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CWeapon.h">
+      <Filter>Object\Entity\Item\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -331,6 +358,21 @@
     </ClCompile>
     <ClCompile Include="CPlayerStateMachine.cpp">
       <Filter>Engine\Component\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
+      <Filter>Object\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="CImage.cpp">
+      <Filter>Object\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="IWeapon.cpp">
+      <Filter>Interface\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>Object\Entity\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CWeapon.cpp">
+      <Filter>Object\Entity\Item\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

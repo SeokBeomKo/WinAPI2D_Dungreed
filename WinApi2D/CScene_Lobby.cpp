@@ -1,13 +1,18 @@
 #include "framework.h"
 #include "CScene_Lobby.h"
+#include "CSound.h"
+#include "CD2DImage.h"
 
-#include "CGameObject.h"
+#include "CImage.h"
 #include "CBackGround.h"
+
+// Entity
+#include "CGameObject.h"
 #include "CPlayer.h"
 #include "CMonster.h"
 
-#include "CSound.h"
-#include "CD2DImage.h"
+// 아이템
+#include "CWeapon.h"
 
 CScene_Lobby::CScene_Lobby()
 {
@@ -35,16 +40,16 @@ void CScene_Lobby::Enter()
 	path += L"tile\\Lobby.tile";
 	LoadTile(path);
 
-	// 맵 이미지
+	// 타일 이미지
 	CBack_Ground* town = new CBack_Ground;
 	town->Load(L"Town", L"texture\\map\\Lobby.png");
 	AddObject(town, GROUP_GAMEOBJ::MAP);
 
 	// 배경 이미지
-	CBack_Ground* skyday = new CBack_Ground;
-	skyday->Load(L"Sky_Day", L"texture\\background\\Sky_Day.png", { WINSIZEX / 2.f, WINSIZEY / 2.f });
+	/*CImage* skyday = new CImage;
+	skyday->Load(L"Sky_Day", L"texture\\background\\Sky_Day.png");
 	AddObject(skyday, GROUP_GAMEOBJ::BACK_GROUND);
-	/*CBack_Ground* townBG_day = new CBack_Ground;
+	CBack_Ground* townBG_day = new CBack_Ground;
 	townBG_day->Load(L"TownBG_Day", L"texture\\background\\TownBG_Day.png", fPoint(0.f, 160.f), 7.f);
 	AddObject(townBG_day, GROUP_GAMEOBJ::BACK_GROUND);
 	CBack_Ground* townLayer_day = new CBack_Ground;
@@ -57,14 +62,18 @@ void CScene_Lobby::Enter()
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
 	// Monster 추가
-	CMonster* pMonster = new CMonster;
+	/*CMonster* pMonster = new CMonster;
 	pMonster->SetPos(fPoint(1100, 350));
 	pMonster->SetCenterPos(pMonster->GetPos());
-	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
+	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);*/
 
+	CItem* pShortSword = new ShortSword;
+	pShortSword->SetPos(fPoint(m_fptPlayerPos));
+	AddObject(pShortSword, GROUP_GAMEOBJ::ITEM);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ITEM, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 

@@ -14,7 +14,6 @@ CTile::CTile()
 	m_iY = 0;
 	m_iIdx = 0;
 	m_group = GROUP_TILE::NONE;
-	m_bIsPlat = false;
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
 }
 
@@ -140,10 +139,21 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
-		(this->GetGroup() == GROUP_TILE::GROUND))
+	switch (this->GetGroup())
 	{
+	case GROUP_TILE::GROUND:
 		pEntity->AddGrounded();
+		//pEntity->m_ftempY = (GetCollider()->GetFinalPos().y - (GetCollider()->GetScale().y + pOther->GetScale().y / 2.f)); // TODO : 1.9f 오프셋값
+		pEntity->m_foffsetY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f); // TODO : 1.9f 오프셋값
+		break;
+	case GROUP_TILE::PLATFORM:
+		if (pEntity->GetPassPlatform()) break;
+		pEntity->AddGrounded();
+		pEntity->m_foffsetY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f);
+		pEntity->SetPosY(pEntity->m_foffsetY);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -152,10 +162,17 @@ void CTile::OnCollision(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
-		(this->GetGroup() == GROUP_TILE::GROUND))
+	switch (this->GetGroup())
 	{
-
+	case GROUP_TILE::GROUND:
+		if (!pEntity->GetGrounded())	pEntity->SetGrounded(1);
+		pEntity->SetPosY(pEntity->m_foffsetY);
+		break;
+	case GROUP_TILE::PLATFORM:
+		if (pEntity->GetPassPlatform()) break;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -164,9 +181,18 @@ void CTile::OnCollisionExit(CCollider* pOther)
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
 
-	if ((pEntity->GetGroup() == GROUP_GAMEOBJ::PLAYER) &&
-		(this->GetGroup() == GROUP_TILE::GROUND))
+	switch (this->GetGroup())
 	{
+	case GROUP_TILE::GROUND:
 		pEntity->RemoveGrounded();
+		break;
+	case GROUP_TILE::PLATFORM:
+		if (pEntity->GetGrounded())	// Entity 가 땅에 있었을 때만 카운트 --
+		{
+			pEntity->RemoveGrounded();
+		}
+		break;
+	default:
+		break;
 	}
 }

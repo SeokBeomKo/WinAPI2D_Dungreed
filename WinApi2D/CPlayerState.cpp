@@ -19,6 +19,84 @@ CPlayerState::~CPlayerState()
 {
 }
 
+void CPlayerState::AttackHandle()
+{
+	if (nullptr == m_pStateMachine->GetOwner()->GetWeapon())	return;
+
+	if (Key(VK_LBUTTON))
+	{
+		m_pStateMachine->GetOwner()->Attack();
+	}
+}
+
+bool CPlayerState::IdleHandle()
+{
+	if (m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::MoveHandle()
+{
+	if (Key('A') || Key('D'))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
+		return true;
+	}
+	return false;
+}
+
+void CPlayerState::OverMoveHandle()
+{
+	if (Key('A') || Key('D'))
+	{
+		m_pStateMachine->GetOwner()->Move(Key('D'));
+	}
+}
+
+bool CPlayerState::DashHandle()
+{
+	if (KeyDown(VK_RBUTTON))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::DASH);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::JumpHandle()
+{
+	if (KeyDown(VK_SPACE) || KeyDown('W') && m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::DownJumpHandle()
+{
+	if (Key('S') && KeyDown(VK_SPACE))
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::DOWNJUMP);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayerState::FallHandle()
+{
+	if (!m_pStateMachine->GetOwner()->GetGrounded())
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return true;
+	}
+	return false;
+}
+
 bool CPlayerState::GetVertical()
 {
 	fPoint pos = m_pStateMachine->GetOwner()->GetPos();
@@ -41,16 +119,12 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
-	if (Key('A') || Key('D'))
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::MOVE);
-		return;
-	}
-	if (KeyDown(VK_SPACE) || KeyDown('W') && m_pStateMachine->GetOwner()->GetGrounded())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
-		return;
-	}
+	if (DownJumpHandle())	return;
+	if (MoveHandle())		return;
+	if (JumpHandle())		return;
+	if (FallHandle())		return;
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->Idle();
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
@@ -79,16 +153,16 @@ CPlayerMoveState::~CPlayerMoveState()
 
 void CPlayerMoveState::update()
 {
+	if (DownJumpHandle())	return;
 	if (!Key('A') && !Key('D'))
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
 		return;
 	}
-	if (KeyDown(VK_SPACE) || KeyDown('W'))
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::JUMP);
-		return;
-	}
+	if (JumpHandle())		return;
+	if (FallHandle())		return;
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->Move(Key('D'));
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Move", GetVertical());
@@ -100,6 +174,50 @@ void CPlayerMoveState::enter()
 
 void CPlayerMoveState::exit()
 {
+}
+
+//========================================
+//## 대쉬 상태							##
+//========================================
+
+CPlayerDashState::CPlayerDashState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
+{
+	m_fDashTime = 0.f;
+	m_fptDirection = {};
+}
+
+CPlayerDashState::~CPlayerDashState()
+{
+}
+
+void CPlayerDashState::update()
+{
+	if (DashHandle())		return;
+	if (m_pStateMachine->GetOwner()->GetDashForce() <= DASH_POWER * 0.1f)
+	{
+		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+		return;
+	}
+	m_pStateMachine->GetOwner()->SetGravity(false);
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
+	m_pStateMachine->GetOwner()->Dash(m_fptDirection);
+}
+
+void CPlayerDashState::enter()
+{
+	m_pStateMachine->GetOwner()->InitDashForce();
+	m_fDashTime = 0.f;
+	m_pStateMachine->GetOwner()->SetPassPlatform(true);
+
+	m_fptDirection = (MousePos() - CCameraManager::getInst()->GetRenderPos(m_pStateMachine->GetOwner()->GetPos())).normalize();
+}
+
+void CPlayerDashState::exit()
+{
+	m_pStateMachine->GetOwner()->SetPassPlatform(false);
+	
+	m_fptDirection = {  };
 }
 
 //========================================
@@ -118,29 +236,29 @@ CPlayerJumpState::~CPlayerJumpState()
 void CPlayerJumpState::update()
 {
 	m_pStateMachine->GetOwner()->Jump();
-	if (m_pStateMachine->GetOwner()->GetJump() < 50.f)
+
+	if (m_pStateMachine->GetOwner()->GetJump() <= 0.f)
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
 		return;
 	}
 
-	if (Key('A') || Key('D'))
-	{
-		m_pStateMachine->GetOwner()->Move(Key('D'));
-	}
-	
+	OverMoveHandle();
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 }
 
 void CPlayerJumpState::enter()
 {
-	m_pStateMachine->GetOwner()->InitForce();
-	//m_pStateMachine->GetOwner()->InitGravity();
+	m_pStateMachine->GetOwner()->InitJumpForce();
 	m_pStateMachine->GetOwner()->RemoveJumpCount();
+	m_pStateMachine->GetOwner()->SetPassPlatform(true);
 }
 
 void CPlayerJumpState::exit()
 {
+	m_pStateMachine->GetOwner()->SetPassPlatform(false);
 }
 
 //========================================
@@ -158,6 +276,8 @@ CPlayerDoubleJumpState::~CPlayerDoubleJumpState()
 
 void CPlayerDoubleJumpState::update()
 {
+	OverMoveHandle();
+	if (DashHandle())		return;
 }
 
 void CPlayerDoubleJumpState::enter()
@@ -165,6 +285,33 @@ void CPlayerDoubleJumpState::enter()
 }
 
 void CPlayerDoubleJumpState::exit()
+{
+}
+
+//========================================
+//## 아래 점프 상태						##
+//========================================
+
+CPlayerDownJumpState::CPlayerDownJumpState(CPlayerStateMachine* _machine)
+	: CPlayerState(_machine)
+{
+}
+
+CPlayerDownJumpState::~CPlayerDownJumpState()
+{
+}
+
+void CPlayerDownJumpState::update()
+{
+	m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
+}
+
+void CPlayerDownJumpState::enter()
+{
+	m_pStateMachine->GetOwner()->SetGrounded(0);
+}
+
+void CPlayerDownJumpState::exit()
 {
 }
 
@@ -184,15 +331,10 @@ CPlayerFallState::~CPlayerFallState()
 
 void CPlayerFallState::update()
 {
-	if (m_pStateMachine->GetOwner()->GetGrounded())
-	{
-		m_pStateMachine->ChangeState(STATE_PLAYER::IDLE);
-		return;
-	}
-	if (Key('A') || Key('D'))
-	{
-		m_pStateMachine->GetOwner()->Move(Key('D'));
-	}
+	if (IdleHandle())		return;
+	OverMoveHandle();
+	if (DashHandle())		return;
+
 	m_pStateMachine->GetOwner()->Fall();
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 }
@@ -209,7 +351,7 @@ void CPlayerFallState::exit()
 
 
 //========================================
-//## 죽음 상태						##
+//## 죽음 상태							##
 //========================================
 
 CPlayerDeadState::CPlayerDeadState(CPlayerStateMachine* _machine)
@@ -232,3 +374,5 @@ void CPlayerDeadState::enter()
 void CPlayerDeadState::exit()
 {
 }
+
+

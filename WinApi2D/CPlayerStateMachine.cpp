@@ -10,8 +10,10 @@ CPlayerStateMachine::CPlayerStateMachine()
 
 	m_mapState.insert(make_pair(STATE_PLAYER::IDLE,			new CPlayerIdleState(this)));
 	m_mapState.insert(make_pair(STATE_PLAYER::MOVE,			new CPlayerMoveState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::DASH,			new CPlayerDashState(this)));
 	m_mapState.insert(make_pair(STATE_PLAYER::JUMP,			new CPlayerJumpState(this)));
 	m_mapState.insert(make_pair(STATE_PLAYER::DOUBLEJUMP,	new CPlayerDoubleJumpState(this)));
+	m_mapState.insert(make_pair(STATE_PLAYER::DOWNJUMP,		new CPlayerDownJumpState(this)));
 	m_mapState.insert(make_pair(STATE_PLAYER::FALL,			new CPlayerFallState(this)));
 	m_mapState.insert(make_pair(STATE_PLAYER::DEAD,			new CPlayerDeadState(this)));
 
@@ -74,7 +76,7 @@ void CPlayerStateMachine::update()
 void CPlayerStateMachine::ChangeState(STATE_PLAYER nextState)
 {
 	CPlayerState* pNextState = GetState(nextState);
-	assert(m_pCurState != pNextState);
+	// assert(m_pCurState != pNextState);
 
 	m_pCurState->exit();
 	m_pCurState = pNextState;

@@ -15,6 +15,15 @@ public:
 	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
 
+	void AttackHandle();
+
+	bool IdleHandle();
+	bool MoveHandle();
+	void OverMoveHandle();
+	bool DashHandle();
+	bool JumpHandle();
+	bool DownJumpHandle();
+	bool FallHandle();
 	bool GetVertical();
 
 	virtual void update() = 0;
@@ -57,6 +66,24 @@ public:
 };
 
 //========================================
+//## 대쉬 상태							##
+//========================================
+
+class CPlayerDashState : public CPlayerState
+{
+private:
+	float m_fDashTime;
+	fPoint m_fptDirection;
+public:
+	CPlayerDashState(CPlayerStateMachine* _machine);
+	~CPlayerDashState();
+
+	virtual void update();
+	virtual void enter();
+	virtual void exit();
+};
+
+//========================================
 //## 점프 상태							##
 //========================================
 
@@ -84,6 +111,23 @@ private:
 public:
 	CPlayerDoubleJumpState(CPlayerStateMachine* _machine);
 	~CPlayerDoubleJumpState();
+
+	virtual void update();
+	virtual void enter();
+	virtual void exit();
+};
+
+//========================================
+//## 아래 점프 상태						##
+//========================================
+
+class CPlayerDownJumpState : public CPlayerState
+{
+private:
+
+public:
+	CPlayerDownJumpState(CPlayerStateMachine* _machine);
+	~CPlayerDownJumpState();
 
 	virtual void update();
 	virtual void enter();

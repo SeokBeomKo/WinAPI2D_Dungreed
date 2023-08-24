@@ -11,15 +11,20 @@
 #include "CGravity.h"				// 중력
 #include "CPlayerStateMachine.h"	// 유한상태기계
 
+// 아이템
+#include "IWeapon.h"
+
 CPlayer::CPlayer()
 {
+	m_pCurWeapon = nullptr;
+
 	m_iJumpCount = 1;
 	m_fJumpForce = GRAVITY_POWER;
+	m_fDashForce = DASH_POWER;
 
 	m_pStateMachine = new CPlayerStateMachine;
 	m_pStateMachine->m_pPlayer = this;
 
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
 	SetScale(fPoint(32.f * 4, 32.f * 4));
 
@@ -88,12 +93,33 @@ void CPlayer::Fall()
 	
 }
 
-void CPlayer::Dash()
+void CPlayer::Dash(fPoint _dir)
 {
+	fPoint pos = GetPos();
+
+	m_fDashForce -= DASH_FORCE * fDT;
+	pos += _dir * m_fDashForce * fDT;
+
+	SetPos(pos);
 }
 
 void CPlayer::Dead()
 {
+}
+
+void CPlayer::Attack()
+{
+	m_pCurWeapon->use();
+}
+
+void CPlayer::InitDashForce()
+{
+	m_fDashForce = DASH_POWER;
+}
+
+float CPlayer::GetDashForce()
+{
+	return m_fDashForce;
 }
 
 bool CPlayer::GetJumpCount()
@@ -106,14 +132,9 @@ void CPlayer::RemoveJumpCount()
 	m_iJumpCount--;
 }
 
-void CPlayer::InitForce()
+void CPlayer::InitJumpForce()
 {
 	m_fJumpForce = GRAVITY_POWER;
-}
-
-float CPlayer::GetForce()
-{
-	return m_fForce;
 }
 
 float CPlayer::GetJump()
@@ -124,6 +145,11 @@ float CPlayer::GetJump()
 void CPlayer::SetJump(float temp)
 {
 	m_fJumpForce = temp;
+}
+
+IWeapon* CPlayer::GetWeapon()
+{
+	return m_pCurWeapon;
 }
 
 void CPlayer::update()

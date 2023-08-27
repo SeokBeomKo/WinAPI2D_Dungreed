@@ -44,6 +44,7 @@ void ShortSword::render()
 
 void ShortSword::update()
 {
+    SetGravity(!GetGrounded());
 }
 
 CWeapon::CWeapon()

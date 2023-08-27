@@ -143,13 +143,12 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 	{
 	case GROUP_TILE::GROUND:
 		pEntity->AddGrounded();
-		//pEntity->m_ftempY = (GetCollider()->GetFinalPos().y - (GetCollider()->GetScale().y + pOther->GetScale().y / 2.f)); // TODO : 1.9f 오프셋값
-		pEntity->m_foffsetY = (this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f - 1.9f); // TODO : 1.9f 오프셋값
+		pEntity->m_foffsetY = this->GetPos().y - pEntity->GetCollider()->GetScale().y / 2.f - pEntity->GetCollider()->GetOffsetPos().y + 1.f; // 1.f = offset 값
 		break;
 	case GROUP_TILE::PLATFORM:
 		if (pEntity->GetPassPlatform()) break;
 		pEntity->AddGrounded();
-		pEntity->m_foffsetY = ((this->GetPosY() - (this->GetScale().y + pEntity->GetScale().y) / 4.f) - 1.9f);
+		pEntity->m_foffsetY = this->GetPos().y - pEntity->GetCollider()->GetScale().y / 2.f  - pEntity->GetCollider()->GetOffsetPos().y + 1.f;
 		pEntity->SetPosY(pEntity->m_foffsetY);
 		break;
 	default:

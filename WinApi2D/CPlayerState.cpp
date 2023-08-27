@@ -331,8 +331,8 @@ CPlayerFallState::~CPlayerFallState()
 
 void CPlayerFallState::update()
 {
-	if (IdleHandle())		return;
 	OverMoveHandle();
+	if (IdleHandle())		return;
 	if (DashHandle())		return;
 
 	m_pStateMachine->GetOwner()->Fall();

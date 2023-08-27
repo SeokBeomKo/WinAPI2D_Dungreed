@@ -2,6 +2,50 @@
 #include "CWeapon.h"
 
 #include "CCollider.h"
+#include "CPlayer.h"
+
+//========================================
+//## Weapon							    ##
+//========================================
+
+CWeapon::CWeapon()
+{
+}
+
+CWeapon::~CWeapon()
+{
+}
+
+void CWeapon::OnCollision(CCollider* _pOther)
+{
+    CPlayer* pEntity = dynamic_cast<CPlayer*>(_pOther->GetObj());
+    if (nullptr == pEntity)	return;                                 // 충돌한 플레이어를 잘 가져왔는지 ?
+    if (GROUP_GAMEOBJ::PLAYER != pEntity->GetGroup())   return;     // 충돌한 플레이어의 그룹이 PLAYER 로 잘 설정되어있는지 ?
+    if (nullptr != pEntity->GetCollWeapon()) return;                // 충돌한 플레이어와 충돌중인 무기 아이템이 있는지 ?
+    
+    pEntity->SetCollWeapon(this);
+}
+
+void CWeapon::OnCollisionEnter(CCollider* _pOther)
+{
+    CPlayer* pEntity = dynamic_cast<CPlayer*>(_pOther->GetObj());
+    if (nullptr == pEntity)	return;                                 // 충돌한 플레이어를 잘 가져왔는지 ?
+    if (GROUP_GAMEOBJ::PLAYER != pEntity->GetGroup())   return;     // 충돌한 플레이어의 그룹이 PLAYER 로 잘 설정되어있는지 ?
+    if (nullptr != pEntity->GetCollWeapon()) return;                // 충돌한 플레이어와 충돌중인 무기 아이템이 있는지 ?
+    
+    pEntity->SetCollWeapon(this);
+}
+
+void CWeapon::OnCollisionExit(CCollider* _pOther)
+{
+    CPlayer* pEntity = dynamic_cast<CPlayer*>(_pOther->GetObj());
+    if (nullptr == pEntity)	return;                                 // 충돌한 플레이어를 잘 가져왔는지 ?
+    if (GROUP_GAMEOBJ::PLAYER != pEntity->GetGroup())   return;     // 충돌한 플레이어의 그룹이 PLAYER 로 잘 설정되어있는지 ?
+    if (nullptr == pEntity->GetCollWeapon()) return;                // 충돌한 플레이어와 충돌중인 무기 아이템이 있는지 ?
+
+    pEntity->SetCollWeapon(nullptr);
+}
+
 //========================================
 //## ShortSword							##
 //========================================
@@ -45,12 +89,4 @@ void ShortSword::render()
 void ShortSword::update()
 {
     SetGravity(!GetGrounded());
-}
-
-CWeapon::CWeapon()
-{
-}
-
-CWeapon::~CWeapon()
-{
 }

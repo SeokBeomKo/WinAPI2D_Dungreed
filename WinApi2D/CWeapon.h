@@ -15,6 +15,10 @@ public:
 
 	virtual void update() = 0;
 	virtual void render() = 0;
+
+	virtual void OnCollision(CCollider* _pOther);		// 재정의용 충돌중 가상함수
+	virtual void OnCollisionEnter(CCollider* _pOther);	// 재정의용 충돌시 가상함수
+	virtual void OnCollisionExit(CCollider* _pOther);	// 재정의용 탈충돌 가상함수
 };
 
 //========================================

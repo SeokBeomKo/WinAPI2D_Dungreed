@@ -12,11 +12,12 @@
 #include "CPlayerStateMachine.h"	// 유한상태기계
 
 // 아이템
-#include "IWeapon.h"
+#include "CWeapon.h"
 
 CPlayer::CPlayer()
 {
 	m_pCurWeapon = nullptr;
+	m_pCollWeapon = nullptr;
 
 	m_iJumpCount = 1;
 	m_fJumpForce = GRAVITY_POWER;
@@ -60,6 +61,11 @@ CPlayer::~CPlayer()
 CPlayer* CPlayer::Clone()
 {
 	return new CPlayer(*this);
+}
+
+CPlayer* CPlayer::GetObj()
+{
+	return this;
 }
 
 
@@ -112,6 +118,41 @@ void CPlayer::Attack()
 	m_pCurWeapon->use();
 }
 
+void CPlayer::Equip()
+{
+	// 아이템 장착
+	if (nullptr == m_pCollWeapon)	return;
+	if (nullptr != m_pCurWeapon)	UnEquip();
+	
+	//m_pCurWeapon = m_pCollWeapon;
+	m_pCollWeapon->Delete();
+	m_pCollWeapon = nullptr;
+	//DeleteObj(m_pCollWeapon->GetObj());
+}
+
+void CPlayer::UnEquip()
+{
+	// 아이템 장착 해제
+	if (nullptr == m_pCurWeapon)	return;		// 장착한 장비가 있는지 ?
+	CreateObj(m_pCurWeapon, GROUP_GAMEOBJ::ITEM);
+	m_pCurWeapon = nullptr;
+}
+
+void CPlayer::SetCollWeapon(CWeapon* collWeapon)
+{
+	m_pCollWeapon = collWeapon;
+}
+
+CWeapon* CPlayer::GetCollWeapon()
+{
+	return m_pCollWeapon;
+}
+
+CWeapon* CPlayer::GetWeapon()
+{
+	return m_pCurWeapon;
+}
+
 void CPlayer::InitDashForce()
 {
 	m_fDashForce = DASH_POWER;
@@ -145,11 +186,6 @@ float CPlayer::GetJump()
 void CPlayer::SetJump(float temp)
 {
 	m_fJumpForce = temp;
-}
-
-IWeapon* CPlayer::GetWeapon()
-{
-	return m_pCurWeapon;
 }
 
 void CPlayer::update()

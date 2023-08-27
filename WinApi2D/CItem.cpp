@@ -12,6 +12,16 @@ CItem::~CItem()
 {
 }
 
+CD2DImage* CItem::GetImage()
+{
+	return m_pImg;
+}
+
+void CItem::Delete()
+{
+	DeleteObj(this);
+}
+
 void CItem::OnCollision(CCollider* _pOther)
 {
 }

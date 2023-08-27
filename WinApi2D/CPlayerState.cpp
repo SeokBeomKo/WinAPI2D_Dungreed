@@ -19,6 +19,14 @@ CPlayerState::~CPlayerState()
 {
 }
 
+void CPlayerState::EquipHandle()
+{
+	if (Key('E'))
+	{
+		m_pStateMachine->GetOwner()->Equip();
+	}
+}
+
 void CPlayerState::AttackHandle()
 {
 	if (nullptr == m_pStateMachine->GetOwner()->GetWeapon())	return;
@@ -119,6 +127,7 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
+	EquipHandle();
 	if (DownJumpHandle())	return;
 	if (MoveHandle())		return;
 	if (JumpHandle())		return;
@@ -153,6 +162,7 @@ CPlayerMoveState::~CPlayerMoveState()
 
 void CPlayerMoveState::update()
 {
+	EquipHandle();
 	if (DownJumpHandle())	return;
 	if (!Key('A') && !Key('D'))
 	{

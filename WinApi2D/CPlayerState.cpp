@@ -21,7 +21,7 @@ CPlayerState::~CPlayerState()
 
 void CPlayerState::EquipHandle()
 {
-	if (Key('E'))
+	if (KeyDown('E'))
 	{
 		m_pStateMachine->GetOwner()->Equip();
 	}

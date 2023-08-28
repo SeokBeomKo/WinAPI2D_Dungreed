@@ -124,10 +124,9 @@ void CPlayer::Equip()
 	if (nullptr == m_pCollWeapon)	return;
 	if (nullptr != m_pCurWeapon)	UnEquip();
 	
-	//m_pCurWeapon = m_pCollWeapon;
+	m_pCurWeapon = m_pCollWeapon;
 	m_pCollWeapon->Delete();
 	m_pCollWeapon = nullptr;
-	//DeleteObj(m_pCollWeapon->GetObj());
 }
 
 void CPlayer::UnEquip()

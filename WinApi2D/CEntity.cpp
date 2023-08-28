@@ -15,6 +15,10 @@ CEntity::CEntity()
 
 CEntity::~CEntity()
 {
+	if (nullptr != m_pGravity)
+	{
+		delete m_pGravity;
+	}
 }
 
 CEntity* CEntity::Clone()

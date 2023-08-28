@@ -68,7 +68,7 @@ void CScene_Lobby::Enter()
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);*/
 
 	CItem* pShortSword = new ShortSword;
-	pShortSword->SetPos(fPoint(m_fptPlayerPos));
+	pShortSword->SetPos({ 4000.f, 650.f });
 	AddObject(pShortSword, GROUP_GAMEOBJ::ITEM);
 
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);

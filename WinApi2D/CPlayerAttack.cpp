@@ -9,10 +9,14 @@ CPlayerAttack::CPlayerAttack()
 {
 	m_pImg = nullptr;
 
-	m_iDamage	= 0;
-	m_iRange	= 0;
-	m_fTimeFX	= 0.f;
-	m_fptDirFX	= { 0, 0 };
+	m_iDamage		= 0;
+	m_iRange		= 0;
+	m_fCurTimeFX	= 0.f;
+	m_fMaxTimeFX	= 0.4f;
+	m_fptDirFX		= { 0, 0 };
+
+	CreateAnimator();
+	CreateCollider();
 }
 
 CPlayerAttack::CPlayerAttack(CD2DImage* _img, int _dmg, int _range, fPoint _dir, float _time)
@@ -20,7 +24,6 @@ CPlayerAttack::CPlayerAttack(CD2DImage* _img, int _dmg, int _range, fPoint _dir,
 	m_pImg = _img;
 	m_iDamage = _dmg;
 	m_iRange = _range;
-	m_fTimeFX = _time;
 	m_fptDirFX = _dir;
 
 	CreateAnimator();
@@ -58,11 +61,22 @@ int CPlayerAttack::GetDamage()
 	return m_iDamage;
 }
 
+float CPlayerAttack::GetDegree(fPoint _pos)
+{
+	fPoint finalpos = GetPos();
+	fPoint realpos = CCameraManager::getInst()->GetRenderPos(_pos);
+
+	m_fptDirFX.x = MousePos().x - realpos.x;
+	m_fptDirFX.y = MousePos().y - realpos.y;
+
+	return atan2(m_fptDirFX.y, m_fptDirFX.x) * RTOD;
+}
+
 void CPlayerAttack::update()
 {
-	m_fTimeFX += fDT;
+	m_fCurTimeFX += fDT;
 
-	if (m_fTimeFX >= m_fTimeFX)
+	if (m_fCurTimeFX >= m_fMaxTimeFX)
 		DeleteObj(this);
 
 	GetAnimator()->update();

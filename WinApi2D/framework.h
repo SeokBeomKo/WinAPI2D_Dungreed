@@ -126,6 +126,9 @@ enum class TYPE_EVENT
 #define GRAVITY_FORCE		2000		// 돌아가는 힘
 #define GRAVITY_POWER		1200		// 가해지는 힘
 
+#define PI			3.141592
+#define RTOD		180 / PI
+
 #define WINSTARTX   100
 #define WINSTARTY   100
 #define WINSIZEX	1280

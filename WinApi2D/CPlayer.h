@@ -24,7 +24,6 @@ protected:
 
 	CWeapon* m_pCurWeapon;	// 보유 무기 (인벤토리)
 	CEquip* m_pCurEquip;	// 장착 무기 렌더
-
 public:
 	CPlayer();
 	~CPlayer();

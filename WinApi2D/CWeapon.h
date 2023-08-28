@@ -3,17 +3,23 @@
 #include "CItem.h"
 #include "IWeapon.h"
 
+class CPlayerAttack;
+
 class CWeapon : public CItem, public IWeapon
 {
-private:
+protected:
+	CPlayerAttack* m_pAttack;
 
+	CD2DImage* m_pAttackImg;
 public:
 	CWeapon();
 	CWeapon(const CWeapon& _other);
 	~CWeapon();
 	virtual CWeapon* Clone() = 0;
 
-	virtual void use() = 0;
+	virtual void Init() = 0;
+
+	virtual void use(fPoint _pos) = 0;
 
 	virtual void update() = 0;
 	virtual void render() = 0;
@@ -34,8 +40,9 @@ public:
 	ShortSword(const ShortSword& _other);
 	~ShortSword();
 	ShortSword* Clone() override;
+	void Init() override;
 
-	virtual void use();
+	virtual void use(fPoint _pos);
 
 	virtual void update();
 	virtual void render();
@@ -52,8 +59,9 @@ public:
 	PowerKatana(const PowerKatana& _other);
 	~PowerKatana();
 	PowerKatana* Clone() override;
+	void Init() override;
 
-	virtual void use();
+	virtual void use(fPoint _pos);
 
 	virtual void update();
 	virtual void render();

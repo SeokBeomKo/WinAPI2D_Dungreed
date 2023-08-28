@@ -132,6 +132,7 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
+	AttackHandle();
 	EquipHandle();
 	if (DownJumpHandle())	return;
 	if (MoveHandle())		return;

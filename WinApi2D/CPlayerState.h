@@ -15,6 +15,8 @@ public:
 	CPlayerState(CPlayerStateMachine* _machine);
 	~CPlayerState();
 
+	void EquipHandle();
+
 	void AttackHandle();
 
 	bool IdleHandle();

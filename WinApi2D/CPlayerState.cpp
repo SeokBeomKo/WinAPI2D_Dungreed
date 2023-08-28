@@ -19,6 +19,19 @@ CPlayerState::~CPlayerState()
 {
 }
 
+void CPlayerState::EquipHandle()
+{
+	if (KeyDown('E'))
+	{
+		if (nullptr == m_pStateMachine->GetOwner()->GetWeapon())
+			m_pStateMachine->GetOwner()->Equip();
+		else
+		{
+			m_pStateMachine->GetOwner()->UnEquip();
+		}
+	}
+}
+
 void CPlayerState::AttackHandle()
 {
 	if (nullptr == m_pStateMachine->GetOwner()->GetWeapon())	return;
@@ -119,6 +132,7 @@ CPlayerIdleState::~CPlayerIdleState()
 
 void CPlayerIdleState::update()
 {
+	EquipHandle();
 	if (DownJumpHandle())	return;
 	if (MoveHandle())		return;
 	if (JumpHandle())		return;
@@ -153,6 +167,7 @@ CPlayerMoveState::~CPlayerMoveState()
 
 void CPlayerMoveState::update()
 {
+	EquipHandle();
 	if (DownJumpHandle())	return;
 	if (!Key('A') && !Key('D'))
 	{
@@ -193,6 +208,7 @@ CPlayerDashState::~CPlayerDashState()
 
 void CPlayerDashState::update()
 {
+	EquipHandle();
 	if (DashHandle())		return;
 	if (m_pStateMachine->GetOwner()->GetDashForce() <= DASH_POWER * 0.1f)
 	{
@@ -235,6 +251,7 @@ CPlayerJumpState::~CPlayerJumpState()
 
 void CPlayerJumpState::update()
 {
+	EquipHandle();
 	m_pStateMachine->GetOwner()->Jump();
 
 	if (m_pStateMachine->GetOwner()->GetJump() <= 0.f)
@@ -276,6 +293,7 @@ CPlayerDoubleJumpState::~CPlayerDoubleJumpState()
 
 void CPlayerDoubleJumpState::update()
 {
+	EquipHandle();
 	OverMoveHandle();
 	if (DashHandle())		return;
 }
@@ -331,8 +349,9 @@ CPlayerFallState::~CPlayerFallState()
 
 void CPlayerFallState::update()
 {
-	if (IdleHandle())		return;
+	EquipHandle();
 	OverMoveHandle();
+	if (IdleHandle())		return;
 	if (DashHandle())		return;
 
 	m_pStateMachine->GetOwner()->Fall();

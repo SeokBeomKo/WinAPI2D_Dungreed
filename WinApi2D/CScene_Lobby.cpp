@@ -46,7 +46,7 @@ void CScene_Lobby::Enter()
 	AddObject(town, GROUP_GAMEOBJ::MAP);
 
 	// 배경 이미지
-	/*CImage* skyday = new CImage;
+	CImage* skyday = new CImage;
 	skyday->Load(L"Sky_Day", L"texture\\background\\Sky_Day.png");
 	AddObject(skyday, GROUP_GAMEOBJ::BACK_GROUND);
 	CBack_Ground* townBG_day = new CBack_Ground;
@@ -54,7 +54,7 @@ void CScene_Lobby::Enter()
 	AddObject(townBG_day, GROUP_GAMEOBJ::BACK_GROUND);
 	CBack_Ground* townLayer_day = new CBack_Ground;
 	townLayer_day->Load(L"TownLayer_Day", L"texture\\background\\TownLayer_Day.png", fPoint(0.f, 550.f), 3.f);
-	AddObject(townLayer_day, GROUP_GAMEOBJ::BACK_GROUND);*/
+	AddObject(townLayer_day, GROUP_GAMEOBJ::BACK_GROUND);
 
 	// Player 추가
 	CPlayer* pPlayer = new CPlayer;
@@ -68,13 +68,16 @@ void CScene_Lobby::Enter()
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);*/
 
 	CItem* pShortSword = new ShortSword;
-	pShortSword->SetPos(fPoint(m_fptPlayerPos));
+	pShortSword->SetPos({ 4000.f, 650.f });
 	AddObject(pShortSword, GROUP_GAMEOBJ::ITEM);
 
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
+	CItem* pPowerKatana = new PowerKatana;
+	pPowerKatana->SetPos({ 3500.f, 650.f });
+	AddObject(pPowerKatana, GROUP_GAMEOBJ::ITEM);
+
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ITEM);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ITEM, GROUP_GAMEOBJ::TILE);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 
 	// Camera Look 
 	CCameraManager::getInst()->SetRange(fPoint(1904.f, 384.f));

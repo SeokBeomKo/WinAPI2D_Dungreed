@@ -12,6 +12,10 @@ protected:
 public:
 	CItem();
 	~CItem();
+	virtual CItem* Clone() = 0;
+
+	CD2DImage* GetImage();
+	virtual void Delete();
 
 	virtual void update() = 0;
 	virtual void render() = 0;

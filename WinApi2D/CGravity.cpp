@@ -6,7 +6,7 @@
 CGravity::CGravity()
 {
 	m_pOwner		= nullptr;
-	m_bIsGravity	= false;
+	m_bIsGravity	= true;
 	m_fTime			= 0;
 }
 

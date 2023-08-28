@@ -5,6 +5,8 @@
 class CD2DImage;
 class CPlayerStateMachine;
 class IWeapon;
+class CWeapon;
+class CEquip;
 
 class CPlayer : public CEntity
 {
@@ -18,12 +20,17 @@ private:
 	float m_fDashForce;		// 대쉬 힘
 	int m_iJumpCount;		// 점프 횟수
 protected:
-	IWeapon* m_pCurWeapon;	// 장착 무기
+	CWeapon* m_pCollWeapon;	// 충돌중인 무기
+
+	CWeapon* m_pCurWeapon;	// 보유 무기 (인벤토리)
+	CEquip* m_pCurEquip;	// 장착 무기 렌더
 
 public:
 	CPlayer();
 	~CPlayer();
 	virtual CPlayer* Clone();
+
+	virtual CPlayer* GetObj();
 
 	void Idle();
 	void Move(bool _isRight);
@@ -34,6 +41,14 @@ public:
 	void Dead();
 
 	void Attack();
+
+	void Equip();
+	void UnEquip();
+
+	// 무기
+	void SetCollWeapon(CWeapon* collWeapon);
+	CWeapon* GetCollWeapon();
+	CWeapon* GetWeapon();
 
 	void InitDashForce();
 	float GetDashForce();
@@ -46,9 +61,32 @@ public:
 	float GetJump();
 	void SetJump(float temp);
 
-	IWeapon* GetWeapon();
-
 	virtual void update();
 	virtual void render();
+};
+
+//========================================
+//## Equip								##
+//========================================
+
+class CEquip : public CGameObject
+{
+private:
+	CGameObject* m_pOwner;
+	CD2DImage* m_pImg;
+protected:
+	fPoint	m_fptOffset;
+public:
+	CEquip();
+	CEquip(CGameObject* _owner);
+	~CEquip();
+	virtual CEquip* Clone() { return this; };
+
+	void Init();
+	void SetEquip(CD2DImage* _image);
+	bool IsEquip();
+
+	virtual void render();
+	virtual void update();
 };
 

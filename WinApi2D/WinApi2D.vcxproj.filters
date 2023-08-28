@@ -106,6 +106,12 @@
     <Filter Include="Object\Entity\Item\Weapon">
       <UniqueIdentifier>{1a3e109b-7e05-419f-a3c9-87abdbf7c072}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\VFX">
+      <UniqueIdentifier>{db6bcfc4-531c-4602-9e20-723db3d559fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Attack">
+      <UniqueIdentifier>{8d558f01-f784-4473-b96f-90073e27aa8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -249,6 +255,12 @@
     <ClInclude Include="CWeapon.h">
       <Filter>Object\Entity\Item\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerVFX.h">
+      <Filter>Object\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttack.h">
+      <Filter>Object\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -373,6 +385,12 @@
     </ClCompile>
     <ClCompile Include="CWeapon.cpp">
       <Filter>Object\Entity\Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerVFX.cpp">
+      <Filter>Object\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttack.cpp">
+      <Filter>Object\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

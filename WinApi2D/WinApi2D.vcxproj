@@ -172,8 +172,10 @@
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CPlayerAttack.h" />
     <ClInclude Include="CPlayerState.h" />
     <ClInclude Include="CPlayerStateMachine.h" />
+    <ClInclude Include="CPlayerVFX.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
@@ -221,8 +223,10 @@
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CPlayerAttack.cpp" />
     <ClCompile Include="CPlayerState.cpp" />
     <ClCompile Include="CPlayerStateMachine.cpp" />
+    <ClCompile Include="CPlayerVFX.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />

@@ -125,7 +125,7 @@ void CPlayer::Equip()
 	if (nullptr == m_pCollWeapon)	return;
 	if (nullptr != m_pCurWeapon)	UnEquip();
 	
-	m_pCurWeapon = m_pCollWeapon;
+	m_pCurWeapon = m_pCollWeapon->Clone();
 	m_pCurEquip->SetEquip(m_pCurWeapon->GetImage());
 	m_pCollWeapon->Delete();
 	m_pCollWeapon = nullptr;
@@ -135,8 +135,9 @@ void CPlayer::UnEquip()
 {
 	// 아이템 장착 해제
 	if (nullptr == m_pCurWeapon)	return;		// 장착한 장비가 있는지 ?
-
-	CreateObj(m_pCurWeapon, GROUP_GAMEOBJ::ITEM);
+	CItem* tItem = m_pCurWeapon->Clone();
+	tItem->SetPos(GetPos());
+	CreateObj(tItem, GROUP_GAMEOBJ::ITEM);
 	m_pCurWeapon = nullptr;
 	m_pCurEquip->Init();
 }

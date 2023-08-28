@@ -21,11 +21,6 @@ CEntity::~CEntity()
 	}
 }
 
-CEntity* CEntity::Clone()
-{
-	return nullptr;
-}
-
 CEntity* CEntity::GetObj()
 {
 	return this;

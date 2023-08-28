@@ -71,6 +71,10 @@ void CScene_Lobby::Enter()
 	pShortSword->SetPos({ 4000.f, 650.f });
 	AddObject(pShortSword, GROUP_GAMEOBJ::ITEM);
 
+	CItem* pPowerKatana = new PowerKatana;
+	pPowerKatana->SetPos({ 3500.f, 650.f });
+	AddObject(pPowerKatana, GROUP_GAMEOBJ::ITEM);
+
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ITEM);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ITEM, GROUP_GAMEOBJ::TILE);

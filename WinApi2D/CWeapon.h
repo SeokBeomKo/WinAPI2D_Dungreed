@@ -9,7 +9,9 @@ private:
 
 public:
 	CWeapon();
+	CWeapon(const CWeapon& _other);
 	~CWeapon();
+	virtual CWeapon* Clone() = 0;
 
 	virtual void use() = 0;
 
@@ -30,6 +32,7 @@ class ShortSword : public CWeapon
 public:
 	ShortSword();
 	~ShortSword();
+	ShortSword* Clone() override;
 
 	virtual void use();
 
@@ -37,3 +40,19 @@ public:
 	virtual void render();
 };
 
+//========================================
+//## PowerKatana						##
+//========================================
+
+class PowerKatana : public CWeapon
+{
+public:
+	PowerKatana();
+	~PowerKatana();
+	PowerKatana* Clone() override;
+
+	virtual void use();
+
+	virtual void update();
+	virtual void render();
+};

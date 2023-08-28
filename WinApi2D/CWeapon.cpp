@@ -10,6 +10,14 @@
 
 CWeapon::CWeapon()
 {
+    InitGravity();
+    SetGrounded(0);
+}
+
+CWeapon::CWeapon(const CWeapon& _other)
+{
+    InitGravity();
+    SetGrounded(0);
 }
 
 CWeapon::~CWeapon()
@@ -51,6 +59,7 @@ void CWeapon::OnCollisionExit(CCollider* _pOther)
 //========================================
 
 ShortSword::ShortSword()
+    : CWeapon()
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(L"ShortSword", L"texture\\weapon\\ShortSword.png");
     SetScale(fPoint(m_pImg->GetWidth() * 4.f, m_pImg->GetHeight() * 4.f));
@@ -65,8 +74,18 @@ ShortSword::~ShortSword()
 {
 }
 
+ShortSword* ShortSword::Clone()
+{
+    return new ShortSword(*this);
+}
+
 void ShortSword::use()
 {
+}
+
+void ShortSword::update()
+{
+    SetGravity(!GetGrounded());
 }
 
 void ShortSword::render()
@@ -86,7 +105,52 @@ void ShortSword::render()
     component_render();
 }
 
-void ShortSword::update()
+//========================================
+//## ShortSword							##
+//========================================
+
+PowerKatana::PowerKatana()
+{
+    m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PowerKatana", L"texture\\weapon\\PowerKatana.png");
+    SetScale(fPoint(m_pImg->GetWidth() * 4.f, m_pImg->GetHeight() * 4.f));
+    SetPos(fPoint(0.f, 0.f));
+    SetName(L"PowerKatana");
+
+    GetCollider()->SetScale(GetScale());
+    GetCollider()->SetOffsetPos(fPoint(0.f, 0.f));
+}
+
+PowerKatana::~PowerKatana()
+{
+}
+
+PowerKatana* PowerKatana::Clone()
+{
+    return new PowerKatana(*this);
+}
+
+void PowerKatana::use()
+{
+}
+
+void PowerKatana::update()
 {
     SetGravity(!GetGrounded());
+}
+
+void PowerKatana::render()
+{
+    fPoint pos = GetPos();
+    fPoint renderpos = CCameraManager::getInst()->GetRenderPos(pos);
+    fPoint scale = GetScale();
+
+    CRenderManager::getInst()->RenderImage(
+        m_pImg,
+        renderpos.x - scale.x / 2.f,
+        renderpos.y - scale.y / 2.f,
+        renderpos.x + scale.x / 2.f,
+        renderpos.y + scale.y / 2.f
+    );
+
+    component_render();
 }

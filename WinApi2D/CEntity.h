@@ -17,7 +17,7 @@ public:
 	float m_foffsetY;
 	CEntity();
 	~CEntity();
-	virtual CEntity* Clone();
+	virtual CEntity* Clone() = 0;
 
 	virtual CEntity* GetObj();
 

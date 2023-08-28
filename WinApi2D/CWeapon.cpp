@@ -94,12 +94,11 @@ void ShortSword::Init()
 void ShortSword::use(fPoint _pos)
 {
     m_pAttack = new CPlayerAttack();
+    m_pAttack->Init(_pos);
     m_pAttackImg = CResourceManager::getInst()->LoadD2DImage(L"ShortSwordFX", L"texture\\weapon\\effect\\ShortSwordFX.png");
-    m_pAttack->GetAnimator()->CreateAnimation(L"Attack", m_pAttackImg, fPoint(0.f, 0.f), fPoint(28.f, 40.f), fPoint(0.f, 40.f), 0.134f, 3, false, true, m_pAttack->GetDegree(GetPos()));
-    m_pAttack->SetScale(fPoint(28.f, 40.f) * 4.f);
-    m_pAttack->GetCollider()->SetScale(fPoint(40.f, 28.f) * 4.f);
-    m_pAttack->GetCollider()->SetFinalPos(_pos);
-    m_pAttack->SetPos(_pos);
+    m_pAttack->GetAnimator()->CreateAnimation(L"Attack", m_pAttackImg, fPoint(0.f, 0.f), fPoint(28.f, 40.f), fPoint(0.f, 40.f), 0.134f, 3, false, true, m_pAttack->GetDegree());
+    m_pAttack->SetScale(fPoint(28.f, 40.f) * 3.f);
+    m_pAttack->GetCollider()->SetScale(fPoint(40.f, 28.f) * 3.f);
 
     CreateObj(m_pAttack, GROUP_GAMEOBJ::ATTACK_PLAYER);
 }
@@ -167,6 +166,14 @@ void PowerKatana::Init()
 
 void PowerKatana::use(fPoint _pos)
 {
+    m_pAttack = new CPlayerAttack();
+    m_pAttack->Init(_pos);
+    m_pAttackImg = CResourceManager::getInst()->LoadD2DImage(L"EXPowerKatanaSwingPlusFX", L"texture\\weapon\\effect\\EXPowerKatanaSwingPlusFX.png");
+    m_pAttack->GetAnimator()->CreateAnimation(L"Attack", m_pAttackImg, fPoint(0.f, 0.f), fPoint(138.f, 164.f), fPoint(0.f, 164.f), 0.0333f, 12, false, true, m_pAttack->GetDegree());
+    m_pAttack->SetScale(fPoint(138.f, 164.f) * 1.5f);
+    m_pAttack->GetCollider()->SetScale(fPoint(164.f, 138.f) * 1.5f);
+
+    CreateObj(m_pAttack, GROUP_GAMEOBJ::ATTACK_PLAYER);
 }
 
 void PowerKatana::update()

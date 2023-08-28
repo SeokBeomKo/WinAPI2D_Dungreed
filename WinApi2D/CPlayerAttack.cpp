@@ -10,7 +10,7 @@ CPlayerAttack::CPlayerAttack()
 	m_pImg = nullptr;
 
 	m_iDamage		= 0;
-	m_iRange		= 0;
+	m_iRange		= 100;
 	m_fCurTimeFX	= 0.f;
 	m_fMaxTimeFX	= 0.4f;
 	m_fptDirFX		= { 0, 0 };
@@ -35,25 +35,17 @@ CPlayerAttack::~CPlayerAttack()
 }
 
 
-void CPlayerAttack::Init(fPoint _ownerPos, fPoint _slice, fPoint _step, float _duration, UINT _frmCount, bool _reverse, bool _rotate, float _pos)
+void CPlayerAttack::Init(fPoint _pos)
 {
-	fPoint finalpos = GetPos();
-	fPoint pos = _ownerPos;
-	fPoint realpos = CCameraManager::getInst()->GetRenderPos(pos);
+	fPoint finalpos = _pos;
 
-	m_fptDirFX = MousePos() - realpos;
+	m_fptDirFX = MousePos() - CCameraManager::getInst()->GetRenderPos(_pos);
 
-	float rotateDegree = atan2(m_fptDirFX.y, m_fptDirFX.x) * 180 / 3.141592;
-
-	GetAnimator()->CreateAnimation(L"Attack", m_pImg, fPoint(0.f, 0.f), _slice, _step, _duration, _frmCount, _reverse, _rotate, rotateDegree);
-	SetScale(_slice * 4.f);
-	GetCollider()->SetScale(_slice * 4.f);
-
-	finalpos.x = finalpos.x + m_fptDirFX.normalize().x * m_iRange;
-	finalpos.y = finalpos.y + m_fptDirFX.normalize().y * m_iRange;
+	finalpos = finalpos + m_fptDirFX.normalize() * m_iRange;
 
 	SetPos(finalpos);
-	GetCollider()->SetFinalPos(_ownerPos);
+	GetCollider()->SetFinalPos(_pos);
+
 }
 
 int CPlayerAttack::GetDamage()
@@ -61,14 +53,8 @@ int CPlayerAttack::GetDamage()
 	return m_iDamage;
 }
 
-float CPlayerAttack::GetDegree(fPoint _pos)
+float CPlayerAttack::GetDegree()
 {
-	fPoint finalpos = GetPos();
-	fPoint realpos = CCameraManager::getInst()->GetRenderPos(_pos);
-
-	m_fptDirFX.x = MousePos().x - realpos.x;
-	m_fptDirFX.y = MousePos().y - realpos.y;
-
 	return atan2(m_fptDirFX.y, m_fptDirFX.x) * RTOD;
 }
 

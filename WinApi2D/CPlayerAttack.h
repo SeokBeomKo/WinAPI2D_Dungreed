@@ -18,10 +18,10 @@ public:
 	~CPlayerAttack();
 	virtual CPlayerAttack* Clone() { return this; }
 
-	void Init(fPoint _ownerPos, fPoint _slice, fPoint _step, float _duration, UINT _frmCount, bool _reverse, bool _rotate, float _pos);
+	void Init(fPoint _pos);
 	int GetDamage();
 
-	float GetDegree(fPoint _pos);
+	float GetDegree();
 
 	virtual void update();
 	virtual void render();

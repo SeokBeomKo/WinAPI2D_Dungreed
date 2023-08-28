@@ -31,6 +31,7 @@ class ShortSword : public CWeapon
 {
 public:
 	ShortSword();
+	ShortSword(const ShortSword& _other);
 	~ShortSword();
 	ShortSword* Clone() override;
 
@@ -48,6 +49,7 @@ class PowerKatana : public CWeapon
 {
 public:
 	PowerKatana();
+	PowerKatana(const PowerKatana& _other);
 	~PowerKatana();
 	PowerKatana* Clone() override;
 

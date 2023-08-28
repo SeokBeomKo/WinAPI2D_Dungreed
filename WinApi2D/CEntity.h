@@ -16,6 +16,7 @@ protected:	// Component
 public:
 	float m_foffsetY;
 	CEntity();
+	CEntity(const CEntity& _other);
 	~CEntity();
 	virtual CEntity* Clone() = 0;
 

@@ -7,10 +7,23 @@
 CEntity::CEntity()
 {
 	m_pGravity = nullptr;
-	m_iGrounded = 0;
 	m_bIsPass = false;
+	m_iGrounded = 0;
 
 	m_foffsetY = 0.f;
+}
+
+CEntity::CEntity(const CEntity& _other)
+{
+	m_bIsPass = false;
+	m_iGrounded = 0;
+
+	m_foffsetY = 0.f;
+	if (nullptr != _other.m_pGravity)
+	{
+		m_pGravity = new CGravity(*_other.m_pGravity);
+		m_pGravity->m_pOwner = this;
+	}
 }
 
 CEntity::~CEntity()

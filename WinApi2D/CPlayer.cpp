@@ -16,8 +16,9 @@
 
 CPlayer::CPlayer()
 {
-	m_pCurWeapon = nullptr;
+	m_pCurWeapon	= nullptr;
 	m_pCollWeapon = nullptr;
+	m_pCurEquip = new CEquip(this);
 
 	m_iJumpCount = 1;
 	m_fJumpForce = GRAVITY_POWER;
@@ -125,6 +126,7 @@ void CPlayer::Equip()
 	if (nullptr != m_pCurWeapon)	UnEquip();
 	
 	m_pCurWeapon = m_pCollWeapon;
+	m_pCurEquip->SetEquip(m_pCurWeapon->GetImage());
 	m_pCollWeapon->Delete();
 	m_pCollWeapon = nullptr;
 }
@@ -133,8 +135,10 @@ void CPlayer::UnEquip()
 {
 	// 아이템 장착 해제
 	if (nullptr == m_pCurWeapon)	return;		// 장착한 장비가 있는지 ?
+
 	CreateObj(m_pCurWeapon, GROUP_GAMEOBJ::ITEM);
 	m_pCurWeapon = nullptr;
+	m_pCurEquip->Init();
 }
 
 void CPlayer::SetCollWeapon(CWeapon* collWeapon)
@@ -193,11 +197,89 @@ void CPlayer::update()
 	{
 		m_pStateMachine->update();
 	}
+	if (m_pCurEquip->IsEquip())
+	{
+		m_pCurEquip->update();
+	}
 
 	GetAnimator()->update();
 }
 
 void CPlayer::render()
 {
+	if (m_pCurEquip->IsEquip())
+	{
+		m_pCurEquip->render();
+	}
 	component_render();
+}
+
+//========================================
+//## Equip								##
+//========================================
+
+CEquip::CEquip()
+{
+	m_pOwner	= nullptr;
+	m_pImg		= nullptr;
+	m_fptOffset = {50.f, 10.f};
+}
+
+CEquip::CEquip(CGameObject* _owner)
+{
+	m_pOwner = _owner;
+	m_fptOffset = { 50.f, 10.f };
+}
+
+CEquip::~CEquip()
+{
+}
+
+void CEquip::Init()
+{
+	m_pImg = nullptr;
+}
+
+void CEquip::SetEquip(CD2DImage* _image)
+{
+	m_pImg = _image;
+	SetScale(fPoint(m_pImg->GetWidth() * 4.f, m_pImg->GetHeight() * 4.f));
+}
+
+bool CEquip::IsEquip()
+{
+	return nullptr != m_pImg;
+}
+
+void CEquip::render()
+{
+	fPoint pos = GetPos();
+	fPoint renderpos = CCameraManager::getInst()->GetRenderPos(pos);
+	fPoint scale = GetScale();
+
+	fPoint mousepos = MousePos();
+	fVec2 d;
+	d.x = (mousepos.x - renderpos.x);
+	d.y = (mousepos.y - renderpos.y);
+
+	float rotateDegree = atan2(d.y, d.x) * 180 / 3.141592;
+
+	CRenderManager::getInst()->RenderImage(
+		m_pImg,
+		renderpos.x - scale.x / 2.f,
+		renderpos.y - scale.y / 2.f,
+		renderpos.x + scale.x / 2.f,
+		renderpos.y + scale.y / 2.f, true,
+		renderpos - fPoint(m_fptOffset.x, 0.f),
+		rotateDegree
+	);
+}
+
+void CEquip::update()
+{
+	fPoint pos = m_pOwner->GetPos();
+	fPoint realpos = CCameraManager::getInst()->GetRenderPos(pos);
+	pos += m_fptOffset;
+
+	SetPos(pos);
 }

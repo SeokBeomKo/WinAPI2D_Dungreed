@@ -75,6 +75,20 @@ enum class GROUP_TILE
 	SIZE,
 };
 
+enum class GROUP_ENEMY
+{
+	GROUND,
+	FLY,
+
+	BOSS,
+
+	SIZE,
+};
+
+//========================================
+//## 상태 그룹							##
+//========================================
+
 enum class STATE_PLAYER
 {
 	IDLE,
@@ -84,6 +98,19 @@ enum class STATE_PLAYER
 	DOUBLEJUMP,
 	DOWNJUMP,
 	FALL,
+
+	DEAD,
+
+	SIZE,
+};
+
+enum class STATE_ENEMY
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATTACK,
+
 	DEAD,
 
 	SIZE,

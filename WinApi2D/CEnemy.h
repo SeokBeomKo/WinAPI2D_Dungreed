@@ -4,6 +4,7 @@
 
 class CD2DImage;
 class CEnemyStateMachine;
+class CEnemyType;
 
 //========================================
 //## Enemy								##
@@ -12,50 +13,20 @@ class CEnemyStateMachine;
 class CEnemy : public CEntity
 {
 protected:
+	CD2DImage* m_pImg;
 	CEnemyStateMachine* m_pStateMachine;
+	CEnemyType* m_pType;
 public:
 	CEnemy();
 	~CEnemy();
-	CEnemy* Clone() = 0;
+	CEnemy* Clone();
 
-	void update() = 0;
-	void render() = 0;
+	CEnemyType* GetEnemyType();
+
+	void update();
+	void render();
 
 	void OnCollision(CCollider* _pOther) override;
 	void OnCollisionEnter(CCollider* _pOther) override;
 	void OnCollisionExit(CCollider* _pOther) override;
-};
-
-//========================================
-//## GroundEnemy						##
-//========================================
-
-class CGroundEnemy : public CEnemy
-{
-private:
-
-public:
-	CGroundEnemy();
-	~CGroundEnemy();
-	CGroundEnemy* Clone() override;
-
-	void update() override;
-	void render() override;
-};
-
-//========================================
-//## FlyEnemy							##
-//========================================
-
-class CFlyEnemy : public CEnemy
-{
-private:
-
-public:
-	CFlyEnemy();
-	~CFlyEnemy();
-	CFlyEnemy* Clone() override;
-
-	void update() override;
-	void render() override;
 };

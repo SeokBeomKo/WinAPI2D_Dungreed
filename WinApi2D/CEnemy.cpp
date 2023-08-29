@@ -21,8 +21,29 @@ CEnemy::~CEnemy()
 {
 }
 
+CEnemy* CEnemy::Clone()
+{
+	return nullptr;
+}
+
+CEnemyType* CEnemy::GetEnemyType()
+{
+	return m_pType;
+}
+
+void CEnemy::update()
+{
+	if (nullptr != GetGravity())
+		GetGravity()->finalupdate();
+	if (nullptr != GetAnimator())
+		GetAnimator()->update();
+	if (nullptr != m_pStateMachine)
+		m_pStateMachine->update();
+}
+
 void CEnemy::render()
 {
+	component_render();
 }
 
 void CEnemy::OnCollision(CCollider* _pOther)
@@ -35,66 +56,4 @@ void CEnemy::OnCollisionEnter(CCollider* _pOther)
 
 void CEnemy::OnCollisionExit(CCollider* _pOther)
 {
-}
-
-//========================================
-//## GroundEnemy						##
-//========================================
-
-CGroundEnemy::CGroundEnemy()
-{
-}
-
-CGroundEnemy::~CGroundEnemy()
-{
-}
-
-CGroundEnemy* CGroundEnemy::Clone()
-{
-	return nullptr;
-}
-
-void CGroundEnemy::update()
-{
-	if (nullptr != GetGravity())
-		GetGravity()->finalupdate();
-	if (nullptr != GetAnimator())
-		GetAnimator()->update();
-	if (nullptr != m_pStateMachine)
-		m_pStateMachine->update();
-}
-
-void CGroundEnemy::render()
-{
-	component_render();
-}
-
-//========================================
-//## FlyEnemy							##
-//========================================
-
-CFlyEnemy::CFlyEnemy()
-{
-}
-
-CFlyEnemy::~CFlyEnemy()
-{
-}
-
-CFlyEnemy* CFlyEnemy::Clone()
-{
-	return nullptr;
-}
-
-void CFlyEnemy::update()
-{
-	if (nullptr != GetAnimator())
-		GetAnimator()->update();
-	if (nullptr != m_pStateMachine)
-		m_pStateMachine->update();
-}
-
-void CFlyEnemy::render()
-{
-	component_render();
 }

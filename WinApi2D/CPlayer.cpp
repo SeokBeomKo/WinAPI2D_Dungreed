@@ -46,12 +46,6 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"Dead", m_pImg, fPoint(0.f, 0.f), fPoint(32.f, 32.f), fPoint(32.f, 0.f), 1.f, 1);
 
 	CreateGravity();
-
-	/*CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"LeftMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
-	pAni = GetAnimator()->FindAnimation(L"RightMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);*/
 }
 
 CPlayer::~CPlayer()

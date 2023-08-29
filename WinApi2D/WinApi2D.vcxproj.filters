@@ -112,6 +112,12 @@
     <Filter Include="Object\Attack">
       <UniqueIdentifier>{8d558f01-f784-4473-b96f-90073e27aa8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Component\FSM\Player">
+      <UniqueIdentifier>{92b99cb1-c2f8-4c5e-a53f-6d2e0b690e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\FSM\Enemy">
+      <UniqueIdentifier>{e83619c6-c039-4670-847f-aebfb61b94bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -234,12 +240,6 @@
     <ClInclude Include="CScene_Tool.h">
       <Filter>Scene\ToolScene</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerStateMachine.h">
-      <Filter>Engine\Component\FSM</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerState.h">
-      <Filter>Engine\Component\FSM</Filter>
-    </ClInclude>
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Image</Filter>
     </ClInclude>
@@ -260,6 +260,12 @@
     </ClInclude>
     <ClInclude Include="CPlayerAttack.h">
       <Filter>Object\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerState.h">
+      <Filter>Engine\Component\FSM\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateMachine.h">
+      <Filter>Engine\Component\FSM\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,12 +371,6 @@
     <ClCompile Include="CScene_Tool.cpp">
       <Filter>Scene\ToolScene</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerState.cpp">
-      <Filter>Engine\Component\FSM</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerStateMachine.cpp">
-      <Filter>Engine\Component\FSM</Filter>
-    </ClCompile>
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Image</Filter>
     </ClCompile>
@@ -391,6 +391,12 @@
     </ClCompile>
     <ClCompile Include="CPlayerAttack.cpp">
       <Filter>Object\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerState.cpp">
+      <Filter>Engine\Component\FSM\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateMachine.cpp">
+      <Filter>Engine\Component\FSM\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

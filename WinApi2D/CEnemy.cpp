@@ -6,8 +6,6 @@
 #include "CGravity.h"
 
 #include "CEnemyStateMachine.h"
-#include "CGroundEnemyState.h"
-#include "CFlyEnemyState.h"
 
 //========================================
 //## Enemy								##
@@ -15,6 +13,9 @@
 
 CEnemy::CEnemy()
 {
+	m_pImg = nullptr;
+	m_pType = nullptr;
+	m_pStateMachine = new CEnemyStateMachine();
 }
 
 CEnemy::~CEnemy()
@@ -26,6 +27,18 @@ CEnemy* CEnemy::Clone()
 	return nullptr;
 }
 
+void CEnemy::Init(CD2DImage* _img, CEnemyType* _type)
+{
+	m_pImg = _img;
+	m_pType = _type;
+}
+
+
+void CEnemy::SetEnemyType(CEnemyType* _type)
+{
+	m_pType = _type;
+}
+
 CEnemyType* CEnemy::GetEnemyType()
 {
 	return m_pType;
@@ -33,8 +46,6 @@ CEnemyType* CEnemy::GetEnemyType()
 
 void CEnemy::update()
 {
-	if (nullptr != GetGravity())
-		GetGravity()->finalupdate();
 	if (nullptr != GetAnimator())
 		GetAnimator()->update();
 	if (nullptr != m_pStateMachine)

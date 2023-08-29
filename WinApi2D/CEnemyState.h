@@ -12,9 +12,14 @@ class CEnemyState
 protected:
 	CEnemy* enemy;
 	CEnemyStateMachine* stateMachine;
+
+	STATE_ENEMY m_eState;
 public:
-	CEnemyState(CEnemyStateMachine* _stateMachine);
+	CEnemyState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyState();
+
+	void SetStateMachine(CEnemyStateMachine* _stateMachine);
+	STATE_ENEMY GetStateGroup();
 
 	virtual void Execute() = 0;
 	virtual void OnStateEnter() = 0;
@@ -28,7 +33,7 @@ public:
 class CEnemyIdleState : public CEnemyState
 {
 public:
-	CEnemyIdleState(CEnemyStateMachine* _stateMachine);
+	CEnemyIdleState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyIdleState();
 
 	void Execute() override;
@@ -43,7 +48,7 @@ public:
 class CEnemyTraceState : public CEnemyState
 {
 public:
-	CEnemyTraceState(CEnemyStateMachine* _stateMachine);
+	CEnemyTraceState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyTraceState();
 
 	void Execute() override;
@@ -58,7 +63,7 @@ public:
 class CEnemyAttackState : public CEnemyState
 {
 public:
-	CEnemyAttackState(CEnemyStateMachine* _stateMachine);
+	CEnemyAttackState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyAttackState();
 
 	void Execute() override;
@@ -73,7 +78,7 @@ public:
 class CEnemyDeadState : public CEnemyState
 {
 public:
-	CEnemyDeadState(CEnemyStateMachine* _stateMachine);
+	CEnemyDeadState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyDeadState();
 
 	void Execute() override;

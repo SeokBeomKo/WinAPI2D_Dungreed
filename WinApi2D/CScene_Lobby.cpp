@@ -9,7 +9,9 @@
 // Entity
 #include "CGameObject.h"
 #include "CPlayer.h"
-#include "CMonster.h"
+#include "CEnemy.h"
+
+#include "CEnemyType.h"
 
 // 아이템
 #include "CWeapon.h"
@@ -61,6 +63,11 @@ void CScene_Lobby::Enter()
 	pPlayer->SetPos(m_fptPlayerPos);
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
+	// Enemy 추가
+	/*CEnemy* pBigSkeleton01 = new CEnemy;
+	pBigSkeleton01->SetEnemyType(new CEnemyMeleeWalkType(pBigSkeleton01));
+	AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);*/
+	
 	// Monster 추가
 	/*CMonster* pMonster = new CMonster;
 	pMonster->SetPos(fPoint(1100, 350));

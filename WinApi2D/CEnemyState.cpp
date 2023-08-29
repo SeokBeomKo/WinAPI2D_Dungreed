@@ -9,22 +9,28 @@
 //## EnemyState							##
 //========================================
 
-CEnemyState::CEnemyState(CEnemyStateMachine* _stateMachine)
+CEnemyState::CEnemyState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
 {
 	stateMachine = _stateMachine;
 	enemy = _stateMachine->GetOwner();
+	m_eState = _stateEnum;
 }
 
 CEnemyState::~CEnemyState()
 {
 }
 
+STATE_ENEMY CEnemyState::GetStateGroup()
+{
+	return m_eState;
+}
+
 //========================================
 //## EnemyState							##
 //========================================
 
-CEnemyIdleState::CEnemyIdleState(CEnemyStateMachine* _stateMachine)
-	: CEnemyState(_stateMachine)
+CEnemyIdleState::CEnemyIdleState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
+	: CEnemyState(_stateMachine, _stateEnum)
 {
 }
 
@@ -49,8 +55,8 @@ void CEnemyIdleState::OnStateExit()
 //## EnemyState							##
 //========================================
 
-CEnemyTraceState::CEnemyTraceState(CEnemyStateMachine* _stateMachine)
-	: CEnemyState(_stateMachine)
+CEnemyTraceState::CEnemyTraceState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
+	: CEnemyState(_stateMachine, _stateEnum)
 {
 }
 
@@ -75,8 +81,8 @@ void CEnemyTraceState::OnStateExit()
 //## EnemyState							##
 //========================================
 
-CEnemyAttackState::CEnemyAttackState(CEnemyStateMachine* _stateMachine)
-	: CEnemyState(_stateMachine)
+CEnemyAttackState::CEnemyAttackState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
+	: CEnemyState(_stateMachine, _stateEnum)
 {
 }
 
@@ -101,8 +107,8 @@ void CEnemyAttackState::OnStateExit()
 //## EnemyState							##
 //========================================
 
-CEnemyDeadState::CEnemyDeadState(CEnemyStateMachine* _stateMachine)
-	: CEnemyState(_stateMachine)
+CEnemyDeadState::CEnemyDeadState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
+	: CEnemyState(_stateMachine, _stateEnum)
 {
 }
 

@@ -118,6 +118,9 @@
     <Filter Include="Engine\Component\FSM\Enemy">
       <UniqueIdentifier>{e83619c6-c039-4670-847f-aebfb61b94bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Component\FSM\Enemy\Type">
+      <UniqueIdentifier>{9c7ff0cf-2873-4c6c-b32c-7451a8be6321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -228,9 +231,6 @@
     <ClInclude Include="CPlayer.h">
       <Filter>Object\Entity\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Entity\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="CMissile.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -266,6 +266,18 @@
     </ClInclude>
     <ClInclude Include="CPlayerStateMachine.h">
       <Filter>Engine\Component\FSM\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateMachine.h">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyState.h">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyType.h">
+      <Filter>Engine\Component\FSM\Enemy\Type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -359,9 +371,6 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>Object\Entity\Player</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Entity\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -397,6 +406,18 @@
     </ClCompile>
     <ClCompile Include="CPlayerStateMachine.cpp">
       <Filter>Engine\Component\FSM\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateMachine.cpp">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyState.cpp">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyType.cpp">
+      <Filter>Engine\Component\FSM\Enemy\Type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

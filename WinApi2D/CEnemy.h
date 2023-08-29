@@ -14,13 +14,17 @@ class CEnemy : public CEntity
 {
 protected:
 	CD2DImage* m_pImg;
-	CEnemyStateMachine* m_pStateMachine;
 	CEnemyType* m_pType;
+
+	CEnemyStateMachine* m_pStateMachine;
 public:
 	CEnemy();
 	~CEnemy();
 	CEnemy* Clone();
 
+	void Init(CD2DImage* _img, CEnemyType* _type);
+
+	void SetEnemyType(CEnemyType* _type);
 	CEnemyType* GetEnemyType();
 
 	void update();

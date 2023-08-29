@@ -77,8 +77,10 @@ enum class GROUP_TILE
 
 enum class GROUP_ENEMY
 {
-	GROUND,
-	FLY,
+	MELEE_WALK,
+	RANGE_WALK,
+	MELEE_FLY,
+	RANGE_FLY,
 
 	BOSS,
 
@@ -107,7 +109,6 @@ enum class STATE_PLAYER
 enum class STATE_ENEMY
 {
 	IDLE,
-	PATROL,
 	TRACE,
 	ATTACK,
 

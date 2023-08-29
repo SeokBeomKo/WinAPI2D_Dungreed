@@ -11,7 +11,7 @@ private:
 	CEnemy* m_pOwner;
 	CEnemyState* m_pCurState;
 public:
-	CEnemyStateMachine(GROUP_ENEMY _group);
+	CEnemyStateMachine();
 	~CEnemyStateMachine();
 
 	CEnemy* GetOwner();

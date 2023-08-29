@@ -42,9 +42,9 @@ enum class GROUP_GAMEOBJ
 	MAP,
 	TILE,
 	PLAYER,
-	MONSTER,
+	ENEMY,
 	ATTACK_PLAYER,
-	ATTACK_MONSTER,
+	ATTACK_ENEMY,
 	ITEM,
 
 	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치

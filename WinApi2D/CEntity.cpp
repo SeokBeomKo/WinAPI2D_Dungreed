@@ -73,7 +73,8 @@ void CEntity::AddGrounded()
 
 void CEntity::RemoveGrounded()
 {
-	m_iGrounded--;
+	if (m_iGrounded > 0)
+		m_iGrounded--;
 }
 
 void CEntity::SetGrounded(int _set)

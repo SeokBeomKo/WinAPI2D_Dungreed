@@ -42,9 +42,9 @@ enum class GROUP_GAMEOBJ
 	MAP,
 	TILE,
 	PLAYER,
-	MONSTER,
-	MISSILE_PLAYER,
-	MISSILE_MONSTER,
+	ENEMY,
+	ATTACK_PLAYER,
+	ATTACK_ENEMY,
 	ITEM,
 
 	UI,		// UI는 모든 게임오브젝트 중 최상단 Layer에 위치
@@ -75,6 +75,22 @@ enum class GROUP_TILE
 	SIZE,
 };
 
+enum class GROUP_ENEMY
+{
+	MELEE_WALK,
+	RANGE_WALK,
+	MELEE_FLY,
+	RANGE_FLY,
+
+	BOSS,
+
+	SIZE,
+};
+
+//========================================
+//## 상태 그룹							##
+//========================================
+
 enum class STATE_PLAYER
 {
 	IDLE,
@@ -84,6 +100,18 @@ enum class STATE_PLAYER
 	DOUBLEJUMP,
 	DOWNJUMP,
 	FALL,
+
+	DEAD,
+
+	SIZE,
+};
+
+enum class STATE_ENEMY
+{
+	IDLE,
+	TRACE,
+	ATTACK,
+
 	DEAD,
 
 	SIZE,
@@ -125,6 +153,9 @@ enum class TYPE_EVENT
 
 #define GRAVITY_FORCE		2000		// 돌아가는 힘
 #define GRAVITY_POWER		1200		// 가해지는 힘
+
+#define PI			3.141592
+#define RTOD		180 / PI
 
 #define WINSTARTX   100
 #define WINSTARTY   100

@@ -59,34 +59,73 @@ void CAnimation::render()
     fptPos = fptPos + frm.fptOffset;
     fptPos = CCameraManager::getInst()->GetRenderPos(fptPos);
 
-
     if (m_bFlip)
     {
-        CRenderManager::getInst()->RenderRevFrame(
-            m_pImg,
-            fptPos.x - fptScale.x / 2.f,
-            fptPos.y - fptScale.y / 2.f,
-            fptPos.x + fptScale.x / 2.f,
-            fptPos.y + fptScale.y / 2.f,
-            frm.fptLT.x,
-            frm.fptLT.y,
-            frm.fptLT.x + frm.fptSlice.x,
-            frm.fptLT.y + frm.fptSlice.y
-        );
+        if (m_bRotate)
+        {
+            CRenderManager::getInst()->RenderRevFrame(
+                m_pImg,
+                fptPos.x - fptScale.x / 2.f,
+                fptPos.y - fptScale.y / 2.f,
+                fptPos.x + fptScale.x / 2.f,
+                fptPos.y + fptScale.y / 2.f,
+                frm.fptLT.x,
+                frm.fptLT.y,
+                frm.fptLT.x + frm.fptSlice.x,
+                frm.fptLT.y + frm.fptSlice.y,
+                true,
+                fptPos,
+                m_fPlayerPos
+            );
+        }
+        else
+        {
+            CRenderManager::getInst()->RenderRevFrame(
+                m_pImg,
+                fptPos.x - fptScale.x / 2.f,
+                fptPos.y - fptScale.y / 2.f,
+                fptPos.x + fptScale.x / 2.f,
+                fptPos.y + fptScale.y / 2.f,
+                frm.fptLT.x,
+                frm.fptLT.y,
+                frm.fptLT.x + frm.fptSlice.x,
+                frm.fptLT.y + frm.fptSlice.y
+            );
+        }
     }
     else
     {
-        CRenderManager::getInst()->RenderFrame(
-            m_pImg,
-            fptPos.x - fptScale.x / 2.f,
-            fptPos.y - fptScale.y / 2.f,
-            fptPos.x + fptScale.x / 2.f,
-            fptPos.y + fptScale.y / 2.f,
-            frm.fptLT.x,
-            frm.fptLT.y,
-            frm.fptLT.x + frm.fptSlice.x,
-            frm.fptLT.y + frm.fptSlice.y
-        );
+        if (m_bRotate)
+        {
+            CRenderManager::getInst()->RenderFrame(
+                m_pImg,
+                fptPos.x - fptScale.x / 2.f,
+                fptPos.y - fptScale.y / 2.f,
+                fptPos.x + fptScale.x / 2.f,
+                fptPos.y + fptScale.y / 2.f,
+                frm.fptLT.x,
+                frm.fptLT.y,
+                frm.fptLT.x + frm.fptSlice.x,
+                frm.fptLT.y + frm.fptSlice.y,
+                true,
+                fptPos,
+                m_fPlayerPos
+            );
+        }
+        else
+        {
+            CRenderManager::getInst()->RenderFrame(
+                m_pImg,
+                fptPos.x - fptScale.x / 2.f,
+                fptPos.y - fptScale.y / 2.f,
+                fptPos.x + fptScale.x / 2.f,
+                fptPos.y + fptScale.y / 2.f,
+                frm.fptLT.x,
+                frm.fptLT.y,
+                frm.fptLT.x + frm.fptSlice.x,
+                frm.fptLT.y + frm.fptSlice.y
+            );
+        }
     }
 
 }

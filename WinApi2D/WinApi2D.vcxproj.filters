@@ -106,6 +106,21 @@
     <Filter Include="Object\Entity\Item\Weapon">
       <UniqueIdentifier>{1a3e109b-7e05-419f-a3c9-87abdbf7c072}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\VFX">
+      <UniqueIdentifier>{db6bcfc4-531c-4602-9e20-723db3d559fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Attack">
+      <UniqueIdentifier>{8d558f01-f784-4473-b96f-90073e27aa8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\FSM\Player">
+      <UniqueIdentifier>{92b99cb1-c2f8-4c5e-a53f-6d2e0b690e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\FSM\Enemy">
+      <UniqueIdentifier>{e83619c6-c039-4670-847f-aebfb61b94bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\FSM\Enemy\Type">
+      <UniqueIdentifier>{9c7ff0cf-2873-4c6c-b32c-7451a8be6321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,9 +231,6 @@
     <ClInclude Include="CPlayer.h">
       <Filter>Object\Entity\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Entity\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="CMissile.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -227,12 +239,6 @@
     </ClInclude>
     <ClInclude Include="CScene_Tool.h">
       <Filter>Scene\ToolScene</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerStateMachine.h">
-      <Filter>Engine\Component\FSM</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerState.h">
-      <Filter>Engine\Component\FSM</Filter>
     </ClInclude>
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Image</Filter>
@@ -248,6 +254,30 @@
     </ClInclude>
     <ClInclude Include="CWeapon.h">
       <Filter>Object\Entity\Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerVFX.h">
+      <Filter>Object\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttack.h">
+      <Filter>Object\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerState.h">
+      <Filter>Engine\Component\FSM\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateMachine.h">
+      <Filter>Engine\Component\FSM\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateMachine.h">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyState.h">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyType.h">
+      <Filter>Engine\Component\FSM\Enemy\Type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -341,9 +371,6 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>Object\Entity\Player</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Entity\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -352,12 +379,6 @@
     </ClCompile>
     <ClCompile Include="CScene_Tool.cpp">
       <Filter>Scene\ToolScene</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerState.cpp">
-      <Filter>Engine\Component\FSM</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerStateMachine.cpp">
-      <Filter>Engine\Component\FSM</Filter>
     </ClCompile>
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Image</Filter>
@@ -373,6 +394,30 @@
     </ClCompile>
     <ClCompile Include="CWeapon.cpp">
       <Filter>Object\Entity\Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerVFX.cpp">
+      <Filter>Object\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttack.cpp">
+      <Filter>Object\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerState.cpp">
+      <Filter>Engine\Component\FSM\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateMachine.cpp">
+      <Filter>Engine\Component\FSM\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Object\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateMachine.cpp">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyState.cpp">
+      <Filter>Engine\Component\FSM\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyType.cpp">
+      <Filter>Engine\Component\FSM\Enemy\Type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

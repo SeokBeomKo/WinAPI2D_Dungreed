@@ -138,17 +138,18 @@ void CTile::OnCollisionEnter(CCollider* pOther)
 {
 	CEntity* pEntity = dynamic_cast<CEntity*>(pOther->GetObj());
 	if (nullptr == pEntity)	return;
-
+	
 	switch (this->GetGroup())
 	{
 	case GROUP_TILE::GROUND:
 		pEntity->AddGrounded();
-		pEntity->m_foffsetY = this->GetPos().y - pEntity->GetCollider()->GetScale().y / 2.f - pEntity->GetCollider()->GetOffsetPos().y + 1.f; // 1.f = offset °ª
+		pEntity->m_foffsetY = this->GetPos().y - pOther->GetScale().y / 2.f - pOther->GetOffsetPos().y + 1.f; // 1.f = offset °ª
 		break;
 	case GROUP_TILE::PLATFORM:
 		if (pEntity->GetPassPlatform()) break;
+		if (this->GetPos().y + this->GetScale().y < pEntity->GetPos().y + pEntity->GetScale().y / 2.f) break;
 		pEntity->AddGrounded();
-		pEntity->m_foffsetY = this->GetPos().y - pEntity->GetCollider()->GetScale().y / 2.f  - pEntity->GetCollider()->GetOffsetPos().y + 1.f;
+		pEntity->m_foffsetY = this->GetPos().y - pOther->GetScale().y / 2.f  - pOther->GetOffsetPos().y + 1.f;
 		pEntity->SetPosY(pEntity->m_foffsetY);
 		break;
 	default:

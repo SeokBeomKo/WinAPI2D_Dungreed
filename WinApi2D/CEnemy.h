@@ -40,7 +40,7 @@ public:
 	float GetEnemyVelocity();
 	int GetEnemyDirection();
 
-	virtual void Init() = 0;
+	virtual void InitSpawn() = 0;
 	virtual void update();
 	virtual void render();
 
@@ -61,7 +61,7 @@ public:
 	~BigWhiteSkelEnemy();
 	BigWhiteSkelEnemy* Clone();
 
-	void Init() override;
+	void InitSpawn() override;
 	void update() override;
 	void render() override;
 };

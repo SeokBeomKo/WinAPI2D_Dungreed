@@ -14,7 +14,7 @@
 CEnemyState::CEnemyState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
 {
 	m_pStateMachine = _stateMachine;
-	m_pEnemy		= _stateMachine->GetOwner();
+	m_pOwner		= _stateMachine->GetOwner();
 	m_eState		= _stateEnum;
 	m_fAttackDelay	= _stateMachine->GetAttackDelay();
 	m_fAbsDelay		= 0.f;
@@ -50,8 +50,8 @@ void CEnemyIdleState::Execute()
 	{
 		m_pStateMachine->ChangeState(STATE_ENEMY::PATROL);
 	}
-	m_pEnemy->GetEnemyType()->Idle();
-	m_pEnemy->GetAnimator()->Play(L"Idle");
+	m_pOwner->GetEnemyType()->Idle();
+	m_pOwner->GetAnimator()->Play(L"Idle");
 }
 
 void CEnemyIdleState::OnStateEnter()
@@ -85,14 +85,14 @@ void CEnemyPatrolState::Execute()
 	{
 		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
 	}
-	m_pEnemy->GetEnemyType()->Move();
-	m_pEnemy->GetAnimator()->Play(L"Move",m_pEnemy->GetEnemyDirection() != 1);
+	m_pOwner->GetEnemyType()->Move();
+	m_pOwner->GetAnimator()->Play(L"Move", m_pOwner->GetEnemyDirection() != 1);
 }
 
 void CEnemyPatrolState::OnStateEnter()
 {
 	srand(GetTickCount64());
-	m_pEnemy->SetEnemyDirection((rand() % 2) * 2 - 1);
+	m_pOwner->SetEnemyDirection((rand() % 2) * 2 - 1);
 	m_fPatrolDelay = rand() % 4 + 2;
 }
 
@@ -115,8 +115,8 @@ CEnemyTraceState::~CEnemyTraceState()
 
 void CEnemyTraceState::Execute()
 {
-	m_pEnemy->GetEnemyType()->Move();
-	m_pEnemy->GetAnimator()->Play(L"Move");
+	m_pOwner->GetEnemyType()->Move();
+	m_pOwner->GetAnimator()->Play(L"Move");
 }
 
 void CEnemyTraceState::OnStateEnter()
@@ -142,20 +142,20 @@ CEnemyAttackState::~CEnemyAttackState()
 
 void CEnemyAttackState::Execute()
 {
-	m_pEnemy->GetEnemyType()->Attack();
-	m_pEnemy->GetAnimator()->Play(L"Attack");
+	m_pOwner->GetEnemyType()->Attack();
+	m_pOwner->GetAnimator()->Play(L"Attack");
 }
 
 void CEnemyAttackState::OnStateEnter()
 {
-	m_pEnemy->SetScaleOffset(m_pEnemy->GetEnemyScaleOffset());
-	m_pEnemy->SetPosOffset(m_pEnemy->GetEnemyPosOffset());
+	m_pOwner->SetScaleOffset(m_pOwner->GetEnemyScaleOffset());
+	m_pOwner->SetPosOffset(m_pOwner->GetEnemyPosOffset());
 }
 
 void CEnemyAttackState::OnStateExit()
 {
-	m_pEnemy->SetScaleOffset(1.f);
-	m_pEnemy->SetPosOffset({ 0,0 });
+	m_pOwner->SetScaleOffset(1.f);
+	m_pOwner->SetPosOffset({ 0,0 });
 }
 
 //========================================
@@ -173,8 +173,8 @@ CEnemySpawnState::~CEnemySpawnState()
 
 void CEnemySpawnState::Execute()
 {
-	m_pEnemy->GetAnimator()->Play(L"Spawn");
-	if (m_pEnemy->GetAnimator()->IsAnimationFinished())
+	m_pOwner->GetAnimator()->Play(L"Spawn");
+	if (m_pOwner->GetAnimator()->IsAnimationFinished())
 	{
 		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
 	}
@@ -182,14 +182,14 @@ void CEnemySpawnState::Execute()
 
 void CEnemySpawnState::OnStateEnter()
 {
-	fPoint resize_scale = m_pEnemy->GetScale();
-	m_pEnemy->SetScaleOffset((resize_scale.x + resize_scale.y) * 0.5f);
+	float resize_scale = (m_pOwner->GetScale().x + m_pOwner->GetScale().y) * 0.5f;
+	m_pOwner->SetScale({ resize_scale, resize_scale });
 }
 
 void CEnemySpawnState::OnStateExit()
 {
-	m_pEnemy->SetScaleOffset(1.f);
-	m_pEnemy->Init();
+	m_pOwner->SetScaleOffset(1.f);
+	m_pOwner->InitSpawn();
 }
 
 //========================================
@@ -207,14 +207,23 @@ CEnemyDeadState::~CEnemyDeadState()
 
 void CEnemyDeadState::Execute()
 {
+	m_pOwner->GetAnimator()->Play(L"Dead");
+	if (m_pOwner->GetAnimator()->IsAnimationFinished())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+	}
 }
 
 void CEnemyDeadState::OnStateEnter()
 {
+	float resize_scale = (m_pOwner->GetScale().x + m_pOwner->GetScale().y) * 0.5f;
+	m_pOwner->SetScale({ resize_scale, resize_scale });
+	m_pOwner->SetGravity(false);
 }
 
 void CEnemyDeadState::OnStateExit()
 {
+	DeleteObj(m_pOwner);
 }
 
 

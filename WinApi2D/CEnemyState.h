@@ -10,7 +10,7 @@ class CEnemyStateMachine;
 class CEnemyState
 {
 protected:
-	CEnemy* m_pEnemy;
+	CEnemy* m_pOwner;
 	CEnemyStateMachine* m_pStateMachine;
 
 	STATE_ENEMY m_eState;

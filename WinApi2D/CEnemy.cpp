@@ -92,6 +92,20 @@ void CEnemy::OnCollision(CCollider* _pOther)
 
 void CEnemy::OnCollisionEnter(CCollider* _pOther)
 {
+	CGameObject* pOtherObj = _pOther->GetObj();
+
+	if (pOtherObj->GetGroup() == GROUP_GAMEOBJ::ATTACK_PLAYER)
+	{
+		/*CPlayerAttack* pAttack = (CPlayerAttack*)pOther->GetObj();
+		m_tInfo.fHP -= pAttack->GetDamage();
+		CSoundManager::getInst()->Play(L"MonsterHit");
+		if (m_tInfo.fHP <= 0)
+		{
+			pFX->PlayFX(this, L"Die");
+			DeleteObj(this);
+		}*/
+		m_pStateMachine->ChangeState(STATE_ENEMY::DEAD);
+	}
 }
 
 void CEnemy::OnCollisionExit(CCollider* _pOther)
@@ -113,8 +127,8 @@ BigWhiteSkelEnemy::BigWhiteSkelEnemy()
 	// Enemy 기본 이미지
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"EnemySpawn", L"texture\\enemy\\EnemySpawn.png");
 	GetAnimator()->CreateAnimation(L"Spawn", m_pImg, fPoint(0.f, 0.f), fPoint(31.f, 31.f), fPoint(31.f, 0), 0.1f, 15);
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"EnemyDie", L"texture\\enemy\\EnemyDie.png");
-	GetAnimator()->CreateAnimation(L"Die", m_pImg, fPoint(0.f, 0.f), fPoint(40.f, 40.f), fPoint(40, 0), 0.05f, 11);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"EnemyDead", L"texture\\enemy\\EnemyDead.png");
+	GetAnimator()->CreateAnimation(L"Dead", m_pImg, fPoint(0.f, 0.f), fPoint(40.f, 40.f), fPoint(40, 0), 0.05f, 11);
 	// Enemy 이미지
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelIdle", L"texture\\enemy\\BigWhiteSkelIdle.png");
 	GetAnimator()->CreateAnimation(L"Idle", m_pImg, fPoint(0.f, 0.f), fPoint(33.f, 30.f), fPoint(0.f, 30.f), 0.1f, 6);
@@ -137,13 +151,14 @@ BigWhiteSkelEnemy* BigWhiteSkelEnemy::Clone()
 	return new BigWhiteSkelEnemy(*this);
 }
 
-void BigWhiteSkelEnemy::Init()
+void BigWhiteSkelEnemy::InitSpawn()
 {
 	CreateCollider();
 	GetCollider()->SetScale({ 70.f,120.f });
 
 	CreateGravity();
 }
+
 
 void BigWhiteSkelEnemy::update()
 {

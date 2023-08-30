@@ -22,7 +22,6 @@ public:
 	~CEnemy();
 	CEnemy* Clone();
 
-	void SetEnemyType(CEnemyType* _type);
 	CEnemyType* GetEnemyType();
 
 	virtual void update();

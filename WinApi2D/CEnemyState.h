@@ -14,6 +14,8 @@ protected:
 	CEnemyStateMachine* stateMachine;
 
 	STATE_ENEMY m_eState;
+
+	float m_fDelay;
 public:
 	CEnemyState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyState();

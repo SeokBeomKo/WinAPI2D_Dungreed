@@ -53,7 +53,7 @@ void CAnimation::render()
 {
     CGameObject* pObj = m_pAnimator->GetObj();
     fPoint fptPos = pObj->GetPos();
-    fPoint fptScale = pObj->GetScale();
+    fPoint fptScale = (pObj->GetScale()) * (pObj->GetScaleOffset());
     tAniFrm frm = m_vecFrm[m_iCurFrm];
 
     fptPos = fptPos + frm.fptOffset;

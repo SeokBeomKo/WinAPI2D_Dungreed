@@ -14,6 +14,8 @@ private:
 	fPoint m_fptPos;			// 오브젝트 좌표
 	fPoint m_fptScale;			// 오브젝트 크기
 
+	float m_fScaleOffset = 1.f;		// 스케일 오프셋
+
 	bool m_bActive;					// 오브젝트 활성화 여부
 
 protected:	// Component
@@ -33,6 +35,7 @@ public:
 	void SetPosX(float _posX);
 	void SetPosY(float _posY);
 	void SetScale(fPoint _scale);
+	void SetScaleOffset(float _scaleOffset);
 
 	bool ActiveSelf();					// 오브젝트 활성화 여부
 	GROUP_GAMEOBJ GetGroup();
@@ -41,6 +44,7 @@ public:
 	float GetPosX();
 	float GetPosY();
 	fPoint GetScale();
+	float GetScaleOffset();
 
 
 	virtual CGameObject* GetObj();

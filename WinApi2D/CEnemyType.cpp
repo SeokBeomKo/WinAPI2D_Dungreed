@@ -61,10 +61,12 @@ void CEnemyRangeWalkType::Idle()
 
 void CEnemyRangeWalkType::Move()
 {
+	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
 }
 
 void CEnemyRangeWalkType::Attack()
 {
+	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
 }
 
 //========================================

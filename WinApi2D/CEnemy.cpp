@@ -28,11 +28,6 @@ CEnemy* CEnemy::Clone()
 	return nullptr;
 }
 
-void CEnemy::SetEnemyType(CEnemyType* _type)
-{
-	m_pType = _type;
-}
-
 CEnemyType* CEnemy::GetEnemyType()
 {
 	return m_pType;
@@ -69,16 +64,21 @@ void CEnemy::OnCollisionExit(CCollider* _pOther)
 
 BigWhiteSkelEnemy::BigWhiteSkelEnemy()
 {
+	SetScaleOffset(1.5f);
 	SetName(L"BigSkelleton");
 	SetScale(fPoint(33.f * 4.f, 30.f * 4.f));
 	
 	CreateCollider();
 	GetCollider()->SetScale(GetScale());
 
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelIdle", L"texture\\enemy\\BigWhiteSkelIdle.png");
-
 	CreateAnimator();
+
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelIdle", L"texture\\enemy\\BigWhiteSkelIdle.png");
 	GetAnimator()->CreateAnimation(L"Idle", m_pImg, fPoint(0.f, 0.f), fPoint(33.f, 30.f), fPoint(0.f, 30.f), 0.1f, 6);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelMove", L"texture\\enemy\\BigWhiteSkelMove.png");
+	GetAnimator()->CreateAnimation(L"Move", m_pImg, fPoint(0.f, 0.f), fPoint(33.f, 30.f), fPoint(0.f, 30.f), 0.1f, 6);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelAttack", L"texture\\enemy\\BigWhiteSkelAttack.png");
+	GetAnimator()->CreateAnimation(L"Attack", m_pImg, fPoint(0.f, 0.f), fPoint(65.f, 48.f), fPoint(0.f, 48.f), 0.1f, 12);
 
 	m_pType = new CEnemyMeleeWalkType(this);
 	m_pStateMachine = new CEnemyStateMachine(this);

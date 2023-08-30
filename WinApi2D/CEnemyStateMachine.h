@@ -10,6 +10,8 @@ private:
 	map<STATE_ENEMY, CEnemyState*> m_mapState;
 	CEnemy* m_pOwner;
 	CEnemyState* m_pCurState;
+
+	float m_fAttackDelay;	// °ø°Ý µô·¹ÀÌ
 public:
 	CEnemyStateMachine();
 	CEnemyStateMachine(CEnemy* _owner);
@@ -17,7 +19,11 @@ public:
 
 	CEnemy* GetOwner();
 	CEnemyState* GetState(STATE_ENEMY _state);
+
+	float GetAttackDelay();
+
 	void SetCurState(STATE_ENEMY _state);
+	void SetAttackDelay(float _attack);
 
 	void update();
 

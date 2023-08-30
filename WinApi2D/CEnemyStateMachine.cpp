@@ -5,8 +5,9 @@
 
 CEnemyStateMachine::CEnemyStateMachine()
 {
-	m_pOwner = nullptr;
-	m_pCurState = nullptr;
+	m_pOwner		= nullptr;
+	m_pCurState		= nullptr;
+	m_fAttackDelay	= 0.f;
 }
 
 CEnemyStateMachine::CEnemyStateMachine(CEnemy* _owner)
@@ -44,9 +45,19 @@ CEnemyState* CEnemyStateMachine::GetState(STATE_ENEMY _state)
 	return iter->second;
 }
 
+float CEnemyStateMachine::GetAttackDelay()
+{
+	return m_fAttackDelay;
+}
+
 void CEnemyStateMachine::SetCurState(STATE_ENEMY _state)
 {
 	m_pCurState = GetState(_state);
+}
+
+void CEnemyStateMachine::SetAttackDelay(float _attack)
+{
+	m_fAttackDelay = _attack;
 }
 
 void CEnemyStateMachine::update()

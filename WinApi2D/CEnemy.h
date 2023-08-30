@@ -18,6 +18,9 @@ protected:
 
 	CEnemyStateMachine* m_pStateMachine;
 
+	float m_fVelocity = 100.f;	// 이동속도
+	int m_iDirection = 1;		// 방향 : 1 우, -1 좌
+
 	float m_fEnemyScaleOffset = 1.f;
 	fPoint m_fptEnemyPosOffset = { 0,0 };
 public:
@@ -28,9 +31,13 @@ public:
 	CEnemyType* GetEnemyType();
 	void SetEnemyScaleOffset(float _scaleOffset);
 	void SetEnemyPosOffset(fPoint _posOffset);
+	void SetEnemyVelocity(float _velocity);
+	void SetEnemyDirection(int _dir);
 
 	float GetEnemyScaleOffset();
 	fPoint GetEnemyPosOffset();
+	float GetEnemyVelocity();
+	int GetEnemyDirection();
 
 	virtual void update();
 	virtual void render();

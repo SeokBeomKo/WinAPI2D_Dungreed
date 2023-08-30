@@ -13,10 +13,12 @@
 
 CEnemyState::CEnemyState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
 {
-	stateMachine	= _stateMachine;
-	enemy			= _stateMachine->GetOwner();
+	m_pStateMachine = _stateMachine;
+	m_pEnemy		= _stateMachine->GetOwner();
 	m_eState		= _stateEnum;
-	m_fDelay		= 0.f;
+	m_fAttackDelay	= _stateMachine->GetAttackDelay();
+	m_fAbsDelay		= 0.f;
+	m_fPatrolDelay  = 0.f;
 }
 
 CEnemyState::~CEnemyState()
@@ -43,16 +45,24 @@ CEnemyIdleState::~CEnemyIdleState()
 
 void CEnemyIdleState::Execute()
 {
-	enemy->GetEnemyType()->Idle();
-	enemy->GetAnimator()->Play(L"Idle");
+	m_fPatrolDelay -= fDT;
+	if (m_fPatrolDelay <= 0.f)
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::PATROL);
+	}
+	m_pEnemy->GetEnemyType()->Idle();
+	m_pEnemy->GetAnimator()->Play(L"Idle");
 }
 
 void CEnemyIdleState::OnStateEnter()
 {
+	srand(GetTickCount64());
+	m_fPatrolDelay = rand() % 5 + 1;
 }
 
 void CEnemyIdleState::OnStateExit()
 {
+	m_fPatrolDelay = 0.f;
 }
 
 //========================================
@@ -70,12 +80,20 @@ CEnemyPatrolState::~CEnemyPatrolState()
 
 void CEnemyPatrolState::Execute()
 {
-	enemy->GetEnemyType()->Move();
-	enemy->GetAnimator()->Play(L"Move");
+	m_fPatrolDelay -= fDT;
+	if (m_fPatrolDelay <= 0.f)
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+	}
+	m_pEnemy->GetEnemyType()->Move();
+	m_pEnemy->GetAnimator()->Play(L"Move",m_pEnemy->GetEnemyDirection() != 1);
 }
 
 void CEnemyPatrolState::OnStateEnter()
 {
+	srand(GetTickCount64());
+	m_pEnemy->SetEnemyDirection((rand() % 2) * 2 - 1);
+	m_fPatrolDelay = rand() % 4 + 2;
 }
 
 void CEnemyPatrolState::OnStateExit()
@@ -97,8 +115,8 @@ CEnemyTraceState::~CEnemyTraceState()
 
 void CEnemyTraceState::Execute()
 {
-	enemy->GetEnemyType()->Move();
-	enemy->GetAnimator()->Play(L"Move");
+	m_pEnemy->GetEnemyType()->Move();
+	m_pEnemy->GetAnimator()->Play(L"Move");
 }
 
 void CEnemyTraceState::OnStateEnter()
@@ -124,18 +142,20 @@ CEnemyAttackState::~CEnemyAttackState()
 
 void CEnemyAttackState::Execute()
 {
-	enemy->GetEnemyType()->Attack();
-	enemy->GetAnimator()->Play(L"Attack");
+	m_pEnemy->GetEnemyType()->Attack();
+	m_pEnemy->GetAnimator()->Play(L"Attack");
 }
 
 void CEnemyAttackState::OnStateEnter()
 {
-	enemy->SetScaleOffset(enemy->GetEnemyScaleOffset());
-	enemy->SetPosOffset(enemy->GetEnemyPosOffset());
+	m_pEnemy->SetScaleOffset(m_pEnemy->GetEnemyScaleOffset());
+	m_pEnemy->SetPosOffset(m_pEnemy->GetEnemyPosOffset());
 }
 
 void CEnemyAttackState::OnStateExit()
 {
+	m_pEnemy->SetScaleOffset(1.f);
+	m_pEnemy->SetPosOffset({ 0,0 });
 }
 
 //========================================
@@ -157,7 +177,6 @@ void CEnemySpawnState::Execute()
 
 void CEnemySpawnState::OnStateEnter()
 {
-	m_fDelay = 0.f;
 }
 
 void CEnemySpawnState::OnStateExit()
@@ -183,7 +202,6 @@ void CEnemyDeadState::Execute()
 
 void CEnemyDeadState::OnStateEnter()
 {
-	m_fDelay = 0.f;
 }
 
 void CEnemyDeadState::OnStateExit()

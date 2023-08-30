@@ -36,6 +36,11 @@ void CEnemyMeleeWalkType::Idle()
 void CEnemyMeleeWalkType::Move()
 {
 	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
+	fPoint pos = m_pOwner->GetPos();
+
+	pos.x += (m_pOwner->GetEnemyVelocity() * fDT) * m_pOwner->GetEnemyDirection();
+
+	m_pOwner->SetPos(pos);
 }
 
 void CEnemyMeleeWalkType::Attack()

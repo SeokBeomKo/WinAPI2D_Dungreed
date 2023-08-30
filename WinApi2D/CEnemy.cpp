@@ -16,7 +16,7 @@ CEnemy::CEnemy()
 {
 	m_pImg = nullptr;
 	m_pType = nullptr;
-	m_pStateMachine = new CEnemyStateMachine(this);
+	m_pStateMachine = nullptr;
 }
 
 CEnemy::~CEnemy()
@@ -43,6 +43,16 @@ void CEnemy::SetEnemyPosOffset(fPoint _posOffset)
 	m_fptEnemyPosOffset = _posOffset;
 }
 
+void CEnemy::SetEnemyVelocity(float _velocity)
+{
+	m_fVelocity = _velocity;
+}
+
+void CEnemy::SetEnemyDirection(int _dir)
+{
+	m_iDirection = _dir;
+}
+
 float CEnemy::GetEnemyScaleOffset()
 {
 	return m_fEnemyScaleOffset;
@@ -51,6 +61,16 @@ float CEnemy::GetEnemyScaleOffset()
 fPoint CEnemy::GetEnemyPosOffset()
 {
 	return m_fptEnemyPosOffset;
+}
+
+float CEnemy::GetEnemyVelocity()
+{
+	return m_fVelocity;
+}
+
+int CEnemy::GetEnemyDirection()
+{
+	return m_iDirection;
 }
 
 void CEnemy::update()
@@ -103,7 +123,7 @@ BigWhiteSkelEnemy::BigWhiteSkelEnemy()
 
 	m_pType = new CEnemyMeleeWalkType(this);
 	m_pStateMachine = new CEnemyStateMachine(this);
-
+	m_pStateMachine->SetAttackDelay(1.f);	// 공격 딜레이 설정
 	CreateGravity();
 }
 

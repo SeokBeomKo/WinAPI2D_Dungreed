@@ -10,12 +10,14 @@ class CEnemyStateMachine;
 class CEnemyState
 {
 protected:
-	CEnemy* enemy;
-	CEnemyStateMachine* stateMachine;
+	CEnemy* m_pEnemy;
+	CEnemyStateMachine* m_pStateMachine;
 
 	STATE_ENEMY m_eState;
 
-	float m_fDelay;
+	float m_fAbsDelay;		// 절대적 딜레이
+	float m_fPatrolDelay;	// 패트롤 > 대기 딜레이
+	float m_fAttackDelay;	// 공격 딜레이
 public:
 	CEnemyState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum);
 	~CEnemyState();

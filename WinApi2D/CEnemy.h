@@ -22,15 +22,29 @@ public:
 	~CEnemy();
 	CEnemy* Clone();
 
-	void Init(CD2DImage* _img, CEnemyType* _type);
-
 	void SetEnemyType(CEnemyType* _type);
 	CEnemyType* GetEnemyType();
 
-	void update();
-	void render();
+	virtual void update();
+	virtual void render();
 
 	void OnCollision(CCollider* _pOther) override;
 	void OnCollisionEnter(CCollider* _pOther) override;
 	void OnCollisionExit(CCollider* _pOther) override;
+};
+
+//========================================
+//## BigWhiteSkel						##
+//========================================
+
+class BigWhiteSkelEnemy : public CEnemy
+{
+private:
+public:
+	BigWhiteSkelEnemy();
+	~BigWhiteSkelEnemy();
+	BigWhiteSkelEnemy* Clone();
+
+	void update() override;
+	void render() override;
 };

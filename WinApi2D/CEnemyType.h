@@ -11,12 +11,11 @@ class CEnemyType
 protected:
 	CEnemy* m_pOwner;
 public:
-	CEnemyType();
 	CEnemyType(CEnemy* _owner);
 	~CEnemyType();
 
 	virtual void Idle() = 0;
-	virtual void Trace() = 0;
+	virtual void Move() = 0;
 	virtual void Attack() = 0;
 };
 
@@ -32,7 +31,7 @@ public:
 	~CEnemyMeleeWalkType();
 
 	void Idle() override;
-	void Trace() override;
+	void Move() override;
 	void Attack() override;
 };
 
@@ -48,7 +47,7 @@ public:
 	~CEnemyRangeWalkType();
 
 	void Idle() override;
-	void Trace() override;
+	void Move() override;
 	void Attack() override;
 };
 
@@ -64,7 +63,7 @@ public:
 	~CEnemyMeleeFlyType();
 
 	void Idle() override;
-	void Trace() override;
+	void Move() override;
 	void Attack() override;
 };
 
@@ -80,7 +79,7 @@ public:
 	~CEnemyRangeFlyType();
 
 	void Idle() override;
-	void Trace() override;
+	void Move() override;
 	void Attack() override;
 };
 

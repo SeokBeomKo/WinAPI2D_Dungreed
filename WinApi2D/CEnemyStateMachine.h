@@ -12,6 +12,7 @@ private:
 	CEnemyState* m_pCurState;
 public:
 	CEnemyStateMachine();
+	CEnemyStateMachine(CEnemy* _owner);
 	~CEnemyStateMachine();
 
 	CEnemy* GetOwner();

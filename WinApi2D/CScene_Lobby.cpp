@@ -64,7 +64,12 @@ void CScene_Lobby::Enter()
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
 	// Enemy 추가
+	CEnemy* pBigSkeleton01 = new BigWhiteSkelEnemy();
+	pBigSkeleton01->SetPos(m_fptPlayerPos);
+	AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);
+
 	/*CEnemy* pBigSkeleton01 = new CEnemy;
+	pBigSkeleton01->SetName(L"BigSkelleton");
 	pBigSkeleton01->SetEnemyType(new CEnemyMeleeWalkType(pBigSkeleton01));
 	AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);*/
 	
@@ -82,9 +87,16 @@ void CScene_Lobby::Enter()
 	pPowerKatana->SetPos({ 3500.f, 650.f });
 	AddObject(pPowerKatana, GROUP_GAMEOBJ::ITEM);
 
+	// 타일 충돌
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ITEM);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ITEM, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ENEMY, GROUP_GAMEOBJ::TILE);
+
+	// 공격 충돌
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ATTACK_ENEMY);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::ENEMY, GROUP_GAMEOBJ::ATTACK_PLAYER);
+
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ITEM);
 
 	// Camera Look 
 	CCameraManager::getInst()->SetRange(fPoint(1904.f, 384.f));

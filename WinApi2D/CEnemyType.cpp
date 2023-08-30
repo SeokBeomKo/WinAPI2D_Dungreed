@@ -6,11 +6,6 @@
 //## Enemy								##
 //========================================
 
-CEnemyType::CEnemyType()
-{
-	m_pOwner = nullptr;
-}
-
 CEnemyType::CEnemyType(CEnemy* _owner)
 {
 	m_pOwner = _owner;
@@ -35,9 +30,10 @@ CEnemyMeleeWalkType::~CEnemyMeleeWalkType()
 
 void CEnemyMeleeWalkType::Idle()
 {
+	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
 }
 
-void CEnemyMeleeWalkType::Trace()
+void CEnemyMeleeWalkType::Move()
 {
 }
 
@@ -60,9 +56,10 @@ CEnemyRangeWalkType::~CEnemyRangeWalkType()
 
 void CEnemyRangeWalkType::Idle()
 {
+	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
 }
 
-void CEnemyRangeWalkType::Trace()
+void CEnemyRangeWalkType::Move()
 {
 }
 
@@ -87,7 +84,7 @@ void CEnemyMeleeFlyType::Idle()
 {
 }
 
-void CEnemyMeleeFlyType::Trace()
+void CEnemyMeleeFlyType::Move()
 {
 }
 
@@ -112,7 +109,7 @@ void CEnemyRangeFlyType::Idle()
 {
 }
 
-void CEnemyRangeFlyType::Trace()
+void CEnemyRangeFlyType::Move()
 {
 }
 

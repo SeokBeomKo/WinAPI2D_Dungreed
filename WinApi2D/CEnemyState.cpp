@@ -5,6 +5,8 @@
 #include "CEnemyType.h"
 #include "CEnemyStateMachine.h"
 
+#include "CAnimator.h"
+
 //========================================
 //## EnemyState							##
 //========================================
@@ -26,7 +28,7 @@ STATE_ENEMY CEnemyState::GetStateGroup()
 }
 
 //========================================
-//## EnemyState							##
+//## EnemyIdleState						##
 //========================================
 
 CEnemyIdleState::CEnemyIdleState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
@@ -41,6 +43,7 @@ CEnemyIdleState::~CEnemyIdleState()
 void CEnemyIdleState::Execute()
 {
 	enemy->GetEnemyType()->Idle();
+	enemy->GetAnimator()->Play(L"Idle");
 }
 
 void CEnemyIdleState::OnStateEnter()
@@ -52,7 +55,32 @@ void CEnemyIdleState::OnStateExit()
 }
 
 //========================================
-//## EnemyState							##
+//## EnemyPatrolState					##
+//========================================
+
+CEnemyPatrolState::CEnemyPatrolState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
+	: CEnemyState(_stateMachine, _stateEnum)
+{
+}
+
+CEnemyPatrolState::~CEnemyPatrolState()
+{
+}
+
+void CEnemyPatrolState::Execute()
+{
+}
+
+void CEnemyPatrolState::OnStateEnter()
+{
+}
+
+void CEnemyPatrolState::OnStateExit()
+{
+}
+
+//========================================
+//## EnemyTraceState					##
 //========================================
 
 CEnemyTraceState::CEnemyTraceState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
@@ -66,7 +94,8 @@ CEnemyTraceState::~CEnemyTraceState()
 
 void CEnemyTraceState::Execute()
 {
-	enemy->GetEnemyType()->Trace();
+	enemy->GetEnemyType()->Move();
+	enemy->GetAnimator()->Play(L"Move");
 }
 
 void CEnemyTraceState::OnStateEnter()
@@ -78,7 +107,7 @@ void CEnemyTraceState::OnStateExit()
 }
 
 //========================================
-//## EnemyState							##
+//## EnemyAttackState					##
 //========================================
 
 CEnemyAttackState::CEnemyAttackState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
@@ -104,7 +133,7 @@ void CEnemyAttackState::OnStateExit()
 }
 
 //========================================
-//## EnemyState							##
+//## EnemyDeadState						##
 //========================================
 
 CEnemyDeadState::CEnemyDeadState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
@@ -125,5 +154,30 @@ void CEnemyDeadState::OnStateEnter()
 }
 
 void CEnemyDeadState::OnStateExit()
+{
+}
+
+//========================================
+//## EnemySpawnState					##
+//========================================
+
+CEnemySpawnState::CEnemySpawnState(CEnemyStateMachine* _stateMachine, STATE_ENEMY _stateEnum)
+	: CEnemyState(_stateMachine, _stateEnum)
+{
+}
+
+CEnemySpawnState::~CEnemySpawnState()
+{
+}
+
+void CEnemySpawnState::Execute()
+{
+}
+
+void CEnemySpawnState::OnStateEnter()
+{
+}
+
+void CEnemySpawnState::OnStateExit()
 {
 }

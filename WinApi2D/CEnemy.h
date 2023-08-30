@@ -17,12 +17,20 @@ protected:
 	CEnemyType* m_pType;
 
 	CEnemyStateMachine* m_pStateMachine;
+
+	float m_fEnemyScaleOffset = 1.f;
+	fPoint m_fptEnemyPosOffset = { 0,0 };
 public:
 	CEnemy();
 	~CEnemy();
 	CEnemy* Clone();
 
 	CEnemyType* GetEnemyType();
+	void SetEnemyScaleOffset(float _scaleOffset);
+	void SetEnemyPosOffset(fPoint _posOffset);
+
+	float GetEnemyScaleOffset();
+	fPoint GetEnemyPosOffset();
 
 	virtual void update();
 	virtual void render();

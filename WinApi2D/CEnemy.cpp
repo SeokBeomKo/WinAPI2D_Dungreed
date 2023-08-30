@@ -33,6 +33,26 @@ CEnemyType* CEnemy::GetEnemyType()
 	return m_pType;
 }
 
+void CEnemy::SetEnemyScaleOffset(float _scaleOffset)
+{
+	m_fEnemyScaleOffset = _scaleOffset;
+}
+
+void CEnemy::SetEnemyPosOffset(fPoint _posOffset)
+{
+	m_fptEnemyPosOffset = _posOffset;
+}
+
+float CEnemy::GetEnemyScaleOffset()
+{
+	return m_fEnemyScaleOffset;
+}
+
+fPoint CEnemy::GetEnemyPosOffset()
+{
+	return m_fptEnemyPosOffset;
+}
+
 void CEnemy::update()
 {
 	if (nullptr != GetAnimator())
@@ -64,12 +84,13 @@ void CEnemy::OnCollisionExit(CCollider* _pOther)
 
 BigWhiteSkelEnemy::BigWhiteSkelEnemy()
 {
-	SetScaleOffset(1.5f);
+	SetEnemyScaleOffset(1.7f);
+	SetEnemyPosOffset({ 50.f, -40.f });
 	SetName(L"BigSkelleton");
 	SetScale(fPoint(33.f * 4.f, 30.f * 4.f));
 	
 	CreateCollider();
-	GetCollider()->SetScale(GetScale());
+	GetCollider()->SetScale({70.f,120.f});
 
 	CreateAnimator();
 

@@ -22,7 +22,7 @@ CEnemyStateMachine::CEnemyStateMachine(CEnemy* _owner)
 	AddState(new CEnemyDeadState(this, STATE_ENEMY::DEAD));
 	AddState(new CEnemySpawnState(this, STATE_ENEMY::SPAWN));
 
-	SetCurState(STATE_ENEMY::ATTACK);
+	SetCurState(STATE_ENEMY::IDLE);
 }
 
 CEnemyStateMachine::~CEnemyStateMachine()

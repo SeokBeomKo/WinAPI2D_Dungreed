@@ -70,6 +70,11 @@ void CGameObject::SetScaleOffset(float _scaleOffset)
 	m_fScaleOffset = _scaleOffset;
 }
 
+void CGameObject::SetPosOffset(fPoint _posOffset)
+{
+	m_fptPosOffset = _posOffset;
+}
+
 void CGameObject::SetGroup(GROUP_GAMEOBJ _group)
 {
 	m_eGroup = _group;
@@ -103,6 +108,11 @@ fPoint CGameObject::GetScale()
 float CGameObject::GetScaleOffset()
 {
 	return m_fScaleOffset;
+}
+
+fPoint CGameObject::GetPosOffset()
+{
+	return m_fptPosOffset;
 }
 
 GROUP_GAMEOBJ CGameObject::GetGroup()

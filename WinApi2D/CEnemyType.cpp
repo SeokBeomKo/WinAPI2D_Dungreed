@@ -35,10 +35,12 @@ void CEnemyMeleeWalkType::Idle()
 
 void CEnemyMeleeWalkType::Move()
 {
+	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
 }
 
 void CEnemyMeleeWalkType::Attack()
 {
+	m_pOwner->SetGravity(!m_pOwner->GetGrounded());
 }
 
 //========================================

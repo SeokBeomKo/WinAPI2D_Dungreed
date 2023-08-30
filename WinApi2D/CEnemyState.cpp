@@ -130,7 +130,8 @@ void CEnemyAttackState::Execute()
 
 void CEnemyAttackState::OnStateEnter()
 {
-	
+	enemy->SetScaleOffset(enemy->GetEnemyScaleOffset());
+	enemy->SetPosOffset(enemy->GetEnemyPosOffset());
 }
 
 void CEnemyAttackState::OnStateExit()

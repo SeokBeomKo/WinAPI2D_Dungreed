@@ -41,5 +41,9 @@ public:
 	void render();	
 
 	void Create(CD2DImage* tex, fPoint lt, fPoint slice, fPoint step, float duration, UINT frmCount);	// 局聪皋捞记 积己
+
+public:
+	int GetFrameIndex() const { return m_iCurFrm; }
+	size_t GetFrameCount() const { return m_vecFrm.size(); }
 };
 

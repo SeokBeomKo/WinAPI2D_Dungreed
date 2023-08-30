@@ -26,5 +26,6 @@ public:
 		fPoint step, float duration, UINT frmCount, bool reverse = false, bool rotate = false, float pos = 0);
 	CAnimation* FindAnimation(const wstring& strName);
 	void Play(const wstring& strName, bool _flip = false);
+	bool IsAnimationFinished() const;
 };
 

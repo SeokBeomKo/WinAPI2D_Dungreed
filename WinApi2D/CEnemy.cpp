@@ -108,12 +108,14 @@ BigWhiteSkelEnemy::BigWhiteSkelEnemy()
 	SetEnemyPosOffset({ 50.f, -40.f });
 	SetName(L"BigSkelleton");
 	SetScale(fPoint(33.f * 4.f, 30.f * 4.f));
-	
-	CreateCollider();
-	GetCollider()->SetScale({70.f,120.f});
 
 	CreateAnimator();
-
+	// Enemy 기본 이미지
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"EnemySpawn", L"texture\\enemy\\EnemySpawn.png");
+	GetAnimator()->CreateAnimation(L"Spawn", m_pImg, fPoint(0.f, 0.f), fPoint(31.f, 31.f), fPoint(31.f, 0), 0.1f, 15);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"EnemyDie", L"texture\\enemy\\EnemyDie.png");
+	GetAnimator()->CreateAnimation(L"Die", m_pImg, fPoint(0.f, 0.f), fPoint(40.f, 40.f), fPoint(40, 0), 0.05f, 11);
+	// Enemy 이미지
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelIdle", L"texture\\enemy\\BigWhiteSkelIdle.png");
 	GetAnimator()->CreateAnimation(L"Idle", m_pImg, fPoint(0.f, 0.f), fPoint(33.f, 30.f), fPoint(0.f, 30.f), 0.1f, 6);
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"BigWhiteSkelMove", L"texture\\enemy\\BigWhiteSkelMove.png");
@@ -124,7 +126,6 @@ BigWhiteSkelEnemy::BigWhiteSkelEnemy()
 	m_pType = new CEnemyMeleeWalkType(this);
 	m_pStateMachine = new CEnemyStateMachine(this);
 	m_pStateMachine->SetAttackDelay(1.f);	// 공격 딜레이 설정
-	CreateGravity();
 }
 
 BigWhiteSkelEnemy::~BigWhiteSkelEnemy()
@@ -134,6 +135,14 @@ BigWhiteSkelEnemy::~BigWhiteSkelEnemy()
 BigWhiteSkelEnemy* BigWhiteSkelEnemy::Clone()
 {
 	return new BigWhiteSkelEnemy(*this);
+}
+
+void BigWhiteSkelEnemy::Init()
+{
+	CreateCollider();
+	GetCollider()->SetScale({ 70.f,120.f });
+
+	CreateGravity();
 }
 
 void BigWhiteSkelEnemy::update()

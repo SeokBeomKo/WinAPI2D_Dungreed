@@ -173,14 +173,23 @@ CEnemySpawnState::~CEnemySpawnState()
 
 void CEnemySpawnState::Execute()
 {
+	m_pEnemy->GetAnimator()->Play(L"Spawn");
+	if (m_pEnemy->GetAnimator()->IsAnimationFinished())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+	}
 }
 
 void CEnemySpawnState::OnStateEnter()
 {
+	fPoint resize_scale = m_pEnemy->GetScale();
+	m_pEnemy->SetScaleOffset((resize_scale.x + resize_scale.y) * 0.5f);
 }
 
 void CEnemySpawnState::OnStateExit()
 {
+	m_pEnemy->SetScaleOffset(1.f);
+	m_pEnemy->Init();
 }
 
 //========================================

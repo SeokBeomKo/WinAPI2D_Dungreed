@@ -72,3 +72,12 @@ void CAnimator::Play(const wstring& strName, bool _flip)
 	m_pCurAni = FindAnimation(strName);
 	m_pCurAni->m_bFlip = _flip;
 }
+
+bool CAnimator::IsAnimationFinished() const {
+	if (m_pCurAni == nullptr) {
+		return true; // 현재 애니메이션이 없으면 종료된 것으로 간주합니다.
+	}
+
+	// 현재 애니메이션의 현재 프레임 인덱스와 전체 프레임 개수를 비교하여 체크합니다.
+	return m_pCurAni->GetFrameIndex() == m_pCurAni->GetFrameCount() - 1;
+}

@@ -28,17 +28,19 @@ public:
 	~CEnemy();
 	CEnemy* Clone();
 
+
 	CEnemyType* GetEnemyType();
 	void SetEnemyScaleOffset(float _scaleOffset);
 	void SetEnemyPosOffset(fPoint _posOffset);
 	void SetEnemyVelocity(float _velocity);
-	void SetEnemyDirection(int _dir);
+	void SetEnemyDirection(int _dir = 1);
 
 	float GetEnemyScaleOffset();
 	fPoint GetEnemyPosOffset();
 	float GetEnemyVelocity();
 	int GetEnemyDirection();
 
+	virtual void Init() = 0;
 	virtual void update();
 	virtual void render();
 
@@ -59,6 +61,7 @@ public:
 	~BigWhiteSkelEnemy();
 	BigWhiteSkelEnemy* Clone();
 
+	void Init() override;
 	void update() override;
 	void render() override;
 };

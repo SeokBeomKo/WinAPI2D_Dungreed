@@ -46,9 +46,23 @@ CEnemyIdleState::~CEnemyIdleState()
 void CEnemyIdleState::Execute()
 {
 	m_fPatrolDelay -= fDT;
+
+	float fLen = (m_pOwner->GetTarget()->GetPos() - m_pOwner->GetPos()).Length();
+
+	if (fLen <= m_pOwner->GetEnemyAttackDis())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::ATTACK);
+		return;
+	}
+	if (fLen <= m_pOwner->GetEnemyRegionDis())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::TRACE);
+		return;
+	}
 	if (m_fPatrolDelay <= 0.f)
 	{
 		m_pStateMachine->ChangeState(STATE_ENEMY::PATROL);
+		return;
 	}
 	m_pOwner->GetEnemyType()->Idle();
 }
@@ -81,9 +95,22 @@ CEnemyPatrolState::~CEnemyPatrolState()
 void CEnemyPatrolState::Execute()
 {
 	m_fPatrolDelay -= fDT;
+	float fLen = (m_pOwner->GetTarget()->GetPos() - m_pOwner->GetPos()).Length();
+
+	if (fLen <= m_pOwner->GetEnemyAttackDis())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::ATTACK);
+		return;
+	}
+	if (fLen <= m_pOwner->GetEnemyRegionDis())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::TRACE);
+		return;
+	}
 	if (m_fPatrolDelay <= 0.f)
 	{
 		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+		return;
 	}
 	m_pOwner->GetEnemyType()->Move();
 	
@@ -116,12 +143,30 @@ CEnemyTraceState::~CEnemyTraceState()
 
 void CEnemyTraceState::Execute()
 {
+	float fLen = (m_pOwner->GetTarget()->GetPos() - m_pOwner->GetPos()).Length();
+
+	if (fLen > m_pOwner->GetEnemyRegionDis())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+		return;
+	}
+	if (fLen <= m_pOwner->GetEnemyAttackDis())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::ATTACK);
+		return;
+	}
+
+	if (m_pOwner->GetTarget()->GetPos().x > m_pOwner->GetPos().x)
+		m_pOwner->SetEnemyDirection(1);
+	else
+		m_pOwner->SetEnemyDirection(-1);
+	m_pOwner->GetAnimator()->SetCurAniFlip(m_pOwner->GetEnemyDirection() != 1);
 	m_pOwner->GetEnemyType()->Move();
-	m_pOwner->GetAnimator()->Play(L"Move");
 }
 
 void CEnemyTraceState::OnStateEnter()
 {
+	m_pOwner->GetAnimator()->Play(L"Move", m_pOwner->GetEnemyDirection() != 1);
 }
 
 void CEnemyTraceState::OnStateExit()
@@ -143,12 +188,17 @@ CEnemyAttackState::~CEnemyAttackState()
 
 void CEnemyAttackState::Execute()
 {
+	if (m_pOwner->GetAnimator()->IsAnimationFinished())
+	{
+		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+		return;
+	}
 	m_pOwner->GetEnemyType()->Attack();
-	m_pOwner->GetAnimator()->Play(L"Attack");
 }
 
 void CEnemyAttackState::OnStateEnter()
 {
+	m_pOwner->GetAnimator()->Play(L"Attack", m_pOwner->GetEnemyDirection() != 1);
 	m_pOwner->SetScaleOffset(m_pOwner->GetEnemyScaleOffset());
 	m_pOwner->SetPosOffset(m_pOwner->GetEnemyPosOffset());
 }

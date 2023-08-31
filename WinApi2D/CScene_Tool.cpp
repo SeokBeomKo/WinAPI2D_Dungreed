@@ -35,7 +35,7 @@ void CScene_Tool::update()
 
 	if (KeyDown(VK_TAB))
 	{
-		ChangeScn(GROUP_SCENE::LOBBY);
+		ChangeScn(GROUP_SCENE::TITLE);
 	}
 
 	if (Key('A'))

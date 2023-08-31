@@ -51,8 +51,10 @@ void CAnimation::update()
 
 void CAnimation::render()
 {
+    int iIsFlip = 1;
+    if (m_bFlip) iIsFlip = -1;
     CGameObject* pObj = m_pAnimator->GetObj();
-    fPoint fptPos = pObj->GetPos() + pObj->GetPosOffset();
+    fPoint fptPos = pObj->GetPos() + fPoint{(pObj->GetPosOffset().x * iIsFlip), pObj->GetPosOffset().y };
     fPoint fptScale = (pObj->GetScale()) * (pObj->GetScaleOffset());
     tAniFrm frm = m_vecFrm[m_iCurFrm];
 

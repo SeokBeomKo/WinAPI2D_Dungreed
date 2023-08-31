@@ -23,8 +23,15 @@ protected:
 
 	float m_fEnemyScaleOffset = 1.f;
 	fPoint m_fptEnemyPosOffset = { 0,0 };
+
+	// temp
+	CEntity* m_pTarget;
+	float m_fRegionDis;
+	float m_fAttackDis;
+
 public:
 	CEnemy();
+	CEnemy(CEntity* _target);
 	~CEnemy();
 	CEnemy* Clone();
 
@@ -39,6 +46,10 @@ public:
 	fPoint GetEnemyPosOffset();
 	float GetEnemyVelocity();
 	int GetEnemyDirection();
+
+	CEntity* GetTarget();
+	float GetEnemyRegionDis();
+	float GetEnemyAttackDis();
 
 	virtual void InitSpawn() = 0;
 	virtual void update();
@@ -58,6 +69,7 @@ class BigWhiteSkelEnemy : public CEnemy
 private:
 public:
 	BigWhiteSkelEnemy();
+	BigWhiteSkelEnemy(CEntity* _target);
 	~BigWhiteSkelEnemy();
 	BigWhiteSkelEnemy* Clone();
 

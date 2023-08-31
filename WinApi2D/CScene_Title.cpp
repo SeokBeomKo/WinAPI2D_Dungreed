@@ -9,6 +9,7 @@
 
 SCene_Title::SCene_Title()
 {
+	CSoundManager::getInst()->AddSound(L"CScene_Start_bgm", L"sound\\title.wav", false);
 }
 
 SCene_Title::~SCene_Title()
@@ -38,7 +39,6 @@ void ExitCheck(DWORD_PTR, DWORD_PTR)
 
 void SCene_Title::Enter()
 {
-	CSoundManager::getInst()->AddSound(L"CScene_Start_bgm", L"sound\\title.wav", false);
 	CSoundManager::getInst()->Play(L"CScene_Start_bgm");
 
 	CImage* backsky = new CImage;
@@ -61,17 +61,19 @@ void SCene_Title::Enter()
 	cloud01clone->SetPos(fPoint(WINSIZEX / 2.f + 2500.f, WINSIZEY / 2.f));
 	AddObject(cloud01clone, GROUP_GAMEOBJ::BACK_GROUND);
 
+	// 시작 버튼
 	CTitleButtonUI* pStartUI = new CTitleButtonUI();
 	pStartUI->Load(L"PlayOff_Kor", L"texture\\ui\\PlayOff_Kor.png", L"PlayOn_Kor", L"texture\\ui\\PlayOn_Kor.png");
 	pStartUI->SetPos(fPoint(WINSIZEX / 2 - pStartUI->GetScale().x / 2, WINSIZEY / 2 + 100.f - pStartUI->GetScale().y / 2));
 	pStartUI->SetClickedCallBack(StartCheck, 0, 0);
 	AddObject(pStartUI, GROUP_GAMEOBJ::UI);
-
+	// 옵션 버튼
 	CTitleButtonUI* pOptiontUI = new CTitleButtonUI();
 	pOptiontUI->Load(L"OptionOff_Kor", L"texture\\ui\\OptionOff_Kor.png", L"OptionOn_Kor", L"texture\\ui\\OptionOn_Kor.png");
 	pOptiontUI->SetPos(fPoint(WINSIZEX / 2 - pOptiontUI->GetScale().x / 2, WINSIZEY / 2 + 150.f - pOptiontUI->GetScale().y / 2));
+	pOptiontUI->SetClickedCallBack(OptionCheck, 0, 0);
 	AddObject(pOptiontUI, GROUP_GAMEOBJ::UI);
-
+	// 종료 버튼
 	CTitleButtonUI* pExitUI = new CTitleButtonUI();
 	pExitUI->Load(L"ExitOff_Kor", L"texture\\ui\\ExitOff_Kor.png", L"ExitOn_Kor", L"texture\\ui\\ExitOn_Kor.png");
 	pExitUI->SetPos(fPoint(WINSIZEX / 2 - pExitUI->GetScale().x / 2, WINSIZEY / 2 + 200.f - pExitUI->GetScale().y / 2));

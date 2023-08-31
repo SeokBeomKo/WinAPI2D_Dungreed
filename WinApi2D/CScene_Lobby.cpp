@@ -19,6 +19,7 @@
 CScene_Lobby::CScene_Lobby()
 {
 	m_fptPlayerPos = { 3700.f, 650.f };
+	CSoundManager::getInst()->AddSound(L"CScene_Town_bgm", L"sound\\0.Town.wav", false);
 }
 
 CScene_Lobby::~CScene_Lobby()
@@ -29,14 +30,33 @@ void CScene_Lobby::update()
 {
 	CScene::update();
 
-	if (KeyDown(VK_TAB))
+	if (KeyDown(VK_F2))
 	{
-		ChangeScn(GROUP_SCENE::TOOL);
+		// Enemy 추가
+		CEnemy* pBigSkeleton01 = new BigWhiteSkelEnemy(GetTarget());
+		pBigSkeleton01->SetPos(m_fptPlayerPos);
+		AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);
 	}
+}
+
+void CScene_Lobby::SetTarget(CEntity* _target)
+{
+	m_pTarget = _target;
+}
+
+CEntity* CScene_Lobby::GetTarget()
+{
+	if (nullptr != m_pTarget)
+		return m_pTarget;
+	return nullptr;
 }
 
 void CScene_Lobby::Enter()
 {
+	CCameraManager::getInst()->FadeIn(2.f);
+	// 배경음
+	CSoundManager::getInst()->Play(L"CScene_Town_bgm");
+
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\Lobby.tile";
@@ -62,17 +82,14 @@ void CScene_Lobby::Enter()
 	CPlayer* pPlayer = new CPlayer;
 	pPlayer->SetPos(m_fptPlayerPos);
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
+	SetTarget(pPlayer);
 
 	// Enemy 추가
-	CEnemy* pBigSkeleton01 = new BigWhiteSkelEnemy();
+	CEnemy* pBigSkeleton01 = new BigWhiteSkelEnemy(GetTarget());
 	pBigSkeleton01->SetPos(m_fptPlayerPos);
 	AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);
 
-	/*CEnemy* pBigSkeleton01 = new CEnemy;
-	pBigSkeleton01->SetName(L"BigSkelleton");
-	pBigSkeleton01->SetEnemyType(new CEnemyMeleeWalkType(pBigSkeleton01));
-	AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);*/
-
+	// Item 추가
 	CItem* pShortSword = new ShortSword;
 	pShortSword->SetPos({ 4000.f, 650.f });
 	AddObject(pShortSword, GROUP_GAMEOBJ::ITEM);
@@ -99,6 +116,7 @@ void CScene_Lobby::Enter()
 
 void CScene_Lobby::Exit()
 {
+	CSoundManager::getInst()->Stop(L"CScene_Town_bgm");
 	DeleteAll();
 
 	CCollisionManager::getInst()->Reset();

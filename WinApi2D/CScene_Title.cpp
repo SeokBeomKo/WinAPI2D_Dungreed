@@ -9,7 +9,7 @@
 
 SCene_Title::SCene_Title()
 {
-	CSoundManager::getInst()->AddSound(L"CScene_Start_bgm", L"sound\\title.wav", false);
+	CSoundManager::getInst()->AddSound(L"CScene_Start_bgm", L"sound\\title.wav", true);
 }
 
 SCene_Title::~SCene_Title()

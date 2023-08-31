@@ -19,7 +19,19 @@
 CScene_Lobby::CScene_Lobby()
 {
 	m_fptPlayerPos = { 3700.f, 650.f };
-	CSoundManager::getInst()->AddSound(L"CScene_Town_bgm", L"sound\\0.Town.wav", false);
+	// 배경음
+	CSoundManager::getInst()->AddSound(L"CScene_Town_bgm", L"sound\\0.Town.wav", true);
+
+	//// 플레이어
+	//CSoundManager::getInst()->AddSound(L"dash", L"sound\\dash.wav", false);
+	//CSoundManager::getInst()->AddSound(L"jumping", L"sound\\jumping.wav", false);
+	//CSoundManager::getInst()->AddSound(L"step1", L"sound\\step1.wav", false);
+	//CSoundManager::getInst()->AddSound(L"equip", L"sound\\equip.wav", false);
+
+	//// 적
+	/*CSoundManager::getInst()->AddSound(L"MonsterHit", L"sound\\MonsterHit.wav", false);
+	CSoundManager::getInst()->AddSound(L"MonsterDie", L"sound\\MonsterDie.wav", false);
+	CSoundManager::getInst()->AddSound(L"MonsterSpawn", L"sound\\MonsterSpawn.wav", false);*/
 }
 
 CScene_Lobby::~CScene_Lobby()

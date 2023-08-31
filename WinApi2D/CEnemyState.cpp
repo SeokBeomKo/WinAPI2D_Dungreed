@@ -260,7 +260,7 @@ void CEnemyDeadState::Execute()
 {
 	if (m_pOwner->GetAnimator()->IsAnimationFinished())
 	{
-		m_pStateMachine->ChangeState(STATE_ENEMY::IDLE);
+		return;
 	}
 }
 

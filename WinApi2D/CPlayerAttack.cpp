@@ -12,7 +12,7 @@ CPlayerAttack::CPlayerAttack()
 	m_iDamage		= 0;
 	m_iRange		= 100;
 	m_fCurTimeFX	= 0.f;
-	m_fMaxTimeFX	= 0.4f;
+	m_fMaxTimeFX	= 0.2f;
 	m_fptDirFX		= { 0, 0 };
 
 	CreateAnimator();

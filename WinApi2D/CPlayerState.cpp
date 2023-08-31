@@ -175,6 +175,7 @@ void CPlayerMoveState::update()
 	if (m_fabsDelay >= 0.5f)
 	{
 		m_pStateMachine->GetOwner()->GetVFX(L"RunVFX")->PlayVFX(L"RunVFX", GetVertical());
+		//CSoundManager::getInst()->Play(L"step1");
 		m_fabsDelay = 0.f;
 	}
 	AttackHandle();
@@ -235,6 +236,7 @@ void CPlayerDashState::update()
 
 void CPlayerDashState::enter()
 {
+	//CSoundManager::getInst()->Play(L"dash");
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 	m_pStateMachine->GetOwner()->InitDashForce();
 	m_fDashTime = 0.f;
@@ -281,6 +283,7 @@ void CPlayerJumpState::update()
 
 void CPlayerJumpState::enter()
 {
+	//CSoundManager::getInst()->Play(L"jumping");
 	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 	m_pStateMachine->GetOwner()->GetVFX(L"JumpVFX")->PlayVFX(L"JumpVFX");
 

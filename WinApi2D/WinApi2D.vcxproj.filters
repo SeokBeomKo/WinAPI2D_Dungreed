@@ -279,6 +279,9 @@
     <ClInclude Include="CEnemyType.h">
       <Filter>Engine\Component\FSM\Enemy\Type</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerVFXController.h">
+      <Filter>Object\VFX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -418,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="CEnemyType.cpp">
       <Filter>Engine\Component\FSM\Enemy\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerVFXController.cpp">
+      <Filter>Object\VFX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

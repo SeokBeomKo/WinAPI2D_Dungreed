@@ -4,9 +4,11 @@
 
 class CD2DImage;
 class CPlayerStateMachine;
-class IWeapon;
 class CWeapon;
 class CEquip;
+
+class CPlayerVFXController;
+class CPlayerVFX;
 
 class CPlayer : public CEntity
 {
@@ -24,6 +26,7 @@ protected:
 
 	CWeapon* m_pCurWeapon;	// 보유 무기 (인벤토리)
 	CEquip* m_pCurEquip;	// 장착 무기 렌더
+	CPlayerVFXController* m_pVFXcontroller;
 public:
 	CPlayer();
 	~CPlayer();
@@ -49,6 +52,8 @@ public:
 	CWeapon* GetCollWeapon();
 	CWeapon* GetWeapon();
 
+	int GetDirection();
+
 	void InitDashForce();
 	float GetDashForce();
 
@@ -57,8 +62,10 @@ public:
 
 	void InitJumpForce();
 
-	float GetJump();
-	void SetJump(float temp);
+	float GetJumpForce();
+	void SetJumpForce(float temp);
+
+	CPlayerVFX* GetVFX(wstring _name);
 
 	virtual void update();
 	virtual void render();

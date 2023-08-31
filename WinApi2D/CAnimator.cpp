@@ -71,6 +71,12 @@ void CAnimator::Play(const wstring& strName, bool _flip)
 {
 	m_pCurAni = FindAnimation(strName);
 	m_pCurAni->m_bFlip = _flip;
+	m_pCurAni->SetFrame(0);
+}
+
+void CAnimator::SetCurAniFlip(bool _flip)
+{
+	m_pCurAni->m_bFlip = _flip;
 }
 
 bool CAnimator::IsAnimationFinished() const {

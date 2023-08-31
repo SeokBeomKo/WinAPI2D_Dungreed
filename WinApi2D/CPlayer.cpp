@@ -14,11 +14,14 @@
 // ¾ÆÀÌÅÛ
 #include "CWeapon.h"
 
+#include "CPlayerVFXController.h"
+
 CPlayer::CPlayer()
 {
 	m_pCurWeapon	= nullptr;
 	m_pCollWeapon = nullptr;
 	m_pCurEquip = new CEquip(this);
+	m_pVFXcontroller = new CPlayerVFXController(this);
 
 	m_iJumpCount = 1;
 	m_fJumpForce = GRAVITY_POWER;
@@ -150,6 +153,17 @@ CWeapon* CPlayer::GetWeapon()
 	return m_pCurWeapon;
 }
 
+
+int CPlayer::GetDirection()
+{
+	fPoint pos = GetPos();
+	fPoint realpos = CCameraManager::getInst()->GetRenderPos(pos);
+	if (MousePos().x <= realpos.x)
+		return 1;
+	else
+		return -1;
+}
+
 void CPlayer::InitDashForce()
 {
 	m_fDashForce = DASH_POWER;
@@ -175,14 +189,19 @@ void CPlayer::InitJumpForce()
 	m_fJumpForce = GRAVITY_POWER;
 }
 
-float CPlayer::GetJump()
+float CPlayer::GetJumpForce()
 {
 	return m_fJumpForce;
 }
 
-void CPlayer::SetJump(float temp)
+void CPlayer::SetJumpForce(float temp)
 {
 	m_fJumpForce = temp;
+}
+
+CPlayerVFX* CPlayer::GetVFX(wstring _name)
+{
+	return m_pVFXcontroller->GetVFX(_name);
 }
 
 void CPlayer::update()

@@ -23,6 +23,8 @@ public:
 
 	float GetDegree();
 
+	void PlayVFX();
+
 	virtual void update();
 	virtual void render();
 };

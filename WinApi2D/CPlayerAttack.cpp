@@ -45,7 +45,6 @@ void CPlayerAttack::Init(fPoint _pos)
 
 	SetPos(finalpos);
 	GetCollider()->SetFinalPos(_pos);
-
 }
 
 int CPlayerAttack::GetDamage()
@@ -56,6 +55,11 @@ int CPlayerAttack::GetDamage()
 float CPlayerAttack::GetDegree()
 {
 	return atan2(m_fptDirFX.y, m_fptDirFX.x) * RTOD;
+}
+
+void CPlayerAttack::PlayVFX()
+{
+	GetAnimator()->Play(L"Attack");
 }
 
 void CPlayerAttack::update()
@@ -70,7 +74,5 @@ void CPlayerAttack::update()
 
 void CPlayerAttack::render()
 {
-	GetAnimator()->Play(L"Attack");
-
 	component_render();
 }

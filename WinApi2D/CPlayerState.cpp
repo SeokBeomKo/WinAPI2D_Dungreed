@@ -5,6 +5,7 @@
 #include "CPlayer.h"
 #include "CAnimator.h"
 #include "CGravity.h"
+#include "CPlayerVFX.h"
 
 //========================================
 //## 기본 상태							##
@@ -141,12 +142,13 @@ void CPlayerIdleState::update()
 	if (DashHandle())		return;
 
 	m_pStateMachine->GetOwner()->Idle();
+	m_pStateMachine->GetOwner()->GetAnimator()->SetCurAniFlip(GetVertical());
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
-	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
 }
 
 void CPlayerIdleState::enter()
 {
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Idle", GetVertical());
 }
 
 void CPlayerIdleState::exit()
@@ -160,6 +162,7 @@ void CPlayerIdleState::exit()
 CPlayerMoveState::CPlayerMoveState(CPlayerStateMachine* _machine)
 	: CPlayerState(_machine)
 {
+	m_fabsDelay = 0.f;
 }
 
 CPlayerMoveState::~CPlayerMoveState()
@@ -168,6 +171,12 @@ CPlayerMoveState::~CPlayerMoveState()
 
 void CPlayerMoveState::update()
 {
+	m_fabsDelay += fDT;
+	if (m_fabsDelay >= 0.5f)
+	{
+		m_pStateMachine->GetOwner()->GetVFX(L"RunVFX")->PlayVFX(L"RunVFX", GetVertical());
+		m_fabsDelay = 0.f;
+	}
 	AttackHandle();
 	EquipHandle();
 	if (DownJumpHandle())	return;
@@ -181,12 +190,14 @@ void CPlayerMoveState::update()
 	if (DashHandle())		return;
 
 	m_pStateMachine->GetOwner()->Move(Key('D'));
+	m_pStateMachine->GetOwner()->GetAnimator()->SetCurAniFlip(GetVertical());
 	m_pStateMachine->GetOwner()->SetGravity(!m_pStateMachine->GetOwner()->GetGrounded());
-	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Move", GetVertical());
 }
 
 void CPlayerMoveState::enter()
 {
+	m_fabsDelay = 1.f;
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Move", GetVertical());
 }
 
 void CPlayerMoveState::exit()
@@ -218,12 +229,13 @@ void CPlayerDashState::update()
 		return;
 	}
 	m_pStateMachine->GetOwner()->SetGravity(false);
-	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
+	m_pStateMachine->GetOwner()->GetAnimator()->SetCurAniFlip(GetVertical());
 	m_pStateMachine->GetOwner()->Dash(m_fptDirection);
 }
 
 void CPlayerDashState::enter()
 {
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 	m_pStateMachine->GetOwner()->InitDashForce();
 	m_fDashTime = 0.f;
 	m_pStateMachine->GetOwner()->SetPassPlatform(true);
@@ -257,20 +269,21 @@ void CPlayerJumpState::update()
 	EquipHandle();
 	m_pStateMachine->GetOwner()->Jump();
 
-	if (m_pStateMachine->GetOwner()->GetJump() <= 0.f)
+	if (m_pStateMachine->GetOwner()->GetJumpForce() <= 0.f)
 	{
 		m_pStateMachine->ChangeState(STATE_PLAYER::FALL);
 		return;
 	}
-
+	m_pStateMachine->GetOwner()->GetAnimator()->SetCurAniFlip(GetVertical());
 	OverMoveHandle();
 	if (DashHandle())		return;
-
-	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
 }
 
 void CPlayerJumpState::enter()
 {
+	m_pStateMachine->GetOwner()->GetAnimator()->Play(L"Jump", GetVertical());
+	m_pStateMachine->GetOwner()->GetVFX(L"JumpVFX")->PlayVFX(L"JumpVFX");
+
 	m_pStateMachine->GetOwner()->InitJumpForce();
 	m_pStateMachine->GetOwner()->RemoveJumpCount();
 	m_pStateMachine->GetOwner()->SetPassPlatform(true);

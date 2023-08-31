@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CEntity.h"
 
+// component
 #include "CGravity.h"
 #include "CCollider.h"
 

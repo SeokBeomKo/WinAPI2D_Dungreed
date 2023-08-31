@@ -57,7 +57,7 @@ public:
 class CPlayerMoveState : public CPlayerState
 {
 private:
-
+	float m_fabsDelay;
 public:
 	CPlayerMoveState(CPlayerStateMachine* _machine);
 	~CPlayerMoveState();

@@ -179,6 +179,7 @@
     <ClInclude Include="CPlayerState.h" />
     <ClInclude Include="CPlayerStateMachine.h" />
     <ClInclude Include="CPlayerVFX.h" />
+    <ClInclude Include="CPlayerVFXController.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="CPlayerState.cpp" />
     <ClCompile Include="CPlayerStateMachine.cpp" />
     <ClCompile Include="CPlayerVFX.cpp" />
+    <ClCompile Include="CPlayerVFXController.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />

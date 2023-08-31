@@ -282,6 +282,9 @@
     <ClInclude Include="CPlayerVFXController.h">
       <Filter>Object\VFX</Filter>
     </ClInclude>
+    <ClInclude Include="CScene_Title.h">
+      <Filter>Scene\TitleScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -424,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerVFXController.cpp">
       <Filter>Object\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Title.cpp">
+      <Filter>Scene\TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

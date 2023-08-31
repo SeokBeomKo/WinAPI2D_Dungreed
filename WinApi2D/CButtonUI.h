@@ -6,6 +6,10 @@ class CD2DImage;
 // 함수포인터를 위한 타입정의
 typedef void(*BTN_FUNC) (DWORD_PTR, DWORD_PTR);
 
+//========================================
+//## ButtonUI						    ##
+//========================================
+
 class CButtonUI : public CUI
 {
 private:
@@ -34,5 +38,25 @@ public:
 	void SetText(const wstring& str);
 
 	void SetClickedCallBack(BTN_FUNC pFunc, DWORD_PTR param1, DWORD_PTR param2);
+};
+
+//========================================
+//## TitleButtonUI					    ##
+//========================================
+
+class CTitleButtonUI :
+	public CButtonUI
+{
+private:
+	CD2DImage* pimg;
+	wstring m_strOnKey, m_strOnPath;		// 마우스가 올려졌을 경우 경로
+	wstring m_strOffKey, m_strOffPath;		// 마우스가 올려지지 않았을 경우 경로
+public:
+	CTitleButtonUI();
+	~CTitleButtonUI();
+
+	virtual void render();
+
+	void Load(wstring strOffKey, wstring strOffPath, wstring strOnKey, wstring strOnPath);
 };
 

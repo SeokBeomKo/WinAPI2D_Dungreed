@@ -22,7 +22,7 @@ void CImage::update()
 
 void CImage::render()
 {
-    fPoint pos = fPoint(WINSIZEX / 2, WINSIZEY / 2);
+    fPoint pos = GetPos();
     fPoint scale = GetScale();
 
     CRenderManager::getInst()->RenderImage(
@@ -34,8 +34,9 @@ void CImage::render()
     );
 }
 
-void CImage::Load(wstring strKey, wstring strPath, fPoint pos, float scale)
+void CImage::Load(wstring _strKey, wstring _strPath, fPoint _pos, float _scale)
 {
-    m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
-    SetScale(fPoint(m_pImg->GetWidth() * 4.f, m_pImg->GetHeight() * 4.f));
+    m_pImg = CResourceManager::getInst()->LoadD2DImage(_strKey, _strPath);
+    SetPos(_pos);
+    SetScale(fPoint(m_pImg->GetWidth() * _scale, m_pImg->GetHeight() * _scale));
 }

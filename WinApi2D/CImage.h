@@ -15,5 +15,5 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual void Load(wstring strKey, wstring strPath, fPoint pos = { 0,0 }, float scale = 0.f);
+	virtual void Load(wstring _strKey, wstring _strPath, fPoint _pos = { 0,0 }, float _scale = 4.f);
 };

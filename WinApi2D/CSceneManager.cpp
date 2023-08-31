@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CSceneManager.h"
 
+#include "CScene_Title.h"
 #include "CScene_Lobby.h"
 #include "CScene_Tool.h"
 
@@ -57,13 +58,16 @@ void CSceneManager::render()
 
 void CSceneManager::init()
 {
+	m_arrScene[(size_t)GROUP_SCENE::TITLE] = new SCene_Title;
+	m_arrScene[(size_t)GROUP_SCENE::TITLE]->SetName(L"Title_Scene");
+
 	m_arrScene[(size_t)GROUP_SCENE::LOBBY] = new CScene_Lobby;
 	m_arrScene[(size_t)GROUP_SCENE::LOBBY]->SetName(L"Lobby_Scene");
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
-	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::LOBBY];
+	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TITLE];
 	m_pCurScene->Enter();
 }
 

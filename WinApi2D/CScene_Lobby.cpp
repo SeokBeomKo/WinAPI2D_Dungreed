@@ -49,7 +49,7 @@ void CScene_Lobby::Enter()
 
 	// 배경 이미지
 	CImage* skyday = new CImage;
-	skyday->Load(L"Sky_Day", L"texture\\background\\Sky_Day.png");
+	skyday->Load(L"Sky_Day", L"texture\\background\\Sky_Day.png", {WINSIZEX /2.f , WINSIZEY / 2.f});
 	AddObject(skyday, GROUP_GAMEOBJ::BACK_GROUND);
 	CBack_Ground* townBG_day = new CBack_Ground;
 	townBG_day->Load(L"TownBG_Day", L"texture\\background\\TownBG_Day.png", fPoint(0.f, 160.f), 7.f);
@@ -72,12 +72,6 @@ void CScene_Lobby::Enter()
 	pBigSkeleton01->SetName(L"BigSkelleton");
 	pBigSkeleton01->SetEnemyType(new CEnemyMeleeWalkType(pBigSkeleton01));
 	AddObject(pBigSkeleton01, GROUP_GAMEOBJ::ENEMY);*/
-	
-	// Monster 추가
-	/*CMonster* pMonster = new CMonster;
-	pMonster->SetPos(fPoint(1100, 350));
-	pMonster->SetCenterPos(pMonster->GetPos());
-	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);*/
 
 	CItem* pShortSword = new ShortSword;
 	pShortSword->SetPos({ 4000.f, 650.f });
